@@ -24,10 +24,16 @@ import {
 
 export const Route = createFileRoute("/admin/contratos/$id")({
   loader: async ({ params, context }) => {
-    await context.queryClient.ensureQueryData({
-      queryKey: ["contract", params.id],
-      queryFn: () => getContractById({ data: params.id }),
-    });
+    await Promise.all([
+      context.queryClient.ensureQueryData({
+        queryKey: ["contract", params.id],
+        queryFn: () => getContractById({ data: params.id }),
+      }),
+      context.queryClient.ensureQueryData({
+        queryKey: ["active-artists"],
+        queryFn: () => getActiveArtists(),
+      })
+    ]);
   },
   component: ContractDetails,
 });
@@ -41,6 +47,11 @@ function ContractDetails() {
   const { data: contract } = useSuspenseQuery({
     queryKey: ["contract", id],
     queryFn: () => getContractById({ data: id }),
+  });
+
+  const { data: artists } = useSuspenseQuery({
+    queryKey: ["active-artists"],
+    queryFn: () => getActiveArtists(),
   });
 
   const [editData, setEditData] = useState(contract);
