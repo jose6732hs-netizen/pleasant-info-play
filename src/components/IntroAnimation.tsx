@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import crownAsset from "@/assets/logo-crown.png.asset.json";
-import digit0 from "@/assets/digit-0.png.asset.json";
-import digit6 from "@/assets/digit-6.png.asset.json";
-import digit4 from "@/assets/digit-4.png.asset.json";
+import digit0 from "@/assets/num-0.png.asset.json";
+import digit6 from "@/assets/num-6.png.asset.json";
+import digit4 from "@/assets/num-4.png.asset.json";
 import talentsText from "@/assets/talents-text.png.asset.json";
 
 export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
