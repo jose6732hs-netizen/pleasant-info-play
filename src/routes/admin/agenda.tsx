@@ -252,10 +252,12 @@ function AdminAgenda() {
             <Button 
               disabled={mutation.isPending}
               onClick={() => mutation.mutate({ 
-                ...newEvent, 
-                artist_id: selectedArtistId,
-                start_time: new Date(newEvent.start_time).toISOString(),
-                end_time: new Date(newEvent.end_time).toISOString()
+                data: {
+                  ...newEvent, 
+                  artist_id: selectedArtistId,
+                  start_time: new Date(newEvent.start_time).toISOString(),
+                  end_time: new Date(newEvent.end_time).toISOString()
+                }
               })}
               className="w-full bg-white text-black font-bold uppercase tracking-widest hover:bg-neutral-200"
             >
