@@ -57,24 +57,24 @@ function AdminContracts() {
           <Link to="/admin" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
             <LayoutDashboard className="w-4 h-4" /> Dashboard
           </Link>
-          <Link to="/admin/artistas" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
+          <a href="/admin/artistas" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
             <Users className="w-4 h-4" /> Artistas
-          </Link>
-          <Link to="/admin/agenda" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
+          </a>
+          <a href="/admin/agenda" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
             <Calendar className="w-4 h-4" /> Agenda
-          </Link>
+          </a>
           <Link to="/admin/contratos" className="p-3 bg-white/10 text-white transition rounded-sm font-bold flex items-center gap-3">
             <FileCheck className="w-4 h-4" /> Contratos
           </Link>
+          <a href="/admin/servicos" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
+            <Briefcase className="w-4 h-4" /> Serviços
+          </a>
           <a href="/admin/conteudo" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
             <LayoutDashboard className="w-4 h-4" /> Conteúdo
           </a>
           <a href="/admin/solicitacoes" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
             <FileText className="w-4 h-4" /> Solicitações
           </a>
-          <Link to="/admin/servicos" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
-            <Briefcase className="w-4 h-4" /> Serviços
-          </Link>
           <Link to="/admin/configuracoes" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm mt-auto flex items-center gap-3">
             <Settings className="w-4 h-4" /> Configurações
           </Link>
