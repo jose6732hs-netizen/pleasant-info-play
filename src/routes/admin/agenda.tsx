@@ -44,7 +44,7 @@ function AdminAgenda() {
 
   const { data: events } = useSuspenseQuery({
     queryKey: ["calendar-events", selectedArtistId],
-    queryFn: () => getArtistCalendar({ artist_id: selectedArtistId }),
+    queryFn: () => getArtistCalendar({ data: { artist_id: selectedArtistId } }),
   });
 
   const mutation = useMutation({
