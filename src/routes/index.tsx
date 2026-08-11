@@ -126,7 +126,7 @@ function Index() {
                         </button>
                       </div>
                     </div>
-                  </div>
+                    </a>
                 ))}
               </div>
             ) : (
