@@ -22,29 +22,29 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
     // 0.1s: Coroa
     const t1 = setTimeout(() => setStage(1), 100);
     
-    // 1.1s: Digit 0 (1s after crown)
+    // 1.1s: Digit 0
     const t2 = setTimeout(() => setStage(2), 1100);
     
-    // 1.6s: Digit 6
-    const t3 = setTimeout(() => setStage(3), 1600);
+    // 1.5s: Digit 6
+    const t3 = setTimeout(() => setStage(3), 1500);
     
-    // 2.1s: Digit 4
-    const t4 = setTimeout(() => setStage(4), 2100);
+    // 1.9s: Digit 4
+    const t4 = setTimeout(() => setStage(4), 1900);
 
-    // 2.7s: Talents (after digits)
-    const t5 = setTimeout(() => setStage(5), 2700);
+    // 2.5s: Talents
+    const t5 = setTimeout(() => setStage(5), 2500);
     
-    // 3.8s: Pulse
-    const t6 = setTimeout(() => setStage(6), 3800);
+    // 3.6s: Pulse
+    const t6 = setTimeout(() => setStage(6), 3600);
     
-    // 4.4s: Start Transition
+    // 4.2s: Start Transition
     const t7 = setTimeout(() => {
       setStage(7);
       setTimeout(() => {
         setIsVisible(false);
         onComplete();
       }, 800);
-    }, 4400);
+    }, 4200);
 
     return () => {
       [t1, t2, t3, t4, t5, t6, t7].forEach(clearTimeout);
@@ -76,9 +76,9 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
         }}
       >
         {/* CONTAINER DA LOGO COMPLETA */}
-        <div className="flex flex-col items-center gap-1 md:gap-2">
+        <div className="flex flex-col items-center">
           
-          {/* COROA (Sempre no topo após aparecer) */}
+          {/* COROA */}
           <div 
             className={animationBaseClass}
             style={stage >= 1 ? visibleStyle : hiddenStyle}
@@ -86,41 +86,41 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
             <img 
               src={crownAsset.url} 
               alt="Crown" 
-              className="w-[200px] md:w-[400px] h-auto object-contain"
+              className="w-[180px] md:w-[350px] h-auto object-contain"
             />
           </div>
 
-          {/* ÁREA DOS NÚMEROS (Abaixo da coroa) */}
-          <div className="relative w-[180px] h-[80px] md:w-[360px] md:h-[160px] flex items-center justify-center -mt-4 md:-mt-8">
+          {/* NÚMEROS EM LINHA RETA (0 6 4) */}
+          <div className="flex items-center justify-center gap-2 md:gap-4 -mt-2 md:-mt-4">
             <div 
-              className={`absolute inset-0 flex items-center justify-center ${animationBaseClass}`}
-              style={stage === 2 ? visibleStyle : hiddenStyle}
+              className={animationBaseClass}
+              style={stage >= 2 ? visibleStyle : hiddenStyle}
             >
-              <img src={digit0.url} alt="0" className="h-full w-auto object-contain" />
+              <img src={digit0.url} alt="0" className="w-[50px] md:w-[100px] h-auto object-contain" />
             </div>
             <div 
-              className={`absolute inset-0 flex items-center justify-center ${animationBaseClass}`}
-              style={stage === 3 ? visibleStyle : hiddenStyle}
+              className={animationBaseClass}
+              style={stage >= 3 ? visibleStyle : hiddenStyle}
             >
-              <img src={digit6.url} alt="6" className="h-full w-auto object-contain" />
+              <img src={digit6.url} alt="6" className="w-[50px] md:w-[100px] h-auto object-contain" />
             </div>
             <div 
-              className={`absolute inset-0 flex items-center justify-center ${animationBaseClass}`}
+              className={animationBaseClass}
               style={stage >= 4 ? visibleStyle : hiddenStyle}
             >
-              <img src={digit4.url} alt="4" className="h-full w-auto object-contain" />
+              <img src={digit4.url} alt="4" className="w-[50px] md:w-[100px] h-auto object-contain" />
             </div>
           </div>
 
-          {/* TALENTS (Abaixo dos números) */}
+          {/* TALENTS */}
           <div 
-            className={`${animationBaseClass} -mt-2 md:-mt-4`}
+            className={`${animationBaseClass} mt-1 md:mt-2`}
             style={stage >= 5 ? visibleStyle : hiddenStyle}
           >
             <img 
               src={talentsText.url} 
               alt="Talents" 
-              className="w-[200px] md:w-[400px] h-auto object-contain"
+              className="w-[180px] md:w-[350px] h-auto object-contain"
             />
           </div>
 
