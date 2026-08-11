@@ -46,7 +46,7 @@ function AdminBookings() {
   });
 
   const statusMutation = useMutation({
-    mutationFn: (data: { id: string, status: string }) => updateBookingRequestStatus(data.id, data.status),
+    mutationFn: (variables: { id: string, status: string }) => updateBookingRequestStatus({ data: variables }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["booking-requests"] });
       toast.success("Status atualizado!");
@@ -54,7 +54,7 @@ function AdminBookings() {
     }
   });
 
-  const filteredRequests = requests?.filter(r => 
+  const filteredRequests = requests?.filter((r: any) => 
     filter === "TODAS" || r.status === filter
   );
 
@@ -108,7 +108,7 @@ function AdminBookings() {
 
           <div className="grid grid-cols-1 gap-4">
             {filteredRequests && filteredRequests.length > 0 ? (
-              filteredRequests.map((req) => (
+              filteredRequests.map((req: any) => (
                 <div key={req.id} className="bg-neutral-900 border border-white/5 hover:border-white/10 transition p-6 rounded-sm grid md:grid-cols-4 gap-6 items-center">
                   <div className="space-y-1">
                     <div className="text-[10px] uppercase font-bold text-neutral-500 tracking-widest">Contratante</div>
