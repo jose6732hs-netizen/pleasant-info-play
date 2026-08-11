@@ -16,6 +16,7 @@ export type ContractStatus = z.infer<typeof ContractStatusSchema>;
 export const ContractSchema = z.object({
   id: z.string(),
   booking_id: z.string(),
+  artist_id: z.string().optional(),
   contract_number: z.string(),
   artist_name: z.string(),
   contractor_name: z.string(),
@@ -84,6 +85,7 @@ export const getContractById = createServerFn({ method: "GET" })
 export const generateContractFromProposal = createServerFn({ method: "POST" })
   .validator((data: unknown) => z.object({
     booking_id: z.string(),
+    artist_id: z.string().optional(),
     artist_name: z.string(),
     contractor_name: z.string(),
     event_name: z.string(),
@@ -97,6 +99,7 @@ export const generateContractFromProposal = createServerFn({ method: "POST" })
     const newContract: Contract = {
       id: `ctr-${Date.now()}`,
       booking_id: data.booking_id,
+      artist_id: data.artist_id,
       contract_number: `2026-${Math.floor(Math.random() * 9000) + 1000}`,
       artist_name: data.artist_name,
       contractor_name: data.contractor_name,

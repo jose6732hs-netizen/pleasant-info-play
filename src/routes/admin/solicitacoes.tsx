@@ -251,6 +251,7 @@ function AdminBookings() {
                     onClick={() => {
                       contractMutation.mutate({
                         booking_id: selectedRequest.id,
+                        artist_id: selectedRequest.artist_id,
                         artist_name: getArtistName(selectedRequest.artist_id),
                         contractor_name: selectedRequest.name,
                         event_name: selectedRequest.name, // Fallback to contractor name if not specified
