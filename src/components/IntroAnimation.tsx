@@ -90,25 +90,37 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
             />
           </div>
 
-          {/* NÚMEROS EM LINHA RETA (0 6 4) */}
+          {/* NÚMEROS EM LINHA RETA (0 6 4) - Ajustados para o mesmo tamanho visual */}
           <div className="flex items-center justify-center gap-2 md:gap-4 -mt-2 md:-mt-4">
             <div 
-              className={animationBaseClass}
-              style={stage >= 2 ? visibleStyle : hiddenStyle}
+              className={`${animationBaseClass} flex items-center justify-center`}
+              style={{
+                ...(stage >= 2 ? visibleStyle : hiddenStyle),
+                width: '60px',
+                height: '80px'
+              }}
             >
-              <img src={digit0.url} alt="0" className="w-[50px] md:w-[100px] h-auto object-contain" />
+              <img src={digit0.url} alt="0" className="max-w-full max-h-full object-contain" />
             </div>
             <div 
-              className={animationBaseClass}
-              style={stage >= 3 ? visibleStyle : hiddenStyle}
+              className={`${animationBaseClass} flex items-center justify-center`}
+              style={{
+                ...(stage >= 3 ? visibleStyle : hiddenStyle),
+                width: '60px',
+                height: '80px'
+              }}
             >
-              <img src={digit6.url} alt="6" className="w-[50px] md:w-[100px] h-auto object-contain" />
+              <img src={digit6.url} alt="6" className="max-w-full max-h-full object-contain" />
             </div>
             <div 
-              className={animationBaseClass}
-              style={stage >= 4 ? visibleStyle : hiddenStyle}
+              className={`${animationBaseClass} flex items-center justify-center`}
+              style={{
+                ...(stage >= 4 ? visibleStyle : hiddenStyle),
+                width: '60px',
+                height: '80px'
+              }}
             >
-              <img src={digit4.url} alt="4" className="w-[50px] md:w-[100px] h-auto object-contain" />
+              <img src={digit4.url} alt="4" className="max-w-full max-h-full object-contain" />
             </div>
           </div>
 
