@@ -12,10 +12,16 @@ import { toast } from "sonner";
 
 export const Route = createFileRoute("/admin/agenda")({
   loader: async ({ context }) => {
-    await context.queryClient.ensureQueryData({
-      queryKey: ["active-artists"],
-      queryFn: () => getActiveArtists(),
-    });
+    await Promise.all([
+      context.queryClient.ensureQueryData({
+        queryKey: ["active-artists"],
+        queryFn: () => getActiveArtists(),
+      }),
+      context.queryClient.ensureQueryData({
+        queryKey: ["calendar-events", "1"], // Default to first artist mock
+        queryFn: () => getArtistCalendar({ data: { artist_id: "1" } }),
+      }),
+    ]);
   },
   component: AdminAgenda,
 });
