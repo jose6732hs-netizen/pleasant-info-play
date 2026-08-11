@@ -31,7 +31,7 @@ function Index() {
   });
 
   const getContent = (section: string) => {
-    return contentData?.find((c: any) => c.section_name === section)?.content || {};
+    return (contentData?.find((c: any) => c.section_name === section)?.content || {}) as any;
   };
 
   const hero = getContent("hero");
