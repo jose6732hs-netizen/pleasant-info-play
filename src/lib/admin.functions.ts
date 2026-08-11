@@ -9,7 +9,11 @@ export const getAdminStats = createServerFn({ method: "GET" })
     return {
       totalArtists: 1,
       activeArtists: 1,
-      totalBookings: 0
+      totalBookings: 0,
+      confirmedShows: 1,
+      preReservations: 0,
+      newRequests: 0,
+      negotiations: 0
     };
   });
 
