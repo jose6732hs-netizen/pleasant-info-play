@@ -143,7 +143,33 @@ function ContractDetails() {
             {activeTab === 'editor' && (
               <div className="space-y-8 animate-in fade-in duration-500">
                 <section className="space-y-6">
-                  <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-neutral-500 border-b border-white/5 pb-2">Cláusulas do Contrato</h3>
+                  <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-neutral-500 border-b border-white/5 pb-2">Informações Gerais</h3>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <label className="text-[10px] uppercase font-bold text-neutral-600 tracking-widest">Artista</label>
+                      <select 
+                        value={editData.artist_id}
+                        onChange={(e) => setEditData({...editData, artist_id: e.target.value, artist_name: artists.find(a => a.id === e.target.value)?.name || ""})}
+                        className="w-full bg-neutral-900 border border-white/10 p-4 text-sm focus:outline-none focus:border-white/30 transition"
+                      >
+                        {artists.map(artist => (
+                          <option key={artist.id} value={artist.id}>{artist.name}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-[10px] uppercase font-bold text-neutral-600 tracking-widest">Contratante</label>
+                      <input 
+                        type="text"
+                        value={editData.contractor_name}
+                        onChange={(e) => setEditData({...editData, contractor_name: e.target.value})}
+                        className="w-full bg-neutral-900 border border-white/10 p-4 text-sm focus:outline-none focus:border-white/30 transition"
+                      />
+                    </div>
+                  </div>
+
+                  <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-neutral-500 border-b border-white/5 pb-2 mt-8">Cláusulas do Contrato</h3>
                   
                   <div className="space-y-6">
                     <div className="space-y-2">
