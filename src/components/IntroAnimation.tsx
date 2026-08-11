@@ -58,8 +58,8 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
     onComplete();
   };
 
-  const animationClass = "transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] absolute inset-0 flex items-center justify-center";
-  const hiddenStyle = { opacity: 0, transform: 'translateY(80px) scale(0.96)' };
+  const animationBaseClass = "transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)]";
+  const hiddenStyle = { opacity: 0, transform: 'translateY(40px) scale(0.98)' };
   const visibleStyle = { opacity: 1, transform: 'translateY(0) scale(1)' };
 
   return (
@@ -68,72 +68,62 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
       style={{ pointerEvents: stage === 7 ? 'none' : 'auto' }}
     >
       <div 
-        className={`relative w-[300px] h-[300px] md:w-[600px] md:h-[600px] flex items-center justify-center transition-all duration-[450ms] ease-in-out ${stage === 6 ? 'scale-[1.035] brightness-125' : 'scale-100'}`}
+        className={`relative flex flex-col items-center justify-center transition-all duration-[450ms] ease-in-out ${stage === 6 ? 'scale-[1.035] brightness-125' : 'scale-100'}`}
         style={{ 
           transform: stage === 7 ? 'scale(1.08)' : undefined,
           opacity: stage === 7 ? 0 : 1,
           willChange: 'transform, opacity'
         }}
       >
-        {/* COROA */}
-        <div 
-          className={animationClass}
-          style={stage >= 1 ? visibleStyle : hiddenStyle}
-        >
-          <img 
-            src={crownAsset.url} 
-            alt="Crown" 
-            className="w-full h-auto object-contain"
-          />
-        </div>
+        {/* CONTAINER DA LOGO COMPLETA */}
+        <div className="flex flex-col items-center gap-1 md:gap-2">
+          
+          {/* COROA (Sempre no topo após aparecer) */}
+          <div 
+            className={animationBaseClass}
+            style={stage >= 1 ? visibleStyle : hiddenStyle}
+          >
+            <img 
+              src={crownAsset.url} 
+              alt="Crown" 
+              className="w-[200px] md:w-[400px] h-auto object-contain"
+            />
+          </div>
 
-        {/* DIGITS - Centralizados, aparecendo um por vez no mesmo local/tamanho conforme pedido */}
-        {/* Nota: Se o usuário quiser que eles formem "064" juntos no final, 
-            precisaríamos de layouts diferentes. Mas "centralisados no mesmo tamanho" 
-            geralmente implica um por um no centro. */}
-        <div 
-          className={animationClass}
-          style={stage === 2 ? visibleStyle : hiddenStyle}
-        >
-          <img 
-            src={digit0.url} 
-            alt="0" 
-            className="w-[60%] h-auto object-contain"
-          />
-        </div>
+          {/* ÁREA DOS NÚMEROS (Abaixo da coroa) */}
+          <div className="relative w-[180px] h-[80px] md:w-[360px] md:h-[160px] flex items-center justify-center -mt-4 md:-mt-8">
+            <div 
+              className={`absolute inset-0 flex items-center justify-center ${animationBaseClass}`}
+              style={stage === 2 ? visibleStyle : hiddenStyle}
+            >
+              <img src={digit0.url} alt="0" className="h-full w-auto object-contain" />
+            </div>
+            <div 
+              className={`absolute inset-0 flex items-center justify-center ${animationBaseClass}`}
+              style={stage === 3 ? visibleStyle : hiddenStyle}
+            >
+              <img src={digit6.url} alt="6" className="h-full w-auto object-contain" />
+            </div>
+            <div 
+              className={`absolute inset-0 flex items-center justify-center ${animationBaseClass}`}
+              style={stage >= 4 ? visibleStyle : hiddenStyle}
+            >
+              <img src={digit4.url} alt="4" className="h-full w-auto object-contain" />
+            </div>
+          </div>
 
-        <div 
-          className={animationClass}
-          style={stage === 3 ? visibleStyle : hiddenStyle}
-        >
-          <img 
-            src={digit6.url} 
-            alt="6" 
-            className="w-[60%] h-auto object-contain"
-          />
-        </div>
+          {/* TALENTS (Abaixo dos números) */}
+          <div 
+            className={`${animationBaseClass} -mt-2 md:-mt-4`}
+            style={stage >= 5 ? visibleStyle : hiddenStyle}
+          >
+            <img 
+              src={talentsText.url} 
+              alt="Talents" 
+              className="w-[200px] md:w-[400px] h-auto object-contain"
+            />
+          </div>
 
-        <div 
-          className={animationClass}
-          style={stage === 4 ? visibleStyle : hiddenStyle}
-        >
-          <img 
-            src={digit4.url} 
-            alt="4" 
-            className="w-[60%] h-auto object-contain"
-          />
-        </div>
-
-        {/* TALENTS */}
-        <div 
-          className={animationClass}
-          style={stage >= 5 ? visibleStyle : hiddenStyle}
-        >
-          <img 
-            src={talentsText.url} 
-            alt="Talents" 
-            className="w-full h-auto object-contain mt-32 md:mt-64"
-          />
         </div>
       </div>
 
