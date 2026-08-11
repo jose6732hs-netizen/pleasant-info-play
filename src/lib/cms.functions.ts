@@ -58,6 +58,15 @@ export const submitBookingRequest = createServerFn({ method: "POST" })
     message: z.string().optional(),
   }).parse(data))
   .handler(async ({ data }) => {
+    // In a real scenario, this would check the calendar
     console.log("Booking request received:", data);
-    return { success: true };
+    
+    // We can import checkAvailability but since this is a server function calling another, 
+    // we would usually call the internal logic directly.
+    
+    return { 
+      success: true, 
+      status: 'NOVA',
+      message: "Solicitação recebida com sucesso. Nossa equipe analisará a disponibilidade."
+    };
   });
