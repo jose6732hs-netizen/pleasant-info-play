@@ -13,6 +13,7 @@ function AdminContent() {
           <a href="/admin" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm">Dashboard</a>
           <a href="/admin/artistas" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm">Artistas</a>
           <a href="/admin/agenda" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm">Agenda</a>
+          <a href="/admin/contratos" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm">Contratos</a>
           <a href="/admin/servicos" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm">Serviços</a>
           <a href="/admin/conteudo" className="p-3 bg-white/10 text-white transition rounded-sm font-bold">Conteúdo</a>
           <a href="/admin/solicitacoes" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm">Solicitações</a>

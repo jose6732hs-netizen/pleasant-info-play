@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useSuspenseQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getBookingRequests, updateBookingRequestStatus } from "@/lib/admin.functions";
+import { generateContractFromProposal } from "@/lib/contracts.functions";
 import { getActiveArtists } from "@/lib/cms.functions";
 import { format, parseISO } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -52,6 +53,16 @@ function AdminBookings() {
       toast.success("Status atualizado!");
       setSelectedRequest(null);
     }
+  });
+
+  const contractMutation = useMutation({
+    mutationFn: (variables: any) => generateContractFromProposal({ data: variables }),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["contracts"] });
+      toast.success("Contrato gerado com sucesso!");
+      // Could redirect to contract details
+    },
+    onError: () => toast.error("Erro ao gerar contrato")
   });
 
   const filteredRequests = requests?.filter((r: any) => 
@@ -237,10 +248,24 @@ function AdminBookings() {
 
                 <div className="flex gap-4 pt-4">
                   <button 
-                    onClick={() => statusMutation.mutate({ id: selectedRequest.id, status: 'PROPOSTA_ENVIADA' })}
+                    onClick={() => {
+                      contractMutation.mutate({
+                        booking_id: selectedRequest.id,
+                        artist_id: selectedRequest.artist_id,
+                        artist_name: getArtistName(selectedRequest.artist_id),
+                        contractor_name: selectedRequest.name,
+                        event_name: selectedRequest.name, // Fallback to contractor name if not specified
+                        event_date: selectedRequest.event_date || new Date().toISOString(),
+                        city: "A definir",
+                        state: "GO",
+                        total_value: Number(proposalData.cache) + Number(proposalData.despesas),
+                        payment_conditions: `Cachê: ${proposalData.cache}, Comissão: ${proposalData.comissao}%, Despesas: ${proposalData.despesas}`
+                      });
+                    }}
+                    disabled={contractMutation.isPending}
                     className="flex-1 bg-white text-black py-3 text-[10px] font-bold uppercase tracking-widest rounded-sm hover:bg-neutral-200 transition flex items-center justify-center gap-2"
                   >
-                    <Send className="w-3 h-3" /> Gerar Proposta PDF
+                    <FileText className="w-3 h-3" /> {contractMutation.isPending ? "Gerando..." : "Gerar Contrato"}
                   </button>
                   <button 
                     onClick={() => statusMutation.mutate({ id: selectedRequest.id, status: 'CONFIRMADA' })}
