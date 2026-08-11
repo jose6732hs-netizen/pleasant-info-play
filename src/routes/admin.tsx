@@ -32,14 +32,15 @@ function AdminLayout() {
                 </div>
             </header>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {[
-                    { label: "Artistas Cadastrados", value: "01", sub: "Total de talentos" },
-                    { label: "Artistas Ativos", value: "01", sub: "Aparecendo no site" },
-                    { label: "Solicitações", value: "00", sub: "Novos contatos" }
+                    { label: "Shows Confirmados", value: "01", sub: "Próximos eventos" },
+                    { label: "Pré-Reservas", value: "00", sub: "Aguardando confirmação" },
+                    { label: "Novas Solicitações", value: "00", sub: "Pendentes de análise" },
+                    { label: "Em Negociação", value: "00", sub: "Propostas enviadas" }
                 ].map((stat, i) => (
-                    <div key={i} className="p-8 border border-white/5 bg-neutral-900/50 rounded-sm">
-                        <div className="text-neutral-500 text-xs uppercase tracking-widest mb-4">{stat.label}</div>
+                    <div key={i} className="p-8 border border-white/5 bg-neutral-900/50 rounded-sm hover:bg-neutral-900 transition">
+                        <div className="text-neutral-500 text-[9px] uppercase tracking-widest mb-4 font-bold">{stat.label}</div>
                         <div className="text-5xl font-black tracking-tighter mb-2">{stat.value}</div>
                         <div className="text-[10px] text-neutral-600 uppercase tracking-widest">{stat.sub}</div>
                     </div>
