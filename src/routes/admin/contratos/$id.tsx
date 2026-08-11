@@ -54,7 +54,7 @@ function ContractDetails() {
     queryFn: () => getActiveArtists(),
   });
 
-  const [editData, setEditData] = useState(contract);
+  const [editData, setEditData] = useState<any>(contract);
 
   const saveMutation = useMutation({
     mutationFn: (updates: any) => updateContract({ data: { id, updates } }),
