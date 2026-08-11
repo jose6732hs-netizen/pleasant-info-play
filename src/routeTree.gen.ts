@@ -15,6 +15,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AdminArtistasRouteImport } from './routes/admin/artistas'
 import { Route as AdminConfiguracoesRouteImport } from './routes/admin/configuracoes'
 import { Route as AdminConteudoRouteImport } from './routes/admin/conteudo'
+import { Route as AdminServicosRouteImport } from './routes/admin/servicos'
 import { Route as AdminSolicitacoesRouteImport } from './routes/admin/solicitacoes'
 
 const IndexRoute = IndexRouteImport.update({
@@ -47,6 +48,11 @@ const AdminConteudoRoute = AdminConteudoRouteImport.update({
   path: '/conteudo',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminServicosRoute = AdminServicosRouteImport.update({
+  id: '/servicos',
+  path: '/servicos',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminSolicitacoesRoute = AdminSolicitacoesRouteImport.update({
   id: '/solicitacoes',
   path: '/solicitacoes',
@@ -60,6 +66,7 @@ export interface FileRoutesByFullPath {
   '/admin/artistas': typeof AdminArtistasRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/conteudo': typeof AdminConteudoRoute
+  '/admin/servicos': typeof AdminServicosRoute
   '/admin/solicitacoes': typeof AdminSolicitacoesRoute
 }
 export interface FileRoutesByTo {
@@ -69,6 +76,7 @@ export interface FileRoutesByTo {
   '/admin/artistas': typeof AdminArtistasRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/conteudo': typeof AdminConteudoRoute
+  '/admin/servicos': typeof AdminServicosRoute
   '/admin/solicitacoes': typeof AdminSolicitacoesRoute
 }
 export interface FileRoutesById {
@@ -79,6 +87,7 @@ export interface FileRoutesById {
   '/admin/artistas': typeof AdminArtistasRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/conteudo': typeof AdminConteudoRoute
+  '/admin/servicos': typeof AdminServicosRoute
   '/admin/solicitacoes': typeof AdminSolicitacoesRoute
 }
 export interface FileRouteTypes {
@@ -90,6 +99,7 @@ export interface FileRouteTypes {
     | '/admin/artistas'
     | '/admin/configuracoes'
     | '/admin/conteudo'
+    | '/admin/servicos'
     | '/admin/solicitacoes'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -99,6 +109,7 @@ export interface FileRouteTypes {
     | '/admin/artistas'
     | '/admin/configuracoes'
     | '/admin/conteudo'
+    | '/admin/servicos'
     | '/admin/solicitacoes'
   id:
     | '__root__'
@@ -108,6 +119,7 @@ export interface FileRouteTypes {
     | '/admin/artistas'
     | '/admin/configuracoes'
     | '/admin/conteudo'
+    | '/admin/servicos'
     | '/admin/solicitacoes'
   fileRoutesById: FileRoutesById
 }
@@ -161,6 +173,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminConteudoRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/servicos': {
+      id: '/admin/servicos'
+      path: '/servicos'
+      fullPath: '/admin/servicos'
+      preLoaderRoute: typeof AdminServicosRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/solicitacoes': {
       id: '/admin/solicitacoes'
       path: '/solicitacoes'
@@ -175,6 +194,7 @@ interface AdminRouteChildren {
   AdminArtistasRoute: typeof AdminArtistasRoute
   AdminConfiguracoesRoute: typeof AdminConfiguracoesRoute
   AdminConteudoRoute: typeof AdminConteudoRoute
+  AdminServicosRoute: typeof AdminServicosRoute
   AdminSolicitacoesRoute: typeof AdminSolicitacoesRoute
 }
 
@@ -182,6 +202,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminArtistasRoute: AdminArtistasRoute,
   AdminConfiguracoesRoute: AdminConfiguracoesRoute,
   AdminConteudoRoute: AdminConteudoRoute,
+  AdminServicosRoute: AdminServicosRoute,
   AdminSolicitacoesRoute: AdminSolicitacoesRoute,
 }
 
