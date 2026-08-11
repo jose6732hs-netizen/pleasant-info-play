@@ -2,9 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { ArrowDown, Instagram, Mail, Phone, Users, Calendar, Award, Star, X } from "lucide-react";
 import { getSiteContent, getActiveArtists, submitBookingRequest } from "@/lib/cms.functions";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
+import { IntroAnimation } from "@/components/IntroAnimation";
 
 export const Route = createFileRoute("/")({
   loader: async ({ context }) => {
@@ -32,6 +33,20 @@ function Index() {
     queryKey: ["active-artists"],
     queryFn: () => getActiveArtists(),
   });
+
+  const [showIntro, setShowIntro] = useState(false);
+  
+  useEffect(() => {
+    const hasSeenIntro = sessionStorage.getItem("hasSeen064Intro");
+    if (!hasSeenIntro) {
+      setShowIntro(true);
+    }
+  }, []);
+
+  const handleIntroComplete = () => {
+    sessionStorage.setItem("hasSeen064Intro", "true");
+    setShowIntro(false);
+  };
 
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [bookingForm, setBookingForm] = useState({
@@ -65,6 +80,8 @@ function Index() {
 
   return (
     <div className="min-h-screen bg-neutral-950 text-white selection:bg-white selection:text-black">
+      {showIntro && <IntroAnimation onComplete={handleIntroComplete} />}
+
       {/* Header */}
       <header className="fixed w-full p-6 flex justify-between items-center z-50 backdrop-blur-md bg-neutral-950/80 border-b border-white/5">
         <div className="text-2xl font-bold tracking-tighter">064 TALENTS</div>
