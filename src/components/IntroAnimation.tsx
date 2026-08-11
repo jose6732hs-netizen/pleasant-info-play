@@ -1,35 +1,53 @@
 import { useEffect, useState } from "react";
-import logo064 from "@/assets/logo-064.png.asset.json";
+import crownAsset from "@/assets/logo-crown.png.asset.json";
+import digit0 from "@/assets/digit-0.png.asset.json";
+import digit6 from "@/assets/digit-6.png.asset.json";
+import digit4 from "@/assets/digit-4.png.asset.json";
 import talentsText from "@/assets/talents-text.png.asset.json";
 
 export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
-  const [stage, setStage] = useState(0); // 0: Start, 1: Logo 064, 2: Talents, 3: Pulse, 4: Transition
+  // Stages: 
+  // 0: Start
+  // 1: Coroa (Crown)
+  // 2: Digit 0
+  // 3: Digit 6
+  // 4: Digit 4
+  // 5: Talents
+  // 6: Pulse
+  // 7: Transition to site
+  const [stage, setStage] = useState(0); 
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
-    // Stage 1: Logo 064 starts at 0.10s
+    // 0.1s: Coroa
     const t1 = setTimeout(() => setStage(1), 100);
     
-    // Stage 2: Talents starts at 1.30s
-    const t2 = setTimeout(() => setStage(2), 1300);
+    // 1.1s: Digit 0 (1s after crown)
+    const t2 = setTimeout(() => setStage(2), 1100);
     
-    // Stage 3: Pulse starts at 2.50s
-    const t3 = setTimeout(() => setStage(3), 2500);
+    // 1.6s: Digit 6
+    const t3 = setTimeout(() => setStage(3), 1600);
     
-    // Stage 4: Transition starts at 3.10s
-    const t4 = setTimeout(() => {
-      setStage(4);
+    // 2.1s: Digit 4
+    const t4 = setTimeout(() => setStage(4), 2100);
+
+    // 2.7s: Talents (after digits)
+    const t5 = setTimeout(() => setStage(5), 2700);
+    
+    // 3.8s: Pulse
+    const t6 = setTimeout(() => setStage(6), 3800);
+    
+    // 4.4s: Start Transition
+    const t7 = setTimeout(() => {
+      setStage(7);
       setTimeout(() => {
         setIsVisible(false);
         onComplete();
-      }, 800); // Duration of Stage 4 transition
-    }, 3100);
+      }, 800);
+    }, 4400);
 
     return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-      clearTimeout(t3);
-      clearTimeout(t4);
+      [t1, t2, t3, t4, t5, t6, t7].forEach(clearTimeout);
     };
   }, [onComplete]);
 
@@ -40,48 +58,81 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
     onComplete();
   };
 
+  const animationClass = "transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] absolute inset-0 flex items-center justify-center";
+  const hiddenStyle = { opacity: 0, transform: 'translateY(80px) scale(0.96)' };
+  const visibleStyle = { opacity: 1, transform: 'translateY(0) scale(1)' };
+
   return (
     <div 
-      className={`fixed inset-0 z-[999] bg-black flex items-center justify-center transition-opacity duration-700 ease-in-out ${stage === 4 ? 'opacity-0' : 'opacity-100'}`}
-      style={{ pointerEvents: stage === 4 ? 'none' : 'auto' }}
+      className={`fixed inset-0 z-[999] bg-black flex items-center justify-center transition-opacity duration-700 ease-in-out ${stage === 7 ? 'opacity-0' : 'opacity-100'}`}
+      style={{ pointerEvents: stage === 7 ? 'none' : 'auto' }}
     >
       <div 
-        className={`relative flex flex-col items-center justify-center transition-all duration-[450ms] ease-in-out ${stage === 3 ? 'scale-[1.035] brightness-125' : 'scale-100'}`}
+        className={`relative w-[300px] h-[300px] md:w-[600px] md:h-[600px] flex items-center justify-center transition-all duration-[450ms] ease-in-out ${stage === 6 ? 'scale-[1.035] brightness-125' : 'scale-100'}`}
         style={{ 
-          transform: stage === 4 ? 'scale(1.08)' : undefined,
-          opacity: stage === 4 ? 0 : 1,
+          transform: stage === 7 ? 'scale(1.08)' : undefined,
+          opacity: stage === 7 ? 0 : 1,
           willChange: 'transform, opacity'
         }}
       >
-        {/* IMAGEM 1: Logo 064 */}
+        {/* COROA */}
         <div 
-          className="transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
-          style={{ 
-            opacity: stage >= 1 ? 1 : 0,
-            transform: stage >= 1 ? 'translateY(0) scale(1)' : 'translateY(120px) scale(0.96)',
-            willChange: 'transform, opacity'
-          }}
+          className={animationClass}
+          style={stage >= 1 ? visibleStyle : hiddenStyle}
         >
           <img 
-            src={logo064.url} 
-            alt="064 Logo" 
-            className="w-[280px] md:w-[450px] h-auto object-contain"
+            src={crownAsset.url} 
+            alt="Crown" 
+            className="w-full h-auto object-contain"
           />
         </div>
 
-        {/* IMAGEM 2: TALENTS Text */}
+        {/* DIGITS - Centralizados, aparecendo um por vez no mesmo local/tamanho conforme pedido */}
+        {/* Nota: Se o usuário quiser que eles formem "064" juntos no final, 
+            precisaríamos de layouts diferentes. Mas "centralisados no mesmo tamanho" 
+            geralmente implica um por um no centro. */}
         <div 
-          className="transition-all duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] -mt-4 md:-mt-8"
-          style={{ 
-            opacity: stage >= 2 ? 1 : 0,
-            transform: stage >= 2 ? 'translateY(0) scale(1)' : 'translateY(120px) scale(0.96)',
-            willChange: 'transform, opacity'
-          }}
+          className={animationClass}
+          style={stage === 2 ? visibleStyle : hiddenStyle}
+        >
+          <img 
+            src={digit0.url} 
+            alt="0" 
+            className="w-[60%] h-auto object-contain"
+          />
+        </div>
+
+        <div 
+          className={animationClass}
+          style={stage === 3 ? visibleStyle : hiddenStyle}
+        >
+          <img 
+            src={digit6.url} 
+            alt="6" 
+            className="w-[60%] h-auto object-contain"
+          />
+        </div>
+
+        <div 
+          className={animationClass}
+          style={stage === 4 ? visibleStyle : hiddenStyle}
+        >
+          <img 
+            src={digit4.url} 
+            alt="4" 
+            className="w-[60%] h-auto object-contain"
+          />
+        </div>
+
+        {/* TALENTS */}
+        <div 
+          className={animationClass}
+          style={stage >= 5 ? visibleStyle : hiddenStyle}
         >
           <img 
             src={talentsText.url} 
             alt="Talents" 
-            className="w-[280px] md:w-[450px] h-auto object-contain"
+            className="w-full h-auto object-contain mt-32 md:mt-64"
           />
         </div>
       </div>
