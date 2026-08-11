@@ -19,6 +19,9 @@ import { Route as AdminConteudoRouteImport } from './routes/admin/conteudo'
 import { Route as AdminServicosRouteImport } from './routes/admin/servicos'
 import { Route as AdminSolicitacoesRouteImport } from './routes/admin/solicitacoes'
 import { Route as ArtistasSlugRouteImport } from './routes/artistas/$slug'
+import { Route as AdminContratosIndexRouteImport } from './routes/admin/contratos/index'
+import { Route as AdminContratosIdRouteImport } from './routes/admin/contratos/$id'
+import { Route as AdminContratosIdVisualizarRouteImport } from './routes/admin/contratos/$id.visualizar'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -70,6 +73,22 @@ const ArtistasSlugRoute = ArtistasSlugRouteImport.update({
   path: '/artistas/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminContratosIndexRoute = AdminContratosIndexRouteImport.update({
+  id: '/contratos/',
+  path: '/contratos/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminContratosIdRoute = AdminContratosIdRouteImport.update({
+  id: '/contratos/$id',
+  path: '/contratos/$id',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminContratosIdVisualizarRoute =
+  AdminContratosIdVisualizarRouteImport.update({
+    id: '/visualizar',
+    path: '/visualizar',
+    getParentRoute: () => AdminContratosIdRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -82,6 +101,9 @@ export interface FileRoutesByFullPath {
   '/admin/servicos': typeof AdminServicosRoute
   '/admin/solicitacoes': typeof AdminSolicitacoesRoute
   '/artistas/$slug': typeof ArtistasSlugRoute
+  '/admin/contratos/$id': typeof AdminContratosIdRouteWithChildren
+  '/admin/contratos/': typeof AdminContratosIndexRoute
+  '/admin/contratos/$id/visualizar': typeof AdminContratosIdVisualizarRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -94,6 +116,9 @@ export interface FileRoutesByTo {
   '/admin/servicos': typeof AdminServicosRoute
   '/admin/solicitacoes': typeof AdminSolicitacoesRoute
   '/artistas/$slug': typeof ArtistasSlugRoute
+  '/admin/contratos/$id': typeof AdminContratosIdRouteWithChildren
+  '/admin/contratos': typeof AdminContratosIndexRoute
+  '/admin/contratos/$id/visualizar': typeof AdminContratosIdVisualizarRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -107,6 +132,9 @@ export interface FileRoutesById {
   '/admin/servicos': typeof AdminServicosRoute
   '/admin/solicitacoes': typeof AdminSolicitacoesRoute
   '/artistas/$slug': typeof ArtistasSlugRoute
+  '/admin/contratos/$id': typeof AdminContratosIdRouteWithChildren
+  '/admin/contratos/': typeof AdminContratosIndexRoute
+  '/admin/contratos/$id/visualizar': typeof AdminContratosIdVisualizarRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -121,6 +149,9 @@ export interface FileRouteTypes {
     | '/admin/servicos'
     | '/admin/solicitacoes'
     | '/artistas/$slug'
+    | '/admin/contratos/$id'
+    | '/admin/contratos/'
+    | '/admin/contratos/$id/visualizar'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -133,6 +164,9 @@ export interface FileRouteTypes {
     | '/admin/servicos'
     | '/admin/solicitacoes'
     | '/artistas/$slug'
+    | '/admin/contratos/$id'
+    | '/admin/contratos'
+    | '/admin/contratos/$id/visualizar'
   id:
     | '__root__'
     | '/'
@@ -145,6 +179,9 @@ export interface FileRouteTypes {
     | '/admin/servicos'
     | '/admin/solicitacoes'
     | '/artistas/$slug'
+    | '/admin/contratos/$id'
+    | '/admin/contratos/'
+    | '/admin/contratos/$id/visualizar'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -226,8 +263,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ArtistasSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/contratos/': {
+      id: '/admin/contratos/'
+      path: '/contratos'
+      fullPath: '/admin/contratos/'
+      preLoaderRoute: typeof AdminContratosIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/contratos/$id': {
+      id: '/admin/contratos/$id'
+      path: '/contratos/$id'
+      fullPath: '/admin/contratos/$id'
+      preLoaderRoute: typeof AdminContratosIdRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/contratos/$id/visualizar': {
+      id: '/admin/contratos/$id/visualizar'
+      path: '/visualizar'
+      fullPath: '/admin/contratos/$id/visualizar'
+      preLoaderRoute: typeof AdminContratosIdVisualizarRouteImport
+      parentRoute: typeof AdminContratosIdRoute
+    }
   }
 }
+
+interface AdminContratosIdRouteChildren {
+  AdminContratosIdVisualizarRoute: typeof AdminContratosIdVisualizarRoute
+}
+
+const AdminContratosIdRouteChildren: AdminContratosIdRouteChildren = {
+  AdminContratosIdVisualizarRoute: AdminContratosIdVisualizarRoute,
+}
+
+const AdminContratosIdRouteWithChildren =
+  AdminContratosIdRoute._addFileChildren(AdminContratosIdRouteChildren)
 
 interface AdminRouteChildren {
   AdminAgendaRoute: typeof AdminAgendaRoute
@@ -236,6 +305,8 @@ interface AdminRouteChildren {
   AdminConteudoRoute: typeof AdminConteudoRoute
   AdminServicosRoute: typeof AdminServicosRoute
   AdminSolicitacoesRoute: typeof AdminSolicitacoesRoute
+  AdminContratosIdRoute: typeof AdminContratosIdRouteWithChildren
+  AdminContratosIndexRoute: typeof AdminContratosIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
@@ -245,6 +316,8 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminConteudoRoute: AdminConteudoRoute,
   AdminServicosRoute: AdminServicosRoute,
   AdminSolicitacoesRoute: AdminSolicitacoesRoute,
+  AdminContratosIdRoute: AdminContratosIdRouteWithChildren,
+  AdminContratosIndexRoute: AdminContratosIndexRoute,
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
