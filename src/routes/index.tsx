@@ -1,6 +1,6 @@
 // src/routes/index.tsx
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowDown } from "lucide-react";
+import { ArrowDown, Instagram, Mail, Phone } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -8,9 +8,9 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <div className="min-h-screen bg-black text-white selection:bg-white selection:text-black">
+    <div className="min-h-screen bg-neutral-950 text-white selection:bg-white selection:text-black">
       {/* Header */}
-      <header className="fixed w-full p-6 flex justify-between items-center z-50 backdrop-blur-sm bg-black/50 border-b border-white/10">
+      <header className="fixed w-full p-6 flex justify-between items-center z-50 backdrop-blur-md bg-neutral-950/80 border-b border-white/5">
         <div className="text-2xl font-bold tracking-tighter">064 TALENTS</div>
         <nav className="hidden md:flex gap-8 text-xs font-semibold uppercase tracking-widest text-neutral-400">
           <a href="#inicio" className="hover:text-white transition">Início</a>
@@ -31,9 +31,9 @@ function Index() {
             <img 
               src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=2574&auto=format&fit=crop"
               alt="CROWD"
-              className="w-full h-full object-cover opacity-40"
+              className="w-full h-full object-cover opacity-30"
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-neutral-950/60 via-neutral-950/20 to-neutral-950"></div>
           </div>
           
           <div className="relative z-10 space-y-6">
@@ -62,25 +62,60 @@ function Index() {
         </section>
 
         {/* About Section */}
-        <section id="sobre" className="py-24 px-6 md:px-20 bg-neutral-950">
+        <section id="sobre" className="py-24 px-6 md:px-20 bg-neutral-900/30">
           <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-16 items-center">
             <div className="space-y-6">
-              <h2 className="text-4xl md:text-5xl font-bold tracking-tighter">
+              <h2 className="text-4xl md:text-5xl font-bold tracking-tighter leading-tight">
                 MAIS DO QUE BOOKING.<br />
                 <span className="text-neutral-500">CONEXÕES QUE MOVIMENTAM O MERCADO.</span>
               </h2>
-              <p className="text-neutral-400 leading-relaxed">
+              <p className="text-neutral-400 leading-relaxed text-lg">
                 A 064 TALENTS é uma empresa de Artist Booking & Entertainment criada em Goiás com o propósito de conectar talentos a grandes oportunidades.
               </p>
               <p className="text-2xl font-bold uppercase italic tracking-wider text-white">
                 DO GOIÁS PRO MUNDO.
               </p>
             </div>
-            <div className="aspect-square bg-neutral-800 rounded-lg overflow-hidden">
-               <img src="https://images.unsplash.com/photo-1547478011-8a30602558a3?q=80&w=1500&auto=format&fit=crop" alt="Stage" className="w-full h-full object-cover" />
+            <div className="aspect-[4/5] bg-neutral-800 rounded-sm overflow-hidden shadow-2xl">
+               <img src="https://images.unsplash.com/photo-1547478011-8a30602558a3?q=80&w=1500&auto=format&fit=crop" alt="Stage" className="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700" />
             </div>
           </div>
         </section>
+
+        {/* Services Section */}
+        <section id="servicos" className="py-24 px-6 md:px-20 bg-neutral-950">
+           <div className="max-w-6xl mx-auto">
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tighter mb-16 text-center">
+                O TALENTO É DO ARTISTA.<br />
+                <span className="text-neutral-600">A CONEXÃO É NOSSA.</span>
+              </h2>
+              <div className="grid md:grid-cols-4 gap-6">
+                 {[
+                   "Booking Artístico", "Representação Artística", "Gestão de Agenda", "Negociação Comercial",
+                   "Produção Artística", "Curadoria Artística", "Eventos & Projetos", "Parcerias Comerciais"
+                 ].map((service, i) => (
+                   <div key={i} className="p-8 border border-white/5 bg-neutral-900/50 hover:bg-neutral-800/50 transition cursor-default">
+                      <h3 className="font-bold tracking-tight mb-2 text-neutral-200">{service}</h3>
+                      <p className="text-xs text-neutral-500 leading-relaxed">
+                        Intermediação profissional entre artista e contratante, garantindo segurança e resultados.
+                      </p>
+                   </div>
+                 ))}
+              </div>
+           </div>
+        </section>
+
+        {/* Footer */}
+        <footer className="py-12 border-t border-white/5 bg-neutral-950 text-center">
+            <div className="text-2xl font-bold tracking-tighter mb-4">064 TALENTS</div>
+            <p className="text-xs text-neutral-600 uppercase tracking-widest mb-8">Representando talentos. Criando conexões. Do Goiás pro mundo.</p>
+            <div className="flex justify-center gap-6 mb-8">
+                <a href="#" className="text-neutral-500 hover:text-white"><Instagram /></a>
+                <a href="#" className="text-neutral-500 hover:text-white"><Mail /></a>
+                <a href="#" className="text-neutral-500 hover:text-white"><Phone /></a>
+            </div>
+            <p className="text-[10px] text-neutral-700 uppercase tracking-widest">© 2026 064 TALENTS. Todos os direitos reservados.</p>
+        </footer>
       </main>
     </div>
   );
