@@ -1,6 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useSuspenseQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getContractById, updateContract, manageInstallments, addHistoryEntry } from "@/lib/contracts.functions";
+import { getActiveArtists } from "@/lib/cms.functions";
 import { format, parseISO } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { useState } from "react";

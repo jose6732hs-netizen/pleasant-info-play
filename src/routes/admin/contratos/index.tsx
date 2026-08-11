@@ -66,9 +66,12 @@ function AdminContracts() {
           <Link to="/admin/contratos" className="p-3 bg-white/10 text-white transition rounded-sm font-bold flex items-center gap-3">
             <FileCheck className="w-4 h-4" /> Contratos
           </Link>
-          <Link to="/admin/solicitacoes" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
+          <a href="/admin/conteudo" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
+            <LayoutDashboard className="w-4 h-4" /> Conteúdo
+          </a>
+          <a href="/admin/solicitacoes" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
             <FileText className="w-4 h-4" /> Solicitações
-          </Link>
+          </a>
           <Link to="/admin/servicos" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
             <Briefcase className="w-4 h-4" /> Serviços
           </Link>
