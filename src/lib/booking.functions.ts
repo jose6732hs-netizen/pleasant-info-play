@@ -42,14 +42,12 @@ export const getArtistCalendar = createServerFn({ method: "GET" })
     end_date: z.string().optional()
   }).parse(data))
   .handler(async ({ data }) => {
-    // In a real app, query database with filters
     return mockEvents.filter(e => e.artist_id === data.artist_id);
   });
 
 export const addCalendarEvent = createServerFn({ method: "POST" })
   .validator((data: unknown) => CalendarEventSchema.parse(data))
   .handler(async ({ data }) => {
-    // CHECK CONFLIT
     const conflict = mockEvents.find(e => 
       e.artist_id === data.artist_id && 
       e.status === 'CONFIRMADO' &&
@@ -66,10 +64,35 @@ export const addCalendarEvent = createServerFn({ method: "POST" })
     return { success: true, event: newEvent };
   });
 
+export const getBookingProposals = createServerFn({ method: "GET" })
+  .handler(async () => {
+    return []; // Mock
+  });
+
+export const createBookingProposal = createServerFn({ method: "POST" })
+  .validator((data: unknown) => z.object({
+    artist_id: z.string(),
+    contractor_name: z.string(),
+    event_name: z.string(),
+    date: z.string(),
+    city: z.string(),
+    cache_value: z.number(),
+    commission_fee: z.number(),
+    expenses: z.number(),
+    total_value: z.number(),
+    payment_conditions: z.string(),
+    notes: z.string().optional()
+  }).parse(data))
+  .handler(async ({ data }) => {
+    console.log("Proposal created:", data);
+    return { success: true };
+  });
+
 export const updateCalendarEventStatus = createServerFn({ method: "POST" })
   .validator((data: unknown) => z.object({
     id: z.string(),
-    status: z.enum(['DISPONÍVEL', 'PRÉ-RESERVA', 'CONFIRMADO', 'INDISPONÍVEL', 'CANCELADO'])
+    status: z.enum(['DISPONÍVEL', 'PRÉ-RESERVA', 'CONFIRMADO', 'INDISPONÍVEL', 'CANCELADO']),
+    expiration_date: z.string().optional() // For pre-reservations
   }).parse(data))
   .handler(async ({ data }) => {
     mockEvents = mockEvents.map(e => e.id === data.id ? { ...e, status: data.status } : e);
@@ -79,7 +102,7 @@ export const updateCalendarEventStatus = createServerFn({ method: "POST" })
 export const checkAvailability = createServerFn({ method: "GET" })
   .validator((data: unknown) => z.object({
     artist_id: z.string(),
-    date: z.string() // ISO String (just the date part usually)
+    date: z.string() 
   }).parse(data))
   .handler(async ({ data }) => {
     const targetDate = new Date(data.date).toDateString();
