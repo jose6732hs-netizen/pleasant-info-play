@@ -1,13 +1,22 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getActiveArtists } from "@/lib/cms.functions";
+import { getArtistCalendar } from "@/lib/booking.functions";
+import { format, isAfter, parseISO } from "date-fns";
+import { ptBR } from "date-fns/locale";
 
 export const Route = createFileRoute("/artistas/$slug")({
   loader: async ({ context, params }) => {
-    await context.queryClient.ensureQueryData({
-      queryKey: ["active-artists"],
-      queryFn: () => getActiveArtists(),
-    });
+    await Promise.all([
+      context.queryClient.ensureQueryData({
+        queryKey: ["active-artists"],
+        queryFn: () => getActiveArtists(),
+      }),
+      context.queryClient.ensureQueryData({
+        queryKey: ["calendar-events", params.slug],
+        queryFn: () => getArtistCalendar({ data: { artist_id: params.slug } }),
+      }),
+    ]);
   },
   component: ArtistDetail,
 });
@@ -19,7 +28,17 @@ function ArtistDetail() {
     queryFn: () => getActiveArtists(),
   });
 
+  const { data: events } = useSuspenseQuery({
+    queryKey: ["calendar-events", slug],
+    queryFn: () => getArtistCalendar({ data: { artist_id: slug } }),
+  });
+
   const artist = artists?.find((a: any) => a.slug === slug || a.id === slug) as any;
+
+  const upcomingEvents = events
+    ?.filter(e => e.status === 'CONFIRMADO' && isAfter(parseISO(e.start_time), new Date()))
+    .sort((a, b) => parseISO(a.start_time).getTime() - parseISO(b.start_time).getTime())
+    .slice(0, 5);
 
   if (!artist) {
     return (
@@ -76,6 +95,23 @@ function ArtistDetail() {
           </div>
           
           <div className="space-y-12">
+            {upcomingEvents && upcomingEvents.length > 0 && (
+              <div className="space-y-6">
+                 <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-neutral-500 border-b border-white/5 pb-4">Próximos Shows</h2>
+                 <div className="space-y-4">
+                   {upcomingEvents.map((event) => (
+                     <div key={event.id} className="group border-l border-white/10 pl-4 py-1 hover:border-white transition">
+                       <div className="text-[10px] text-neutral-500 font-bold uppercase tracking-widest">
+                         {format(parseISO(event.start_time), "dd 'de' MMMM", { locale: ptBR })}
+                       </div>
+                       <div className="text-sm font-bold uppercase tracking-tight group-hover:text-white transition">{event.city}, {event.state}</div>
+                       <div className="text-[9px] text-neutral-600 uppercase tracking-widest">{event.location}</div>
+                     </div>
+                   ))}
+                 </div>
+              </div>
+            )}
+            
             <div className="space-y-6">
                <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-neutral-500 border-b border-white/5 pb-4">Conecte-se</h2>
                <div className="flex flex-col gap-4 text-xs font-bold uppercase tracking-widest">
