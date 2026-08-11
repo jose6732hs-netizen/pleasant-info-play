@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AdminAgendaRouteImport } from './routes/admin/agenda'
 import { Route as AdminArtistasRouteImport } from './routes/admin/artistas'
 import { Route as AdminConfiguracoesRouteImport } from './routes/admin/configuracoes'
 import { Route as AdminConteudoRouteImport } from './routes/admin/conteudo'
@@ -33,6 +34,11 @@ const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AdminAgendaRoute = AdminAgendaRouteImport.update({
+  id: '/agenda',
+  path: '/agenda',
+  getParentRoute: () => AdminRoute,
 } as any)
 const AdminArtistasRoute = AdminArtistasRouteImport.update({
   id: '/artistas',
@@ -69,6 +75,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
+  '/admin/agenda': typeof AdminAgendaRoute
   '/admin/artistas': typeof AdminArtistasRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/conteudo': typeof AdminConteudoRoute
@@ -80,6 +87,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
+  '/admin/agenda': typeof AdminAgendaRoute
   '/admin/artistas': typeof AdminArtistasRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/conteudo': typeof AdminConteudoRoute
@@ -92,6 +100,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
+  '/admin/agenda': typeof AdminAgendaRoute
   '/admin/artistas': typeof AdminArtistasRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/conteudo': typeof AdminConteudoRoute
@@ -105,6 +114,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/auth'
+    | '/admin/agenda'
     | '/admin/artistas'
     | '/admin/configuracoes'
     | '/admin/conteudo'
@@ -116,6 +126,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/auth'
+    | '/admin/agenda'
     | '/admin/artistas'
     | '/admin/configuracoes'
     | '/admin/conteudo'
@@ -127,6 +138,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/auth'
+    | '/admin/agenda'
     | '/admin/artistas'
     | '/admin/configuracoes'
     | '/admin/conteudo'
@@ -164,6 +176,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/admin/agenda': {
+      id: '/admin/agenda'
+      path: '/agenda'
+      fullPath: '/admin/agenda'
+      preLoaderRoute: typeof AdminAgendaRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/admin/artistas': {
       id: '/admin/artistas'
@@ -211,6 +230,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AdminRouteChildren {
+  AdminAgendaRoute: typeof AdminAgendaRoute
   AdminArtistasRoute: typeof AdminArtistasRoute
   AdminConfiguracoesRoute: typeof AdminConfiguracoesRoute
   AdminConteudoRoute: typeof AdminConteudoRoute
@@ -219,6 +239,7 @@ interface AdminRouteChildren {
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminAgendaRoute: AdminAgendaRoute,
   AdminArtistasRoute: AdminArtistasRoute,
   AdminConfiguracoesRoute: AdminConfiguracoesRoute,
   AdminConteudoRoute: AdminConteudoRoute,
