@@ -236,12 +236,15 @@ function AdminBookings() {
                 </div>
 
                 <div className="flex gap-4 pt-4">
-                  <button 
-                    onClick={() => statusMutation.mutate({ id: selectedRequest.id, status: 'PROPOSTA_ENVIADA' })}
-                    className="flex-1 bg-white text-black py-3 text-[10px] font-bold uppercase tracking-widest rounded-sm hover:bg-neutral-200 transition flex items-center justify-center gap-2"
-                  >
-                    <Send className="w-3 h-3" /> Gerar Proposta PDF
-                  </button>
+                      <button 
+                        onClick={() => {
+                          # Need to call server function to generate contract here
+                          // ... implementation
+                        }}
+                        className="flex-1 bg-white text-black py-3 text-[10px] font-bold uppercase tracking-widest rounded-sm hover:bg-neutral-200 transition flex items-center justify-center gap-2"
+                      >
+                        <FileText className="w-3 h-3" /> Gerar Contrato
+                      </button>
                   <button 
                     onClick={() => statusMutation.mutate({ id: selectedRequest.id, status: 'CONFIRMADA' })}
                     className="flex-1 bg-green-600 text-white py-3 text-[10px] font-bold uppercase tracking-widest rounded-sm hover:bg-green-500 transition flex items-center justify-center gap-2"
