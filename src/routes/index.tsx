@@ -34,17 +34,9 @@ function Index() {
     queryFn: () => getActiveArtists(),
   });
 
-  const [showIntro, setShowIntro] = useState(false);
+  const [showIntro, setShowIntro] = useState(true);
   
-  useEffect(() => {
-    const hasSeenIntro = sessionStorage.getItem("hasSeen064Intro");
-    if (!hasSeenIntro) {
-      setShowIntro(true);
-    }
-  }, []);
-
   const handleIntroComplete = () => {
-    sessionStorage.setItem("hasSeen064Intro", "true");
     setShowIntro(false);
   };
 
