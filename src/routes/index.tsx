@@ -107,7 +107,7 @@ function Index() {
             {artists?.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {artists.map((artist: any) => (
-                  <div key={artist.id} className="group relative aspect-[3/4] overflow-hidden bg-neutral-900 rounded-sm">
+                  <a href={`/artistas/${artist.slug || artist.id}`} key={artist.id} className="group relative aspect-[3/4] overflow-hidden bg-neutral-900 rounded-sm block">
                     <img 
                       src={artist.photo_url || "https://images.unsplash.com/photo-1547478011-8a30602558a3?q=80&w=1500&auto=format&fit=crop"} 
                       alt={artist.name}

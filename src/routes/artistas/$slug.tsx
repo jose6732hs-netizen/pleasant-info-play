@@ -19,7 +19,7 @@ function ArtistDetail() {
     queryFn: () => getActiveArtists(),
   });
 
-  const artist = artists?.find((a: any) => a.slug === slug || a.id === slug);
+  const artist = artists?.find((a: any) => a.slug === slug || a.id === slug) as any;
 
   if (!artist) {
     return (

@@ -17,6 +17,7 @@ import { Route as AdminConfiguracoesRouteImport } from './routes/admin/configura
 import { Route as AdminConteudoRouteImport } from './routes/admin/conteudo'
 import { Route as AdminServicosRouteImport } from './routes/admin/servicos'
 import { Route as AdminSolicitacoesRouteImport } from './routes/admin/solicitacoes'
+import { Route as ArtistasSlugRouteImport } from './routes/artistas/$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -58,6 +59,11 @@ const AdminSolicitacoesRoute = AdminSolicitacoesRouteImport.update({
   path: '/solicitacoes',
   getParentRoute: () => AdminRoute,
 } as any)
+const ArtistasSlugRoute = ArtistasSlugRouteImport.update({
+  id: '/artistas/$slug',
+  path: '/artistas/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -68,6 +74,7 @@ export interface FileRoutesByFullPath {
   '/admin/conteudo': typeof AdminConteudoRoute
   '/admin/servicos': typeof AdminServicosRoute
   '/admin/solicitacoes': typeof AdminSolicitacoesRoute
+  '/artistas/$slug': typeof ArtistasSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -78,6 +85,7 @@ export interface FileRoutesByTo {
   '/admin/conteudo': typeof AdminConteudoRoute
   '/admin/servicos': typeof AdminServicosRoute
   '/admin/solicitacoes': typeof AdminSolicitacoesRoute
+  '/artistas/$slug': typeof ArtistasSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -89,6 +97,7 @@ export interface FileRoutesById {
   '/admin/conteudo': typeof AdminConteudoRoute
   '/admin/servicos': typeof AdminServicosRoute
   '/admin/solicitacoes': typeof AdminSolicitacoesRoute
+  '/artistas/$slug': typeof ArtistasSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -101,6 +110,7 @@ export interface FileRouteTypes {
     | '/admin/conteudo'
     | '/admin/servicos'
     | '/admin/solicitacoes'
+    | '/artistas/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -111,6 +121,7 @@ export interface FileRouteTypes {
     | '/admin/conteudo'
     | '/admin/servicos'
     | '/admin/solicitacoes'
+    | '/artistas/$slug'
   id:
     | '__root__'
     | '/'
@@ -121,12 +132,14 @@ export interface FileRouteTypes {
     | '/admin/conteudo'
     | '/admin/servicos'
     | '/admin/solicitacoes'
+    | '/artistas/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRouteWithChildren
   AuthRoute: typeof AuthRoute
+  ArtistasSlugRoute: typeof ArtistasSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -187,6 +200,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminSolicitacoesRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/artistas/$slug': {
+      id: '/artistas/$slug'
+      path: '/artistas/$slug'
+      fullPath: '/artistas/$slug'
+      preLoaderRoute: typeof ArtistasSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -212,6 +232,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
   AuthRoute: AuthRoute,
+  ArtistasSlugRoute: ArtistasSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
