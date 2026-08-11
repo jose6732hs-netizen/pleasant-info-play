@@ -1,6 +1,5 @@
-// src/routes/index.tsx
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowDown, Instagram, Mail, Phone } from "lucide-react";
+import { ArrowDown, Instagram, Mail, Phone, Users, Calendar, Award, Star } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -61,8 +60,25 @@ function Index() {
           </div>
         </section>
 
+        {/* Stats Section */}
+        <section className="py-20 bg-neutral-900 border-y border-white/5">
+          <div className="max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-12">
+            {[
+              { label: "064", sub: "Goiás" },
+              { label: "Booking", sub: "Oficial" },
+              { label: "Artistas", sub: "Representados" },
+              { label: "Brasil", sub: "Expansão" }
+            ].map((stat, i) => (
+              <div key={i} className="text-center">
+                <div className="text-4xl md:text-5xl font-black tracking-tighter mb-2">{stat.label}</div>
+                <div className="text-xs uppercase tracking-widest text-neutral-500">{stat.sub}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+
         {/* About Section */}
-        <section id="sobre" className="py-24 px-6 md:px-20 bg-neutral-900/30">
+        <section id="sobre" className="py-24 px-6 md:px-20 bg-neutral-950">
           <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-16 items-center">
             <div className="space-y-6">
               <h2 className="text-4xl md:text-5xl font-bold tracking-tighter leading-tight">
@@ -83,7 +99,7 @@ function Index() {
         </section>
 
         {/* Services Section */}
-        <section id="servicos" className="py-24 px-6 md:px-20 bg-neutral-950">
+        <section id="servicos" className="py-24 px-6 md:px-20 bg-neutral-900/30">
            <div className="max-w-6xl mx-auto">
               <h2 className="text-3xl md:text-4xl font-bold tracking-tighter mb-16 text-center">
                 O TALENTO É DO ARTISTA.<br />
@@ -91,11 +107,18 @@ function Index() {
               </h2>
               <div className="grid md:grid-cols-4 gap-6">
                  {[
-                   "Booking Artístico", "Representação Artística", "Gestão de Agenda", "Negociação Comercial",
-                   "Produção Artística", "Curadoria Artística", "Eventos & Projetos", "Parcerias Comerciais"
+                   { title: "Booking Artístico", icon: Calendar },
+                   { title: "Representação", icon: Users },
+                   { title: "Gestão", icon: Award },
+                   { title: "Negociação", icon: Star },
+                   { title: "Produção", icon: Users },
+                   { title: "Curadoria", icon: Star },
+                   { title: "Eventos", icon: Calendar },
+                   { title: "Parcerias", icon: Award }
                  ].map((service, i) => (
                    <div key={i} className="p-8 border border-white/5 bg-neutral-900/50 hover:bg-neutral-800/50 transition cursor-default">
-                      <h3 className="font-bold tracking-tight mb-2 text-neutral-200">{service}</h3>
+                      <service.icon className="w-8 h-8 text-white mb-6 opacity-50" />
+                      <h3 className="font-bold tracking-tight mb-2 text-neutral-200">{service.title}</h3>
                       <p className="text-xs text-neutral-500 leading-relaxed">
                         Intermediação profissional entre artista e contratante, garantindo segurança e resultados.
                       </p>
@@ -110,9 +133,9 @@ function Index() {
             <div className="text-2xl font-bold tracking-tighter mb-4">064 TALENTS</div>
             <p className="text-xs text-neutral-600 uppercase tracking-widest mb-8">Representando talentos. Criando conexões. Do Goiás pro mundo.</p>
             <div className="flex justify-center gap-6 mb-8">
-                <a href="#" className="text-neutral-500 hover:text-white"><Instagram /></a>
-                <a href="#" className="text-neutral-500 hover:text-white"><Mail /></a>
-                <a href="#" className="text-neutral-500 hover:text-white"><Phone /></a>
+                <a href="#" className="text-neutral-500 hover:text-white transition"><Instagram /></a>
+                <a href="#" className="text-neutral-500 hover:text-white transition"><Mail /></a>
+                <a href="#" className="text-neutral-500 hover:text-white transition"><Phone /></a>
             </div>
             <p className="text-[10px] text-neutral-700 uppercase tracking-widest">© 2026 064 TALENTS. Todos os direitos reservados.</p>
         </footer>
