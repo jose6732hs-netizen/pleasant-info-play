@@ -150,7 +150,7 @@ function Index() {
               <p className="text-2xl font-bold uppercase italic tracking-wider text-white">
                 {about.highlight || "DO GOIÁS PRO MUNDO."}
               </p>
-            </div>
+                  </a>
             <div className="aspect-[4/5] bg-neutral-800 rounded-sm overflow-hidden shadow-2xl">
                <img src="https://images.unsplash.com/photo-1547478011-8a30602558a3?q=80&w=1500&auto=format&fit=crop" alt="Stage" className="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700" />
             </div>
