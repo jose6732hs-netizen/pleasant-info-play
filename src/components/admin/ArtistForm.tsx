@@ -273,7 +273,15 @@ export function ArtistForm({ initialData, initialVideos = [], initialGallery = [
                             }}
                             onChange={(img) => {
                               const newGallery = [...gallery];
-                              newGallery[idx] = { ...newGallery[idx], image_url: img.url, alt_text: img.alt };
+                              newGallery[idx] = { 
+                                ...newGallery[idx], 
+                                image_url: img.url, 
+                                alt_text: img.alt || '',
+                                id: newGallery[idx]?.id || `gal-${Date.now()}`,
+                                artist_id: newGallery[idx]?.artist_id || artist.id,
+                                order: newGallery[idx]?.order || idx
+                              };
+
                               setGallery(newGallery);
                             }}
                           />
