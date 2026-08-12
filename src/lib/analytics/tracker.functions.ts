@@ -3,7 +3,7 @@ import { z } from "zod";
 import { persistEvent, queryEvents, clearEvents } from "./events.server";
 import { getOrCreateSession } from "./session.server";
 import { getGeoInfo } from "./geo.server";
-import { getWebRequest } from "@tanstack/react-start/server";
+import { getWebRequest as getRequest } from "@tanstack/react-start/server";
 
 export type EventType = 
   | 'page_view' | 'landing_view' | 'artist_view' | 'artist_click' 
