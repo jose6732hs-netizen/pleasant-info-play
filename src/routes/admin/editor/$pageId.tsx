@@ -453,12 +453,11 @@ function PageEditor() {
                     key={section.id} 
                     section={section}
                     onEdit={(id) => {
-                      console.log('Navigating to editor:', { pageId, sectionId: id });
-                      navigate({ 
-                        to: "/admin/editor/$pageId/edit/$sectionId", 
-                        params: { pageId: pageId as string, sectionId: id } 
-                      });
+                      const target = `/admin/editor/${pageId}/edit/${id}`;
+                      console.log('Navigating to:', target);
+                      window.location.href = target;
                     }} 
+
 
 
                     onDuplicate={handleDuplicate}
