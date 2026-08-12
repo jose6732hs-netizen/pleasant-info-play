@@ -1,19 +1,5 @@
-import { createStart, createCsrfMiddleware, createMiddleware, registerGlobalMiddleware } from "@tanstack/react-start";
+import { createStart, createCsrfMiddleware, createMiddleware } from "@tanstack/react-start";
 import { renderErrorPage } from "./lib/error-page";
-
-const authMiddleware = createMiddleware().client(async ({ next }) => {
-  const token = typeof window !== 'undefined' ? localStorage.getItem("064_auth_token") : null;
-  if (token) {
-    (window as any).headers = {
-      ...(window as any).headers,
-      Authorization: `Bearer ${token}`
-    };
-  }
-  return next();
-}).server(async ({ next, sendContext }) => {
-  const token = sendContext.request.headers.get("Authorization")?.replace("Bearer ", "");
-  return next();
-});
 
 const errorMiddleware = createMiddleware().server(async ({ next }) => {
   try {
@@ -34,6 +20,11 @@ const csrfMiddleware = createCsrfMiddleware({
   filter: (ctx) => ctx.handlerType === "serverFn",
 });
 
+// We'll use a standard middleware pattern for auth headers
+const authMiddleware = createMiddleware().server(async ({ next }) => {
+  return next();
+});
+
 export const startInstance = createStart(() => ({
-  requestMiddleware: [errorMiddleware, csrfMiddleware],
+  requestMiddleware: [errorMiddleware, csrfMiddleware, authMiddleware],
 }));
