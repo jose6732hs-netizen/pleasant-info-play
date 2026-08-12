@@ -75,16 +75,17 @@ export function AdminSidebar({ currentPath }: AdminSidebarProps) {
       {/* Sidebar */}
       <aside className={`
         fixed md:sticky top-0 left-0 z-40
-        h-screen w-64 bg-black border-r border-white/5 
+        h-[100dvh] md:h-screen w-64 max-w-[85vw] bg-black border-r border-white/5 
         transition-transform duration-300 ease-in-out
         ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
-        flex flex-col p-6 space-y-8
+        flex flex-col p-6 gap-6 shrink-0 overflow-hidden
       `}>
-        <div className="hidden md:flex justify-start mb-8">
+        <div className="hidden md:flex justify-start shrink-0">
           <img src={logoAsset.url} alt="064 ADMIN" className="h-8 w-auto object-contain grayscale brightness-200" />
         </div>
         
-        <nav className="flex flex-col gap-1 text-xs text-neutral-400 uppercase tracking-widest overflow-y-auto pr-2 custom-scrollbar">
+        <nav className="flex-1 min-h-0 flex flex-col gap-1 text-xs text-neutral-400 uppercase tracking-widest overflow-y-auto overscroll-contain pr-2 custom-scrollbar">
+
           {menuItems.map((item) => (
             <Link 
               key={item.to}
