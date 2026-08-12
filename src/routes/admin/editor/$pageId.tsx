@@ -126,7 +126,7 @@ function SortableSectionItem({ section, onEdit, onDuplicate, onToggleStatus, onD
             e.stopPropagation();
             onEdit(section.id);
           }}
-          className="p-2 bg-white/5 hover:bg-blue-500/20 text-neutral-400 hover:text-blue-400 rounded-sm transition"
+          className="p-2 bg-blue-500/20 hover:bg-blue-500/40 text-blue-400 hover:text-blue-200 rounded-sm transition cursor-pointer z-50 relative"
           title="Editar Conteúdo"
         >
           <Edit2 className="w-4 h-4" />
