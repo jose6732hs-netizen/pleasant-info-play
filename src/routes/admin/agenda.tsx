@@ -19,8 +19,8 @@ export const Route = createFileRoute("/admin/agenda")({
         queryFn: () => getActiveArtists(),
       }),
       context.queryClient.ensureQueryData({
-        queryKey: ["calendar-events", "1"], // Default to first artist mock
-        queryFn: () => getArtistCalendar({ data: { artist_id: "1" } }),
+        queryKey: ["calendar-events", ""], 
+        queryFn: () => getArtistCalendar({ data: { artist_id: "" } }),
       }),
     ]);
   },
@@ -34,7 +34,7 @@ function AdminAgenda() {
     queryFn: () => getActiveArtists(),
   });
 
-  const [selectedArtistId, setSelectedArtistId] = useState<string>(artists?.[0]?.id || "");
+  const [selectedArtistId, setSelectedArtistId] = useState<string>("");
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [isAddEventOpen, setIsAddEventOpen] = useState(false);
   const [newEvent, setNewEvent] = useState({
