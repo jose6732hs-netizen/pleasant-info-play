@@ -16,8 +16,10 @@ import {
   Smartphone,
   Tablet,
   CheckCircle2,
-  AlertCircle
+  AlertCircle,
+  FileCode
 } from 'lucide-react';
+import { ArtistsPageEditor } from '@/components/admin/ArtistsPageEditor';
 import {
   DndContext,
   closestCenter,
@@ -227,6 +229,14 @@ function PageEditor() {
     }
   };
 
+  const saveConfigMutation = useMutation({
+    mutationFn: (config: any) => savePageConfig({ data: { pageId, config } }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['page', pageId] });
+      toast.success("Configurações da página salvas");
+    }
+  });
+
   return (
     <div className="space-y-8 animate-in fade-in duration-500 max-w-5xl mx-auto">
       <div className="flex items-center justify-between">
@@ -280,6 +290,37 @@ function PageEditor() {
             </Link>
         </div>
       </div>
+
+      {pageId === 'artistas' && (
+        <div className="bg-white/5 border border-white/10 rounded-sm p-8 space-y-6">
+          <div className="flex items-center justify-between border-b border-white/5 pb-6">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-blue-500/10 rounded-sm text-blue-500">
+                <FileCode className="w-5 h-5" />
+              </div>
+              <div>
+                <h2 className="text-xl font-bold text-white uppercase tracking-tight">Configurações da Listagem</h2>
+                <p className="text-xs text-neutral-500 uppercase tracking-widest mt-1">Personalize como os artistas são apresentados aos visitantes</p>
+              </div>
+            </div>
+            <button 
+              onClick={() => saveConfigMutation.mutate(page?.config)}
+              className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-sm transition text-[10px] font-bold uppercase tracking-widest border border-white/10"
+            >
+              <Save className="w-4 h-4" />
+              Salvar Configuração
+            </button>
+          </div>
+          
+          <ArtistsPageEditor 
+            value={page?.config || {}} 
+            onChange={(config) => {
+              // We update local cache immediately for preview-like feel
+              queryClient.setQueryData(['page', pageId], (old: any) => ({ ...old, config }));
+            }} 
+          />
+        </div>
+      )}
 
       <div className="space-y-4">
         {isLoading ? (
