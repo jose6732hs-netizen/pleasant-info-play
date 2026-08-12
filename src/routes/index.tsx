@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { ArrowDown, Instagram, Mail, Phone, Users, Calendar, Award, Star, Youtube, Facebook } from "lucide-react";
+import { ArrowDown, Instagram, Mail, Phone, Users, Calendar, Award, Star, Youtube, Facebook, MessageSquare, PhoneCall } from "lucide-react";
 import { getSiteContent, getActiveArtists } from "@/lib/cms.functions";
 import { useState, useEffect, useMemo } from "react";
 import { useMutation } from "@tanstack/react-query";
@@ -345,36 +345,60 @@ function Index() {
           };
 
           return (
-            <footer id="contato" className="py-24 border-t border-white/5 bg-neutral-950 text-center">
-                <div className="flex justify-center mb-8">
+            <footer id="contato" className="py-24 border-t border-white/5 bg-neutral-950 text-center relative overflow-hidden">
+                {/* Visual Accent */}
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-24 bg-gradient-to-b from-white/20 to-transparent"></div>
+                
+                <div className="flex justify-center mb-8 pt-12">
                     <img src={footer.logo} alt="064 TALENTS" className="h-24 w-auto object-contain opacity-80" />
                 </div>
-                <p className="text-xs text-neutral-500 uppercase tracking-[0.2em] mb-12 max-w-xl mx-auto px-6">{footer.description}</p>
+                <p className="text-xs text-neutral-500 uppercase tracking-[0.2em] mb-12 max-w-xl mx-auto px-6 leading-loose">{footer.description}</p>
                 
-                <div className="flex flex-col md:flex-row justify-center gap-12 mb-16 px-6">
+                <div className="flex flex-col md:flex-row justify-center gap-12 md:gap-24 mb-16 px-6">
                     {footer.blocks?.find((b: any) => b.id === 'social')?.active && (
-                      <div className="space-y-4">
-                        <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-white">Social</h4>
-                        <div className="flex justify-center gap-6">
-                            {footer.social.instagram && <a href={footer.social.instagram} className="text-neutral-500 hover:text-white transition"><Instagram className="w-5 h-5" /></a>}
-                            {footer.social.youtube && <a href={footer.social.youtube} className="text-neutral-500 hover:text-white transition"><Youtube className="w-5 h-5" /></a>}
-                            {footer.social.facebook && <a href={footer.social.facebook} className="text-neutral-500 hover:text-white transition"><Facebook className="w-5 h-5" /></a>}
+                      <div className="space-y-6">
+                        <h4 className="text-[10px] font-black uppercase tracking-[0.5em] text-white/30">CONECTE-SE</h4>
+                        <div className="flex justify-center gap-8">
+                            {footer.social.instagram && (
+                              <a href={footer.social.instagram} className="text-neutral-500 hover:text-white transition group" title="Instagram">
+                                <Instagram className="w-6 h-6 group-hover:scale-110 transition-transform" />
+                              </a>
+                            )}
+                            {footer.social.youtube && (
+                              <a href={footer.social.youtube} className="text-neutral-500 hover:text-white transition group" title="YouTube">
+                                <Youtube className="w-6 h-6 group-hover:scale-110 transition-transform" />
+                              </a>
+                            )}
+                            {footer.social.facebook && (
+                              <a href={footer.social.facebook} className="text-neutral-500 hover:text-white transition group" title="Facebook">
+                                <Facebook className="w-6 h-6 group-hover:scale-110 transition-transform" />
+                              </a>
+                            )}
                         </div>
                       </div>
                     )}
 
                     {footer.blocks?.find((b: any) => b.id === 'contact')?.active && (
-                      <div className="space-y-4">
-                        <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-white">Contato</h4>
-                        <div className="space-y-2 text-[10px] uppercase tracking-widest text-neutral-500 font-bold">
-                            <div className="flex items-center justify-center gap-2"><Mail className="w-3 h-3" /> {footer.contact.email}</div>
-                            <div className="flex items-center justify-center gap-2"><Phone className="w-3 h-3" /> {footer.contact.phone}</div>
+                      <div className="space-y-6">
+                        <h4 className="text-[10px] font-black uppercase tracking-[0.5em] text-white/30">ATENDIMENTO</h4>
+                        <div className="flex flex-col gap-4 text-[11px] uppercase tracking-[0.2em] text-neutral-400 font-bold">
+                            <a href={`mailto:${footer.contact.email}`} className="flex items-center justify-center gap-3 hover:text-white transition group">
+                              <Mail className="w-4 h-4 text-neutral-600 group-hover:text-white transition-colors" /> 
+                              {footer.contact.email}
+                            </a>
+                            <a href={`tel:${footer.contact.phone.replace(/\D/g, '')}`} className="flex items-center justify-center gap-3 hover:text-white transition group">
+                              <PhoneCall className="w-4 h-4 text-neutral-600 group-hover:text-white transition-colors" /> 
+                              {footer.contact.phone}
+                            </a>
                         </div>
                       </div>
                     )}
                 </div>
 
-                <p className="text-[10px] text-neutral-700 uppercase tracking-[0.4em] font-medium border-t border-white/5 pt-12 mx-auto max-w-xs">{footer.copyright}</p>
+                <div className="max-w-xs mx-auto space-y-4 pt-12 border-t border-white/5">
+                  <p className="text-[9px] text-neutral-700 uppercase tracking-[0.5em] font-black">{footer.copyright}</p>
+                  <p className="text-[8px] text-neutral-800 uppercase tracking-[0.3em]">DESIGNED FOR THE BOLD. BUILT FOR THE TALENTED.</p>
+                </div>
             </footer>
           );
         })()}
