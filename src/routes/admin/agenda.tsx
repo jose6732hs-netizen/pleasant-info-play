@@ -9,6 +9,7 @@ import { getArtistCalendar, addCalendarEvent } from "@/lib/booking.functions";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import logoAsset from "@/assets/logo-completa.png.asset.json";
 
 export const Route = createFileRoute("/admin/agenda")({
   loader: async ({ context }) => {
@@ -86,7 +87,9 @@ function AdminAgenda() {
   return (
     <div className="min-h-screen bg-neutral-950 text-white flex flex-col md:flex-row">
       <aside className="w-full md:w-64 border-b md:border-b-0 md:border-r border-white/5 p-6 space-y-8 bg-black/20">
-        <div className="text-xl font-bold tracking-tighter">064 ADMIN</div>
+        <div className="flex justify-start mb-8">
+          <img src={logoAsset.url} alt="064 ADMIN" className="h-8 w-auto object-contain grayscale brightness-200" />
+        </div>
         <nav className="flex flex-col gap-2 text-sm text-neutral-400 uppercase tracking-widest">
           <a href="/admin" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm">Dashboard</a>
           <a href="/admin/artistas" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm">Artistas</a>
