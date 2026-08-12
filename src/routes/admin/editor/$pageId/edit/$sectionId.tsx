@@ -88,6 +88,14 @@ function VisualEditor() {
     setHasChanges(true);
   };
 
+  const restoreOriginal = () => {
+    if (confirm("Deseja restaurar o conteúdo original da seção? Todas as alterações não salvas serão perdidas.")) {
+      setEditContent(JSON.parse(JSON.stringify(section.content)));
+      setHasChanges(false);
+      toast.info("Conteúdo original restaurado");
+    }
+  };
+
   if (isLoading || !section) {
     return (
       <div className="h-screen flex items-center justify-center bg-black">
