@@ -4,11 +4,13 @@ import { z } from "zod";
 export const getDashboardStats = createServerFn({ method: "GET" })
   .handler(async () => {
     return {
-      totalArtists: 0,
+      activeArtists: 0,
       activeProposals: 0,
       confirmedShows: 0,
       monthlyRevenue: 0,
-      pendingContracts: 0
+      pendingContracts: 0,
+      newRequests: 0,
+      totalArtists: 0
     };
   });
 
