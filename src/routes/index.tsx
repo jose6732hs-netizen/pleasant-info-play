@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { getRealAnalyticsEvents } from "@/lib/analytics/tracker.functions";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { ArrowDown, Instagram, Mail, Phone, Users, Calendar, Award, Star, Youtube, Facebook, MessageSquare, PhoneCall } from "lucide-react";
 import { getSiteContent, getActiveArtists } from "@/lib/cms.functions";
