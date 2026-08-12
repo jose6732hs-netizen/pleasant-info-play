@@ -48,10 +48,16 @@ export function ArtistProfile({ artist, videos = [], gallery = [], isPreview = f
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
-            <button className="bg-white text-black px-12 py-5 text-xs font-black uppercase tracking-[0.2em] hover:bg-neutral-200 transition shadow-2xl">
+            <button 
+              onClick={() => handleBookingClick('Hero Primary')}
+              className="bg-white text-black px-12 py-5 text-xs font-black uppercase tracking-[0.2em] hover:bg-neutral-200 transition shadow-2xl"
+            >
               {artist.booking_btn_text || "CONTRATAR ARTISTA"}
             </button>
-            <button className="bg-transparent text-white border border-white/20 backdrop-blur-md px-12 py-5 text-xs font-black uppercase tracking-[0.2em] hover:bg-white/10 transition">
+            <button 
+              onClick={() => handleBookingClick('Hero Secondary')}
+              className="bg-transparent text-white border border-white/20 backdrop-blur-md px-12 py-5 text-xs font-black uppercase tracking-[0.2em] hover:bg-white/10 transition"
+            >
               SOLICITAR ORÇAMENTO
             </button>
           </div>
