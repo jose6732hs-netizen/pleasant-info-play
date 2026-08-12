@@ -17,9 +17,11 @@ import {
   Plus,
   Layers,
   Search,
-  Maximize2
+  Maximize2,
+  RefreshCw
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { RichTextEditor } from '@/components/admin/RichTextEditor';
 
 export const Route = createFileRoute('/admin/editor/$pageId/edit/$sectionId')({
   component: VisualEditor,
