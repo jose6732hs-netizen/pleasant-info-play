@@ -79,11 +79,11 @@ function VisitorView() {
         stats[e.artist_id] = { name: artist.name, views: 0, clicks: 0, reactions: [] };
       }
       
-      if (e.type === 'artist_view') stats[e.artist_id].views++;
-      if (e.type === 'artist_click' || e.type.includes('click')) stats[e.artist_id].clicks++;
+      if (e.type === 'artist_view') stats[e.artist_id!].views++;
+      if (e.type === 'artist_click' || e.type.includes('click')) stats[e.artist_id!].clicks++;
       if (e.type === 'artist_reaction') {
         const emoji = e.metadata?.reaction || '❤️';
-        stats[e.artist_id].reactions.push(emoji);
+        stats[e.artist_id!].reactions.push(emoji);
       }
     });
     
