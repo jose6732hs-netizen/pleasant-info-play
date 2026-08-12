@@ -120,14 +120,17 @@ function SortableSectionItem({ section, onEdit, onDuplicate, onToggleStatus, onD
       </div>
 
       <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-        <Link
-          to="/admin/editor/$pageId/edit/$sectionId"
-          params={{ pageId: section.page_id, sectionId: section.id }}
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            onEdit(section.id);
+          }}
           className="p-2 bg-white/5 hover:bg-blue-500/20 text-neutral-400 hover:text-blue-400 rounded-sm transition"
           title="Editar Conteúdo"
         >
           <Edit2 className="w-4 h-4" />
-        </Link>
+        </button>
         <button 
           onClick={() => onDuplicate(section)}
           className="p-2 bg-white/5 hover:bg-white/10 text-neutral-400 hover:text-white rounded-sm transition"
@@ -449,7 +452,15 @@ function PageEditor() {
                   <SortableSectionItem 
                     key={section.id} 
                     section={section}
-                    onEdit={(id) => navigate({ to: "/admin/editor/$pageId/edit/$sectionId", params: { pageId, sectionId: id } })} 
+                    onEdit={(id) => {
+                      console.log('Navigating to editor:', { pageId, sectionId: id });
+                      navigate({ 
+                        to: "/admin/editor/$pageId/edit/$sectionId", 
+                        params: { pageId: pageId as string, sectionId: id } 
+                      });
+                    }} 
+
+
                     onDuplicate={handleDuplicate}
                     onToggleStatus={handleToggleStatus}
                     onDelete={handleDelete}
