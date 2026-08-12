@@ -80,15 +80,18 @@ function VisitorView() {
       }
       
       const aId = e.artist_id as string;
-      if (e.type === 'artist_view') {
-        stats[aId].views++;
-      }
-      if (e.type === 'artist_click' || e.type.includes('click')) {
-        stats[aId].clicks++;
-      }
-      if (e.type === 'artist_reaction') {
-        const emoji = e.metadata?.reaction || '❤️';
-        stats[aId].reactions.push(emoji);
+      const currentStats = stats[aId];
+      if (currentStats) {
+        if (e.type === 'artist_view') {
+          currentStats.views++;
+        }
+        if (e.type === 'artist_click' || e.type.includes('click')) {
+          currentStats.clicks++;
+        }
+        if (e.type === 'artist_reaction') {
+          const emoji = e.metadata?.reaction || '❤️';
+          currentStats.reactions.push(emoji);
+        }
       }
     });
     
