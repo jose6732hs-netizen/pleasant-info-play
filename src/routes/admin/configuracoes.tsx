@@ -54,7 +54,7 @@ function AdminSettings() {
                     </div>
                     <div className="space-y-2">
                         <label className="text-[10px] uppercase tracking-widest text-neutral-500 font-bold">E-mail</label>
-                        <input type="email" defaultValue="admin@064talents.com.br" className="w-full bg-black border border-white/10 p-4 rounded-sm focus:outline-none focus:border-white transition" />
+                        <input type="email" defaultValue="sempreteste552@gmail.com" className="w-full bg-black border border-white/10 p-4 rounded-sm focus:outline-none focus:border-white transition" />
                     </div>
                 </div>
             </section>

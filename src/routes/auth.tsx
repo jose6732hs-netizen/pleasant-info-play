@@ -48,7 +48,7 @@ function AuthPage() {
               type="email" 
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="admin@064talents.com.br"
+              placeholder="sempreteste552@gmail.com"
               className="w-full bg-black border border-white/10 p-4 rounded-sm focus:outline-none focus:border-white transition text-sm" 
               required
             />
@@ -80,7 +80,7 @@ function AuthPage() {
         <div className="mt-8 p-4 bg-white/5 border border-white/5 rounded-sm">
           <p className="text-[9px] text-neutral-500 uppercase font-bold tracking-widest text-center leading-relaxed">
             Acesso Padrão (Primeira Conta):<br />
-            admin@064talents.com.br / 064talents2026
+            sempreteste552@gmail.com / Kaique@321
           </p>
         </div>
       </div>
