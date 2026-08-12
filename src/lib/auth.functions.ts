@@ -44,8 +44,15 @@ export const loginAdmin = createServerFn({ method: "POST" })
 
 export const checkAuth = createServerFn({ method: "GET" })
   .handler(async () => {
-    // Server-side check would normally verify the session cookie/JWT
-    return { authenticated: true }; 
+    const request = getRequest();
+    const token = request?.headers.get("Authorization")?.replace("Bearer ", "") || "";
+    
+    // In a real app, verify JWT. Here we check our mock token.
+    if (token === "mock-jwt-token-064") {
+      return { authenticated: true, user: { id: "admin-1", role: "ADMIN" } };
+    }
+    
+    return { authenticated: false }; 
   });
 
 export const requestPasswordReset = createServerFn({ method: "POST" })

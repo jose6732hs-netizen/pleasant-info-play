@@ -63,6 +63,12 @@ export const logAuditEvent = createServerFn({ method: "POST" })
 
 export const getAuditLogs = createServerFn({ method: "GET" })
   .handler(async () => {
+    const { checkAuth } = await import("./auth.functions");
+    const auth = await checkAuth();
+    
+    if (!auth.authenticated || auth.user?.role !== 'ADMIN') {
+      throw new Error("Acesso negado: Somente administradores podem visualizar logs de auditoria.");
+    }
     return auditLogs;
   });
 
