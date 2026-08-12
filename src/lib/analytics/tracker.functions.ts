@@ -17,23 +17,23 @@ export interface AnalyticsEvent {
   timestamp: string;
   type: EventType;
   path: string;
-  artist_id?: string;
-  element_id?: string;
-  element_text?: string;
+  artist_id?: string | undefined;
+  element_id?: string | undefined;
+  element_text?: string | undefined;
   utm?: {
-    source?: string;
-    medium?: string;
-    campaign?: string;
-    content?: string;
-    term?: string;
-    ref?: string;
-  };
+    source?: string | undefined;
+    medium?: string | undefined;
+    campaign?: string | undefined;
+    content?: string | undefined;
+    term?: string | undefined;
+    ref?: string | undefined;
+  } | undefined;
   metadata?: any;
   client_info?: {
-    userAgent: string;
-    language: string;
-    resolution: string;
-  };
+    userAgent: string | undefined;
+    language: string | undefined;
+    resolution: string | undefined;
+  } | undefined;
 }
 
 const UtmSchema = z.object({
@@ -46,9 +46,9 @@ const UtmSchema = z.object({
 }).optional();
 
 const ClientInfoSchema = z.object({
-  userAgent: z.string(),
-  language: z.string(),
-  resolution: z.string(),
+  userAgent: z.string().optional(),
+  language: z.string().optional(),
+  resolution: z.string().optional(),
 }).optional();
 
 export const trackRealEvent = createServerFn({ method: "POST" })
@@ -67,10 +67,10 @@ export const trackRealEvent = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     // Sync session first
     await getOrCreateSession(data.visitor_id, data.session_id, {
-      utm: data.utm,
+      utm: data.utm as any,
       device: {
         browser: data.client_info?.userAgent || 'unknown',
-        os: 'unknown', // Would parse userAgent here in real app
+        os: 'unknown',
         resolution: data.client_info?.resolution || 'unknown'
       }
     });
@@ -78,7 +78,15 @@ export const trackRealEvent = createServerFn({ method: "POST" })
     const event: AnalyticsEvent = {
       id: Math.random().toString(36).substring(2, 15),
       timestamp: new Date().toISOString(),
-      ...data,
+      visitor_id: data.visitor_id,
+      session_id: data.session_id,
+      path: data.path,
+      artist_id: data.artist_id,
+      element_id: data.element_id,
+      element_text: data.element_text,
+      utm: data.utm as any,
+      metadata: data.metadata,
+      client_info: data.client_info as any,
       type: data.type as EventType
     };
 
