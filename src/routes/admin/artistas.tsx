@@ -5,6 +5,7 @@ import { Search, Plus, Edit2, Trash2, Eye, Copy, Power } from "lucide-react";
 import { useState } from "react";
 import { ArtistForm } from "@/components/admin/ArtistForm";
 import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/admin/artistas")({
   component: AdminArtists,
