@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { createFileRoute, Link, useParams } from '@tanstack/react-router';
+import { createFileRoute, Link, useParams, useNavigate } from '@tanstack/react-router';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getPageSections, updateSectionsOrder, deleteSection, saveSection, getPages, savePageConfig, publishPage, PageSection } from '@/lib/cms.functions';
 import { 
