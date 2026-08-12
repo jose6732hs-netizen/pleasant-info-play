@@ -85,12 +85,12 @@ export function ArtistProfile({ artist, videos = [], gallery = [], isPreview = f
                   <Play className="w-20 h-20 text-white/20 group-hover:text-white group-hover:scale-110 transition-all" />
                </div>
                <img 
-                 src={videos[0].thumbnail || "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&q=80&w=2070"} 
+                 src={videos[0]?.thumbnail || "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&q=80&w=2070"} 
                  className="w-full h-full object-cover opacity-50"
                  alt="Performance video"
                />
                <div className="absolute bottom-0 left-0 p-8">
-                 <h4 className="text-2xl font-bold uppercase">{videos[0].title}</h4>
+                 <h4 className="text-2xl font-bold uppercase">{videos[0]?.title}</h4>
                </div>
             </div>
           </div>
