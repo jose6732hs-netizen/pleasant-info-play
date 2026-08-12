@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { submitBookingRequest, getActiveArtists } from "@/lib/cms.functions";
 import { toast } from "sonner";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { captureClick } from "@/lib/analytics-client";
+import { captureClick, trackArtistEvent } from "@/lib/analytics-client";
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -40,6 +40,9 @@ export function BookingModal({ isOpen, onClose, initialArtistId }: BookingModalP
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     captureClick("Enviar Solicitação de Booking", "booking-submit-btn", { artistId: form.artist_id });
+    if (form.artist_id) {
+      trackArtistEvent('artist_contact', form.artist_id, { type: 'form_submit' });
+    }
     mutation.mutate({ data: form });
   };
 
