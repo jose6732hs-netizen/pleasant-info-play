@@ -95,11 +95,32 @@ function Index() {
         {/* Hero Section */}
         <section id="inicio" className="relative h-screen flex flex-col items-center justify-center text-center px-4">
           <div className="absolute inset-0 z-0">
-            <img 
-              src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=2574&auto=format&fit=crop"
-              alt="CROWD"
-              className="w-full h-full object-cover opacity-30"
-            />
+            {hero.video_url ? (
+              hero.video_url.includes('youtube') || hero.video_url.includes('vimeo') ? (
+                <iframe
+                  src={hero.video_url.includes('youtube') ? `https://www.youtube.com/embed/${hero.video_url.split('v=')[1]}?autoplay=1&mute=1&loop=1&controls=0` : hero.video_url}
+                  className="w-full h-full object-cover opacity-30 pointer-events-none"
+                  frameBorder="0"
+                  allow="autoplay; fullscreen"
+                />
+              ) : (
+                <video 
+                  src={hero.video_url} 
+                  autoPlay 
+                  muted 
+                  loop 
+                  playsInline
+                  className="w-full h-full object-cover opacity-30"
+                />
+              )
+            ) : (
+              <img 
+                src={hero.image_url || "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=2574&auto=format&fit=crop"}
+                alt="CROWD"
+                className="w-full h-full object-cover opacity-30"
+              />
+            )}
+
             <div className="absolute inset-0 bg-gradient-to-b from-neutral-950/60 via-neutral-950/20 to-neutral-950"></div>
           </div>
           
