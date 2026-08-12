@@ -80,16 +80,26 @@ function VisualEditor() {
   }, [section]);
 
   const saveMutation = useMutation({
-    mutationFn: (updatedSection: PageSection) => saveSection({ data: updatedSection }),
+    mutationFn: async (updatedSection: PageSection) => {
+      // In SSR/Start, headers might not propagate correctly to server functions in some environments
+      // The middleware should handle it, but we can verify or log here
+      return saveSection({ data: updatedSection });
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['sections', pageId] });
       setIsSaving(false);
       setHasChanges(false);
       toast.success("Alterações salvas com sucesso");
     },
-    onError: () => {
+    onError: (error: any) => {
       setIsSaving(false);
-      toast.error("Erro ao salvar alterações");
+      // If the error is an auth redirect or 401, handle it gracefully
+      if (error.status === 401 || error.message?.includes('Unauthorized')) {
+        toast.error("Sessão expirada. Por favor, faça login novamente.");
+        navigate({ to: "/auth" });
+      } else {
+        toast.error("Erro ao salvar alterações");
+      }
     }
   });
 
