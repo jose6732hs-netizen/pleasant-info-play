@@ -1,5 +1,14 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
+import { checkAuth } from "./auth.functions";
+
+async function requireAdmin() {
+  const auth = await checkAuth();
+  if (!auth.authenticated || auth.user?.role !== 'ADMIN') {
+    throw new Error("Unauthorized");
+  }
+}
+
 
 // Persistence Layer
 // Since Lovable Cloud credits are unavailable, we use a robust in-memory mock 
