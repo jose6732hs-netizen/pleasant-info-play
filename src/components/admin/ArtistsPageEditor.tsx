@@ -117,7 +117,7 @@ export function ArtistsPageEditor({ value, onChange }: ArtistsPageEditorProps) {
                 </div>
                 <Slider 
                   value={[value.columnsDesktop]} 
-                  onValueChange={([v]) => updateField({ columnsDesktop: v })}
+                  onValueChange={([v]) => updateField({ columnsDesktop: v as number })}
                   min={1}
                   max={6}
                   step={1}
@@ -130,7 +130,7 @@ export function ArtistsPageEditor({ value, onChange }: ArtistsPageEditorProps) {
                 </div>
                 <Slider 
                   value={[value.columnsTablet]} 
-                  onValueChange={([v]) => updateField({ columnsTablet: v })}
+                  onValueChange={([v]) => updateField({ columnsTablet: v as number })}
                   min={1}
                   max={4}
                   step={1}
