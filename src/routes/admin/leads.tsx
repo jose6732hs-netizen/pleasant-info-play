@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { getAnalyticsEvents } from "@/lib/analytics.functions";
-import { LayoutDashboard, Users, Calendar, Briefcase, FileText, Settings, MousePointer2, MapPin, Clock, Globe } from "lucide-react";
+import { LayoutDashboard, Users, Calendar, Briefcase, FileText, Settings, MousePointer2, MapPin, Clock, Globe, Filter } from "lucide-react";
 import logoAsset from "@/assets/logo-completa.png.asset.json";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
