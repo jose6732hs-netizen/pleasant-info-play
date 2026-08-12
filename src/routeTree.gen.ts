@@ -26,6 +26,7 @@ import { Route as AdminContratosIndexRouteImport } from './routes/admin/contrato
 import { Route as AdminContratosIdRouteImport } from './routes/admin/contratos/$id'
 import { Route as AdminEditorIndexRouteImport } from './routes/admin/editor/index'
 import { Route as AdminEditorPageIdRouteImport } from './routes/admin/editor/$pageId'
+import { Route as AdminEditorConfiguracoesGlobaisRouteImport } from './routes/admin/editor/configuracoes-globais'
 import { Route as AdminContratosIdVisualizarRouteImport } from './routes/admin/contratos/$id.visualizar'
 import { Route as AdminEditorPageIdEditSectionIdRouteImport } from './routes/admin/editor/$pageId/edit/$sectionId'
 
@@ -114,6 +115,12 @@ const AdminEditorPageIdRoute = AdminEditorPageIdRouteImport.update({
   path: '/editor/$pageId',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminEditorConfiguracoesGlobaisRoute =
+  AdminEditorConfiguracoesGlobaisRouteImport.update({
+    id: '/editor/configuracoes-globais',
+    path: '/editor/configuracoes-globais',
+    getParentRoute: () => AdminRoute,
+  } as any)
 const AdminContratosIdVisualizarRoute =
   AdminContratosIdVisualizarRouteImport.update({
     id: '/visualizar',
@@ -143,6 +150,7 @@ export interface FileRoutesByFullPath {
   '/artistas/': typeof ArtistasIndexRoute
   '/admin/contratos/$id': typeof AdminContratosIdRouteWithChildren
   '/admin/editor/$pageId': typeof AdminEditorPageIdRouteWithChildren
+  '/admin/editor/configuracoes-globais': typeof AdminEditorConfiguracoesGlobaisRoute
   '/admin/contratos/': typeof AdminContratosIndexRoute
   '/admin/editor/': typeof AdminEditorIndexRoute
   '/admin/contratos/$id/visualizar': typeof AdminContratosIdVisualizarRoute
@@ -163,6 +171,7 @@ export interface FileRoutesByTo {
   '/artistas': typeof ArtistasIndexRoute
   '/admin/contratos/$id': typeof AdminContratosIdRouteWithChildren
   '/admin/editor/$pageId': typeof AdminEditorPageIdRouteWithChildren
+  '/admin/editor/configuracoes-globais': typeof AdminEditorConfiguracoesGlobaisRoute
   '/admin/contratos': typeof AdminContratosIndexRoute
   '/admin/editor': typeof AdminEditorIndexRoute
   '/admin/contratos/$id/visualizar': typeof AdminContratosIdVisualizarRoute
@@ -185,6 +194,7 @@ export interface FileRoutesById {
   '/artistas/': typeof ArtistasIndexRoute
   '/admin/contratos/$id': typeof AdminContratosIdRouteWithChildren
   '/admin/editor/$pageId': typeof AdminEditorPageIdRouteWithChildren
+  '/admin/editor/configuracoes-globais': typeof AdminEditorConfiguracoesGlobaisRoute
   '/admin/contratos/': typeof AdminContratosIndexRoute
   '/admin/editor/': typeof AdminEditorIndexRoute
   '/admin/contratos/$id/visualizar': typeof AdminContratosIdVisualizarRoute
@@ -208,6 +218,7 @@ export interface FileRouteTypes {
     | '/artistas/'
     | '/admin/contratos/$id'
     | '/admin/editor/$pageId'
+    | '/admin/editor/configuracoes-globais'
     | '/admin/contratos/'
     | '/admin/editor/'
     | '/admin/contratos/$id/visualizar'
@@ -228,6 +239,7 @@ export interface FileRouteTypes {
     | '/artistas'
     | '/admin/contratos/$id'
     | '/admin/editor/$pageId'
+    | '/admin/editor/configuracoes-globais'
     | '/admin/contratos'
     | '/admin/editor'
     | '/admin/contratos/$id/visualizar'
@@ -249,6 +261,7 @@ export interface FileRouteTypes {
     | '/artistas/'
     | '/admin/contratos/$id'
     | '/admin/editor/$pageId'
+    | '/admin/editor/configuracoes-globais'
     | '/admin/contratos/'
     | '/admin/editor/'
     | '/admin/contratos/$id/visualizar'
@@ -384,6 +397,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminEditorPageIdRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/editor/configuracoes-globais': {
+      id: '/admin/editor/configuracoes-globais'
+      path: '/editor/configuracoes-globais'
+      fullPath: '/admin/editor/configuracoes-globais'
+      preLoaderRoute: typeof AdminEditorConfiguracoesGlobaisRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/contratos/$id/visualizar': {
       id: '/admin/contratos/$id/visualizar'
       path: '/visualizar'
@@ -434,6 +454,7 @@ interface AdminRouteChildren {
   AdminIndexRoute: typeof AdminIndexRoute
   AdminContratosIdRoute: typeof AdminContratosIdRouteWithChildren
   AdminEditorPageIdRoute: typeof AdminEditorPageIdRouteWithChildren
+  AdminEditorConfiguracoesGlobaisRoute: typeof AdminEditorConfiguracoesGlobaisRoute
   AdminContratosIndexRoute: typeof AdminContratosIndexRoute
   AdminEditorIndexRoute: typeof AdminEditorIndexRoute
 }
@@ -449,6 +470,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminIndexRoute: AdminIndexRoute,
   AdminContratosIdRoute: AdminContratosIdRouteWithChildren,
   AdminEditorPageIdRoute: AdminEditorPageIdRouteWithChildren,
+  AdminEditorConfiguracoesGlobaisRoute: AdminEditorConfiguracoesGlobaisRoute,
   AdminContratosIndexRoute: AdminContratosIndexRoute,
   AdminEditorIndexRoute: AdminEditorIndexRoute,
 }

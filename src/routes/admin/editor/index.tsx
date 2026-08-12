@@ -72,21 +72,24 @@ function AdminEditorDashboard() {
           ))
         )}
 
-        <div className="group relative overflow-hidden bg-white/5 border border-white/5 hover:border-white/20 transition-all p-6 rounded-sm flex flex-col justify-between min-h-[160px] opacity-60">
+        <Link 
+          to="/admin/editor/configuracoes-globais"
+          className="group relative overflow-hidden bg-white/5 border border-white/5 hover:border-white/20 transition-all p-6 rounded-sm flex flex-col justify-between min-h-[160px]"
+        >
           <div className="space-y-4">
             <div className="p-3 bg-white/5 rounded-sm group-hover:bg-white/10 transition w-fit">
               <Globe className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h3 className="text-xl font-bold text-white transition">Configurações Globais</h3>
+              <h3 className="text-xl font-bold text-white transition group-hover:text-blue-400">Configurações Globais</h3>
               <p className="text-xs text-neutral-500 mt-1">SEO, Favicon, Scripts e Cores</p>
             </div>
           </div>
           <div className="flex items-center justify-between mt-4 text-[10px] font-bold uppercase tracking-widest text-neutral-500">
             <span>Configurações do sistema</span>
-            <ChevronRight className="w-4 h-4" />
+            <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </div>
-        </div>
+        </Link>
       </div>
 
       <div className="p-8 border border-dashed border-white/10 rounded-sm flex flex-col items-center justify-center text-center space-y-4 bg-white/[0.02]">
