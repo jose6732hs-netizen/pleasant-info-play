@@ -98,6 +98,14 @@ export function AdminSidebar({ currentPath }: AdminSidebarProps) {
               <span>{item.label}</span>
             </Link>
           ))}
+          
+          <button 
+            onClick={handleLogout}
+            className="mt-4 p-3 transition rounded-sm flex items-center gap-3 text-red-900 hover:bg-red-950/30 hover:text-red-500 w-full"
+          >
+            <LogOut className="w-4 h-4" /> 
+            <span>Sair</span>
+          </button>
         </nav>
       </aside>
     </>
