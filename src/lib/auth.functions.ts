@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { logAuditEvent } from "./audit.functions";
+import { getRequest } from "@tanstack/react-start/server";
 
 const AUTH_STORAGE_KEY = "064_auth_session";
 
