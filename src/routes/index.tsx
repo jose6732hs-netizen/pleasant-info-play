@@ -1,7 +1,7 @@
 /* 064 TALENTS - Enterprise Security Layer Active */
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { getRealAnalyticsEvents } from "@/lib/analytics/tracker.functions";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useSuspenseQuery, useQuery } from "@tanstack/react-query";
 import { ArrowDown, Instagram, Mail, Phone, Users, Calendar, Award, Star, Youtube, Facebook, MessageSquare, PhoneCall, ShieldCheck, MapPin, Zap } from "lucide-react";
 import { getSiteContent, getActiveArtists } from "@/lib/cms.functions";
 import { useState, useEffect, useMemo } from "react";
@@ -23,10 +23,6 @@ export const Route = createFileRoute("/")({
       context.queryClient.ensureQueryData({
         queryKey: ["active-artists"],
         queryFn: () => getActiveArtists(),
-      }),
-      context.queryClient.ensureQueryData({
-        queryKey: ["analytics-events"],
-        queryFn: () => getRealAnalyticsEvents(),
       }),
     ]);
   },
@@ -50,12 +46,15 @@ function Index() {
     queryFn: () => getSiteContent(),
   });
   
-  const { data: analyticsEvents } = useSuspenseQuery({
+  const [auditMode, setAuditMode] = useState(false);
+
+  const { data: analyticsEvents } = useQuery({
     queryKey: ["analytics-events"],
-    queryFn: () => getRealAnalyticsEvents(),
+    queryFn: () => getRealAnalyticsEvents().catch(() => []),
+    enabled: auditMode,
+    retry: false,
   });
 
-  const [auditMode, setAuditMode] = useState(false);
   
   // Toggle audit mode with Ctrl+Shift+A
   useEffect(() => {
