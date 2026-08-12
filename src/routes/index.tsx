@@ -81,6 +81,7 @@ function Index() {
   const openBooking = (artistId?: string) => {
     if (artistId) setBookingForm(prev => ({ ...prev, artist_id: artistId }));
     setIsBookingModalOpen(true);
+    captureClick(window.location.pathname, "Abrir Modal de Booking", "booking-modal-trigger", { artistId });
   };
 
   return (
