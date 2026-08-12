@@ -76,9 +76,17 @@ function ArtistsList() {
         <section className="space-y-12">
           <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-white/30">Casting Completo</h2>
           {regularArtists.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className={cn(
+              "grid gap-6",
+              config.columnsDesktop === 1 && "grid-cols-1",
+              config.columnsDesktop === 2 && "grid-cols-1 sm:grid-cols-2",
+              config.columnsDesktop === 3 && "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3",
+              config.columnsDesktop === 4 && "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4",
+              config.columnsDesktop === 5 && "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5",
+              config.columnsDesktop === 6 && "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6"
+            )}>
               {regularArtists.map((artist) => (
-                <ArtistCard key={artist.id} artist={artist} />
+                <ArtistCard key={artist.id} artist={artist} config={config} />
               ))}
             </div>
           ) : (
