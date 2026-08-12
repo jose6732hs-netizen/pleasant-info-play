@@ -210,22 +210,20 @@ function PageEditor() {
       display_order: (sections?.length || 0),
       created_at: new Date().toISOString()
     };
-    saveSectionMutation.mutate({ data: newSection });
+    saveSectionMutation.mutate(newSection);
     toast.success("Seção duplicada");
   };
 
   const handleToggleStatus = (section: PageSection) => {
     saveSectionMutation.mutate({
-      data: {
-        ...section,
-        status: section.status === 'ATIVA' ? 'OCULTA' : 'ATIVA'
-      }
+      ...section,
+      status: section.status === 'ATIVA' ? 'OCULTA' : 'ATIVA'
     });
   };
 
   const handleDelete = (id: string) => {
     if (confirm("Tem certeza que deseja excluir esta seção? Esta ação não pode ser desfeita.")) {
-      deleteMutation.mutate({ data: id });
+      deleteMutation.mutate(id);
     }
   };
 
