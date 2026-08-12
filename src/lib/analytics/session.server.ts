@@ -50,3 +50,7 @@ export const getOrCreateSession = async (visitorId: string, sessionId: string, d
   }
   return sessionsStore.get(key);
 };
+
+export const getSessions = async () => {
+  return Array.from(sessionsStore.values());
+};
