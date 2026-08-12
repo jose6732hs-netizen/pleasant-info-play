@@ -154,7 +154,7 @@ function PageEditor() {
   });
 
   const updateOrderMutation = useMutation({
-    mutationFn: (newOrder: { id: string, display_order: number }[]) => updateSectionsOrder(newOrder),
+    mutationFn: (newOrder: { id: string, display_order: number }[]) => updateSectionsOrder({ data: newOrder }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['sections', pageId] });
       setSaveStatus('saved');
@@ -164,7 +164,7 @@ function PageEditor() {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id: string) => deleteSection(id),
+    mutationFn: (id: string) => deleteSection({ data: id }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['sections', pageId] });
       toast.success("Seção excluída com sucesso");
@@ -172,7 +172,7 @@ function PageEditor() {
   });
 
   const saveSectionMutation = useMutation({
-    mutationFn: (section: PageSection) => saveSection(section),
+    mutationFn: (section: PageSection) => saveSection({ data: section }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['sections', pageId] });
     }
