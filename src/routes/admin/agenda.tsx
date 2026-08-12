@@ -3,7 +3,7 @@ import { useSuspenseQuery, useMutation, useQueryClient } from "@tanstack/react-q
 import { useState } from "react";
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isSameDay, addMonths, subMonths, isWithinInterval, parseISO } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { ChevronLeft, ChevronRight, Plus, MapPin, Clock, User, Info, AlertCircle, LayoutDashboard, Users, Calendar, Briefcase, FileText, Settings } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus, MapPin, Clock, User, Info, AlertCircle, LayoutDashboard, Users, Calendar, Briefcase, FileText, Settings, MousePointer2 } from "lucide-react";
 import { getActiveArtists } from "@/lib/cms.functions";
 import { getArtistCalendar, addCalendarEvent } from "@/lib/booking.functions";
 import { cn } from "@/lib/utils";
