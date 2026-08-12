@@ -77,9 +77,9 @@ function Index() {
       {showIntro && <IntroAnimation onComplete={handleIntroComplete} />}
 
       {/* Header */}
-      <header className="fixed w-full p-6 flex justify-between items-center z-50 backdrop-blur-md bg-neutral-950/80 border-b border-white/5">
+      <header className="fixed w-full p-3 md:p-4 flex justify-between items-center z-50 backdrop-blur-md bg-neutral-950/80 border-b border-white/5">
         <div className="flex items-center">
-          <img src={logoAsset.url} alt="064 TALENTS" className="h-10 w-auto object-contain" />
+          <img src={logoAsset.url} alt="064 TALENTS" className="h-8 md:h-10 w-auto object-contain" />
         </div>
         <nav className="hidden md:flex gap-8 text-xs font-semibold uppercase tracking-widest text-neutral-400">
           <a href="#inicio" className="hover:text-white transition">Início</a>
