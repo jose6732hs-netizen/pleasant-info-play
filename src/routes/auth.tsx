@@ -3,7 +3,7 @@ import { useState } from "react";
 import { loginAdmin } from "@/lib/auth.functions";
 import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
-import { Loader2 } from "lucide-react";
+import { Loader2, Eye, EyeOff } from "lucide-react";
 import logoAsset from "@/assets/logo-completa.png.asset.json";
 
 export const Route = createFileRoute("/auth")({
