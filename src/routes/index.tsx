@@ -182,15 +182,10 @@ function Index() {
         <section id="sobre" className="py-24 px-6 md:px-20 bg-neutral-900/30">
           <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-16 items-center">
             <div className="space-y-6">
-              <h2 className="text-4xl md:text-5xl font-bold tracking-tighter leading-tight uppercase">
-                {about.title || "MAIS DO QUE BOOKING."}
-              </h2>
-              <p className="text-neutral-400 leading-relaxed text-lg">
-                {about.text || "A 064 TALENTS é uma empresa de Artist Booking & Entertainment..."}
-              </p>
-              <p className="text-2xl font-bold uppercase italic tracking-wider text-white">
-                {about.highlight || "DO GOIÁS PRO MUNDO."}
-              </p>
+              <h2 className="text-4xl md:text-5xl font-bold tracking-tighter leading-tight uppercase prose prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: about.title || "MAIS DO QUE BOOKING." }} />
+              <div className="text-neutral-400 leading-relaxed text-lg prose prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: about.text || "A 064 TALENTS é uma empresa de Artist Booking & Entertainment..." }} />
+              <div className="text-2xl font-bold uppercase italic tracking-wider text-white prose prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: about.highlight || "DO GOIÁS PRO MUNDO." }} />
+
             </div>
             <div className="aspect-[4/5] bg-neutral-800 rounded-sm overflow-hidden shadow-2xl">
                <img src="https://images.unsplash.com/photo-1547478011-8a30602558a3?q=80&w=1500&auto=format&fit=crop" alt="Stage" className="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700" />
