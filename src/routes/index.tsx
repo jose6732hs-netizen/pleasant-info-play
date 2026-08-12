@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { ArrowDown, Instagram, Mail, Phone, Users, Calendar, Award, Star, Youtube, Facebook } from "lucide-react";
 import { getSiteContent, getActiveArtists } from "@/lib/cms.functions";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { IntroAnimation } from "@/components/IntroAnimation";
 import { BookingModal } from "@/components/BookingModal";
@@ -185,7 +185,7 @@ function Index() {
   const navConfig = (contentData as any)?.find((p: any) => p.id === 'global_nav')?.config;
   const designConfig = (contentData as any)?.find((p: any) => p.id === 'global_design')?.config;
   
-  const designStyles = React.useMemo(() => {
+  const designStyles = useMemo(() => {
     if (!designConfig) return {};
     const { colors, typography, buttons, cards } = designConfig;
     return {
@@ -223,7 +223,7 @@ function Index() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-950 text-white selection:bg-white selection:text-black" style={designStyles}>
+    <div className="min-h-screen bg-neutral-950 text-white selection:bg-white selection:text-black" style={designStyles as any}>
       {showIntro && <IntroAnimation onComplete={handleIntroComplete} />}
 
       {/* Header */}
