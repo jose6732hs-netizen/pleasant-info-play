@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { getRealAnalyticsEvents, clearRealAnalyticsEvents, getRealSessions } from "@/lib/analytics/tracker.functions";
 import { getAllArtists } from "@/lib/cms.functions";
@@ -333,9 +333,13 @@ function AdminLeads() {
                       </td>
                       <td className="p-4">
                         <div className="flex items-center gap-3">
-                           <div className="w-8 h-8 rounded-full bg-neutral-800 flex items-center justify-center text-[10px] font-bold">
+                           <Link 
+                             to="/admin/visitantes/$visitorId" 
+                             params={{ visitorId: event.visitor_id }}
+                             className="w-8 h-8 rounded-full bg-neutral-800 hover:bg-blue-600 transition-colors flex items-center justify-center text-[10px] font-bold"
+                           >
                              {event.visitor_id.substring(0, 2).toUpperCase()}
-                           </div>
+                           </Link>
                            <div className="flex flex-col">
                               <span className="text-[10px] font-mono text-neutral-400">ID: {event.session_id.substring(0, 8)}</span>
                               <span className="text-[8px] text-neutral-600 font-bold uppercase">{event.client_info?.userAgent?.split(' ')[0]}</span>
