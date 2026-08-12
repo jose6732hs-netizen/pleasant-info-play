@@ -288,15 +288,17 @@ export function ArtistForm({ initialData, initialVideos = [], initialGallery = [
                     <h3 className="text-sm font-bold uppercase tracking-widest text-neutral-400">Vídeos (YouTube/Vimeo)</h3>
                     <div className="space-y-4">
                       {videos.map((video, idx) => (
-                        <div key={idx} className="p-6 bg-black border border-white/10 rounded-sm space-y-4">
+                        <div key={video.id || idx} className="p-6 bg-black border border-white/10 rounded-sm space-y-4">
                           <input 
                             placeholder="Título do Vídeo" 
                             className="w-full bg-neutral-900 border border-white/5 p-3 text-xs"
                             value={video.title}
                             onChange={(e) => {
                               const newVideos = [...videos];
-                              newVideos[idx].title = e.target.value;
-                              setVideos(newVideos);
+                              if (newVideos[idx]) {
+                                newVideos[idx] = { ...newVideos[idx], title: e.target.value };
+                                setVideos(newVideos);
+                              }
                             }}
                           />
                           <input 
@@ -305,8 +307,10 @@ export function ArtistForm({ initialData, initialVideos = [], initialGallery = [
                             value={video.url}
                             onChange={(e) => {
                               const newVideos = [...videos];
-                              newVideos[idx].url = e.target.value;
-                              setVideos(newVideos);
+                              if (newVideos[idx]) {
+                                newVideos[idx] = { ...newVideos[idx], url: e.target.value };
+                                setVideos(newVideos);
+                              }
                             }}
                           />
                         </div>
