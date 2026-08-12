@@ -25,6 +25,13 @@ interface AdminSidebarProps {
 
 export function AdminSidebar({ currentPath }: AdminSidebarProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("064_auth_token");
+    toast.success("Sessão encerrada");
+    navigate({ to: "/auth" });
+  };
 
   const menuItems = [
     { to: "/admin", label: "Overview", icon: LayoutDashboard },
