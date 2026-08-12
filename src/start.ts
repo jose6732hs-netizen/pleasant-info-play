@@ -1,6 +1,19 @@
-import { createStart, createCsrfMiddleware, createMiddleware } from "@tanstack/react-start";
-
+import { createStart, createCsrfMiddleware, createMiddleware, registerGlobalMiddleware } from "@tanstack/react-start";
 import { renderErrorPage } from "./lib/error-page";
+
+const authMiddleware = createMiddleware().client(async ({ next }) => {
+  const token = typeof window !== 'undefined' ? localStorage.getItem("064_auth_token") : null;
+  if (token) {
+    (window as any).headers = {
+      ...(window as any).headers,
+      Authorization: `Bearer ${token}`
+    };
+  }
+  return next();
+}).server(async ({ next, sendContext }) => {
+  const token = sendContext.request.headers.get("Authorization")?.replace("Bearer ", "");
+  return next();
+});
 
 const errorMiddleware = createMiddleware().server(async ({ next }) => {
   try {
@@ -17,9 +30,6 @@ const errorMiddleware = createMiddleware().server(async ({ next }) => {
   }
 });
 
-// Start installs this automatically when src/start.ts is absent; defining the
-// file opts out, so re-add it explicitly to keep server functions protected
-// from cross-site requests.
 const csrfMiddleware = createCsrfMiddleware({
   filter: (ctx) => ctx.handlerType === "serverFn",
 });
