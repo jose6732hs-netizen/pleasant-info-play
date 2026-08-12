@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Artist, ArtistVideo, ArtistGallery } from '@/lib/cms.functions';
-import { Save, Image as ImageIcon, Video, Globe, Info, FileText, Search, User, ChevronRight, Check, Plus } from 'lucide-react';
+import { Save, Image as ImageIcon, Video, Globe, Info, FileText, Search, User, ChevronRight, Check, Plus, GripVertical } from 'lucide-react';
 import { ArtistProfile } from '@/components/ArtistProfile';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { RichTextEditor } from './RichTextEditor';
 import { ImageEditor, ImageConfig } from './ImageEditor';
+import { VideoEditor, VideoConfig } from './VideoEditor';
+
 
 
 interface ArtistFormProps {
