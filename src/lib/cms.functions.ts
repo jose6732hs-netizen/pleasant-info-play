@@ -214,8 +214,8 @@ export const publishPage = createServerFn({ method: "POST" })
     
     sectionsStore.forEach(s => {
       if (s.page_id === data.pageId) {
-        if (s.draft_content) s.content = JSON.parse(JSON.stringify(s.draft_content));
-        if (s.draft_styles) s.styles = JSON.parse(JSON.stringify(s.draft_styles));
+        if (s.draft_content !== undefined) s.content = JSON.parse(JSON.stringify(s.draft_content));
+        if (s.draft_styles !== undefined) s.styles = JSON.parse(JSON.stringify(s.draft_styles));
         s.draft_content = undefined;
         s.draft_styles = undefined;
         s.last_published_at = new Date().toISOString();
