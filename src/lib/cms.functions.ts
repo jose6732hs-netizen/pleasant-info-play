@@ -93,6 +93,33 @@ let pagesStore: Page[] = [
       copyright: '© 2026 064 TALENTS. TODOS OS DIREITOS RESERVADOS.'
     }
   } },
+  { id: 'global_design', name: 'Design & Identidade', slug: '/global/design', status: 'PUBLICADO', created_at: new Date().toISOString(), config: {
+    colors: {
+      primary: '#ffffff',
+      secondary: '#a3a3a3',
+      background: '#0a0a0a',
+      text: '#ffffff',
+      textSecondary: '#737373',
+      accent: '#3b82f6'
+    },
+    typography: {
+      titleFont: 'system-ui',
+      textFont: 'system-ui',
+      baseSize: 16,
+      titleWeight: '900',
+      letterSpacing: '0.1em'
+    },
+    buttons: {
+      radius: 9999,
+      height: 48,
+      padding: 32
+    },
+    cards: {
+      radius: 4,
+      border: true,
+      shadow: false
+    }
+  } },
   { id: 'artist_template', name: 'Template de Artista', slug: '/template/artista', status: 'PUBLICADO', created_at: new Date().toISOString(), config: {
     blocks: [
       { id: 'hero', name: 'Hero (Imagem & Nome)', active: true, order: 0 },

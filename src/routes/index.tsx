@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { ArrowDown, Instagram, Mail, Phone, Users, Calendar, Award, Star, Youtube, Facebook } from "lucide-react";
 import { getSiteContent, getActiveArtists } from "@/lib/cms.functions";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { IntroAnimation } from "@/components/IntroAnimation";
 import { BookingModal } from "@/components/BookingModal";
@@ -183,6 +183,31 @@ function Index() {
   };
 
   const navConfig = (contentData as any)?.find((p: any) => p.id === 'global_nav')?.config;
+  const designConfig = (contentData as any)?.find((p: any) => p.id === 'global_design')?.config;
+  
+  const designStyles = useMemo(() => {
+    if (!designConfig) return {};
+    const { colors, typography, buttons, cards } = designConfig;
+    return {
+      '--primary': colors.primary,
+      '--secondary': colors.secondary,
+      '--background': colors.background,
+      '--text': colors.text,
+      '--text-secondary': colors.textSecondary,
+      '--accent': colors.accent,
+      '--font-title': typography.titleFont,
+      '--font-text': typography.textFont,
+      '--base-size': `${typography.baseSize}px`,
+      '--title-weight': typography.titleWeight,
+      '--letter-spacing': typography.letterSpacing,
+      '--btn-radius': `${buttons.radius}px`,
+      '--btn-height': `${buttons.height}px`,
+      '--btn-padding': `0 ${buttons.padding}px`,
+      '--card-radius': `${cards.radius}px`,
+      '--card-border': cards.border ? '1px solid rgba(255,255,255,0.1)' : 'none',
+      '--card-shadow': cards.shadow ? '0 10px 30px -10px rgba(0,0,0,0.5)' : 'none',
+    } as React.CSSProperties;
+  }, [designConfig]);
   const menu = navConfig?.menu || {
     logo: logoAsset.url,
     links: [
@@ -198,7 +223,7 @@ function Index() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-950 text-white selection:bg-white selection:text-black">
+    <div className="min-h-screen bg-neutral-950 text-white selection:bg-white selection:text-black" style={designStyles as any}>
       {showIntro && <IntroAnimation onComplete={handleIntroComplete} />}
 
       {/* Header */}
