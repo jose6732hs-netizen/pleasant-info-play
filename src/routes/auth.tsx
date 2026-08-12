@@ -20,6 +20,8 @@ function AuthPage() {
     mutationFn: (vars: any) => loginAdmin({ data: vars }),
     onSuccess: (data) => {
       localStorage.setItem("064_auth_token", data.token);
+      // Set a cookie as well for server-side availability
+      document.cookie = `064_auth_token=${data.token}; path=/; max-age=86400; SameSite=Lax`;
       toast.success("Acesso autorizado!");
       navigate({ to: "/admin" });
     },
