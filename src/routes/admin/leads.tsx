@@ -5,16 +5,27 @@ import { LayoutDashboard, Users, Calendar, Briefcase, FileText, Settings, MouseP
 import logoAsset from "@/assets/logo-completa.png.asset.json";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { useState } from "react";
 
 export const Route = createFileRoute("/admin/leads")({
   component: AdminLeads,
 });
 
 function AdminLeads() {
+  const [filterType, setFilterType] = useState<string>("all");
+  const [searchPath, setSearchPath] = useState<string>("");
+
   const { data: events, isLoading } = useQuery({
     queryKey: ["analytics-events"],
     queryFn: () => getAnalyticsEvents(),
     refetchInterval: 5000,
+  });
+
+  const filteredEvents = events?.filter((event: any) => {
+    const matchesType = filterType === "all" || event.type === filterType;
+    const matchesPath = event.path.toLowerCase().includes(searchPath.toLowerCase()) || 
+                       (event.elementText?.toLowerCase().includes(searchPath.toLowerCase()));
+    return matchesType && matchesPath;
   });
 
   return (
@@ -58,6 +69,32 @@ function AdminLeads() {
           </header>
 
           <div className="grid grid-cols-1 gap-8">
+            <div className="flex flex-col md:flex-row gap-4 items-center justify-between bg-neutral-900/30 p-4 border border-white/5 rounded-sm">
+              <div className="flex items-center gap-4 w-full md:w-auto">
+                <Filter className="w-4 h-4 text-neutral-500" />
+                <select 
+                  value={filterType}
+                  onChange={(e) => setFilterType(e.target.value)}
+                  className="bg-black border border-white/10 text-xs uppercase tracking-widest p-2 rounded-sm focus:outline-none focus:border-white transition"
+                >
+                  <option value="all">Todos os Eventos</option>
+                  <option value="page_view">Páginas Vistas</option>
+                  <option value="click">Cliques</option>
+                  <option value="filter">Filtros</option>
+                  <option value="modal_open">Modais</option>
+                </select>
+              </div>
+              <div className="w-full md:w-64">
+                <input 
+                  type="text" 
+                  placeholder="BUSCAR CAMINHO OU TEXTO..."
+                  value={searchPath}
+                  onChange={(e) => setSearchPath(e.target.value)}
+                  className="w-full bg-black border border-white/10 p-2 text-[10px] uppercase tracking-widest focus:outline-none focus:border-white transition"
+                />
+              </div>
+            </div>
+
             <div className="space-y-6">
               <h2 className="text-xl font-bold tracking-tighter uppercase border-b border-white/5 pb-4">Eventos Recentes</h2>
               
@@ -75,10 +112,10 @@ function AdminLeads() {
                   <tbody className="divide-y divide-white/5">
                     {isLoading ? (
                       <tr><td colSpan={5} className="p-8 text-center text-neutral-500">Carregando eventos...</td></tr>
-                    ) : events?.length === 0 ? (
-                      <tr><td colSpan={5} className="p-8 text-center text-neutral-500">Nenhum evento capturado ainda.</td></tr>
+                    ) : filteredEvents?.length === 0 ? (
+                      <tr><td colSpan={5} className="p-8 text-center text-neutral-500">Nenhum evento corresponde aos filtros.</td></tr>
                     ) : (
-                      events?.slice().reverse().map((event: any) => (
+                      filteredEvents?.slice().reverse().map((event: any) => (
                         <tr key={event.id} className="hover:bg-white/5 transition-colors">
                           <td className="p-4 whitespace-nowrap">
                             <div className="flex items-center gap-2">
