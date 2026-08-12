@@ -15,7 +15,8 @@ import {
   Monitor,
   Clock,
   TrendingUp,
-  ArrowLeft
+  ArrowLeft,
+  Users
 } from "lucide-react";
 import { useMemo } from "react";
 import { format } from "date-fns";
