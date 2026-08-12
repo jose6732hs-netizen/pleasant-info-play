@@ -230,11 +230,11 @@ export const publishPage = createServerFn({ method: "POST" })
 export const saveSectionDraft = createServerFn({ method: "POST" })
   .inputValidator((d) => z.object({ id: z.string(), content: z.any(), styles: z.any() }).parse(d))
   .handler(async ({ data }) => {
-    const idx = sectionsStore.findIndex(s => s.id === data.id);
-    if (idx !== -1) {
-      sectionsStore[idx].draft_content = data.content;
-      sectionsStore[idx].draft_styles = data.styles;
-      const page = pagesStore.find(p => p.id === sectionsStore[idx].page_id);
+    const section = sectionsStore.find(s => s.id === data.id);
+    if (section) {
+      section.draft_content = data.content;
+      section.draft_styles = data.styles;
+      const page = pagesStore.find(p => p.id === section.page_id);
       if (page) page.status = 'RASCUNHO';
     }
     return { success: true };
