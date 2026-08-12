@@ -65,7 +65,8 @@ let sectionsStore: PageSection[] = [
     content: {
       title: "MAIS DO QUE BOOKING. CONEXÕES QUE MOVIMENTAM O MERCADO.",
       text: "A 064 TALENTS é uma empresa de Artist Booking & Entertainment criada em Goiás com o propósito de conectar talentos a grandes oportunidades.",
-      highlight: "DO GOIÁS PRO MUNDO."
+      highlight: "DO GOIÁS PRO MUNDO.",
+      image_url: "https://images.unsplash.com/photo-1547478011-8a30602558a3?q=80&w=1500&auto=format&fit=crop"
     },
     created_at: new Date().toISOString()
   }
