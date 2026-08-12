@@ -29,17 +29,7 @@ export const getSiteContent = createServerFn({ method: "GET" })
 
 export const getActiveArtists = createServerFn({ method: "GET" })
   .handler(async () => {
-    return [
-      {
-        id: "1",
-        name: "DJ Exemplo",
-        genre: "Eletrofunk",
-        city: "Goiânia",
-        photo_url: "https://images.unsplash.com/photo-1547478011-8a30602558a3?q=80&w=1500&auto=format&fit=crop",
-        status: "active",
-        display_order: 1
-      }
-    ];
+    return [];
   });
 
 export const submitBookingRequest = createServerFn({ method: "POST" })
