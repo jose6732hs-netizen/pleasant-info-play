@@ -89,7 +89,7 @@ function SortableSectionItem({ section, onEdit, onDuplicate, onToggleStatus, onD
       ref={setNodeRef}
       style={style}
       className={`
-        group bg-white/5 border rounded-sm p-4 transition-all
+        group bg-white/5 border rounded-sm p-4 transition-all relative
         ${isDragging ? 'border-blue-500 shadow-2xl scale-[1.02] bg-white/10' : 'border-white/5 hover:border-white/10'}
         flex items-center gap-4
       `}
@@ -119,14 +119,14 @@ function SortableSectionItem({ section, onEdit, onDuplicate, onToggleStatus, onD
         </div>
       </div>
 
-      <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+      <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity z-10">
         <button
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
             onEdit(section.id);
           }}
-          className="p-2 bg-white/5 hover:bg-blue-500/20 text-neutral-400 hover:text-blue-400 rounded-sm transition"
+          className="p-2 bg-blue-600 hover:bg-blue-500 text-white rounded-sm transition cursor-pointer shadow-lg"
           title="Editar Conteúdo"
         >
           <Edit2 className="w-4 h-4" />
@@ -453,12 +453,11 @@ function PageEditor() {
                     key={section.id} 
                     section={section}
                     onEdit={(id) => {
-                      console.log('Navigating to editor:', { pageId, sectionId: id });
-                      navigate({ 
-                        to: "/admin/editor/$pageId/edit/$sectionId", 
-                        params: { pageId: pageId as string, sectionId: id } 
-                      });
+                      const target = `/admin/editor/${pageId}/edit/${id}`;
+                      console.log('Navigating to:', target);
+                      window.location.href = target;
                     }} 
+
 
 
                     onDuplicate={handleDuplicate}

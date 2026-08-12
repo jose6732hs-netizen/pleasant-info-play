@@ -125,16 +125,38 @@ function VisualEditor() {
     }
   };
 
-  if (isLoading || !section) {
+  if (isLoading) {
     return (
       <div className="h-screen flex items-center justify-center bg-black text-white">
         <div className="flex flex-col items-center gap-4">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
-          {!isLoading && !section && <p className="text-xs uppercase tracking-widest text-neutral-500">Seção não encontrada</p>}
         </div>
       </div>
     );
   }
+
+  if (!section) {
+    return (
+      <div className="h-screen flex items-center justify-center bg-black text-white p-8 text-center">
+        <div className="max-w-md space-y-4">
+          <AlertCircle className="w-12 h-12 text-red-500 mx-auto" />
+          <h2 className="text-xl font-bold uppercase tracking-tight">Seção não encontrada</h2>
+          <p className="text-neutral-400 text-sm">
+            Não foi possível localizar a seção "{sectionId}" na página "{pageId}". 
+            Isso pode ocorrer se a seção foi excluída ou se o link expirou.
+          </p>
+          <Link 
+            to="/admin/editor/$pageId" 
+            params={{ pageId }}
+            className="inline-block px-6 py-3 bg-white/10 hover:bg-white/20 text-white rounded-sm transition text-xs font-bold uppercase tracking-widest border border-white/10"
+          >
+            Voltar para a página
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
 
   return (
     <div className="h-screen flex flex-col bg-black overflow-hidden animate-in fade-in duration-500">
