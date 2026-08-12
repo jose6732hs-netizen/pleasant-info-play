@@ -8,6 +8,7 @@ import { IntroAnimation } from "@/components/IntroAnimation";
 import { BookingModal } from "@/components/BookingModal";
 import logoAsset from "@/assets/logo-completa.png.asset.json";
 import { captureClick } from "@/lib/analytics-client";
+import { useTracking } from "@/hooks/use-tracking";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({
@@ -27,6 +28,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  useTracking();
   const { data: contentData } = useSuspenseQuery({
     queryKey: ["site-content"],
     queryFn: () => getSiteContent(),
