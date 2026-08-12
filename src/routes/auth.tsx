@@ -52,8 +52,9 @@ function AuthPage() {
               type="email" 
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="sempreteste552@gmail.com"
+              placeholder="exemplo@email.com"
               className="w-full bg-black border border-white/10 p-4 rounded-sm focus:outline-none focus:border-white transition text-sm" 
+
               required
             />
           </div>
