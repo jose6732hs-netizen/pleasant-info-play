@@ -119,14 +119,14 @@ function SortableSectionItem({ section, onEdit, onDuplicate, onToggleStatus, onD
         </div>
       </div>
 
-      <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+      <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity z-10">
         <button
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
             onEdit(section.id);
           }}
-          className="p-2 bg-blue-500/20 hover:bg-blue-500/40 text-blue-400 hover:text-blue-200 rounded-sm transition cursor-pointer z-50 relative"
+          className="p-2 bg-blue-600 hover:bg-blue-500 text-white rounded-sm transition cursor-pointer shadow-lg"
           title="Editar Conteúdo"
         >
           <Edit2 className="w-4 h-4" />
