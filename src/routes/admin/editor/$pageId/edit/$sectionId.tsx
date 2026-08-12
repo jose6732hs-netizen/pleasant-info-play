@@ -17,9 +17,11 @@ import {
   Plus,
   Layers,
   Search,
-  Maximize2
+  Maximize2,
+  RefreshCw
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { RichTextEditor } from '@/components/admin/RichTextEditor';
 
 export const Route = createFileRoute('/admin/editor/$pageId/edit/$sectionId')({
   component: VisualEditor,
@@ -86,10 +88,22 @@ function VisualEditor() {
     setHasChanges(true);
   };
 
+  const restoreOriginal = () => {
+    if (!section) return;
+    if (confirm("Deseja restaurar o conteúdo original da seção? Todas as alterações não salvas serão perdidas.")) {
+      setEditContent(JSON.parse(JSON.stringify(section.content)));
+      setHasChanges(false);
+      toast.info("Conteúdo original restaurado");
+    }
+  };
+
   if (isLoading || !section) {
     return (
-      <div className="h-screen flex items-center justify-center bg-black">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
+      <div className="h-screen flex items-center justify-center bg-black text-white">
+        <div className="flex flex-col items-center gap-4">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
+          {!isLoading && !section && <p className="text-xs uppercase tracking-widest text-neutral-500">Seção não encontrada</p>}
+        </div>
       </div>
     );
   }
@@ -169,26 +183,24 @@ function VisualEditor() {
             
             <div className="space-y-6">
               {editContent && Object.keys(editContent).map((key) => (
-                <div key={key} className="space-y-2">
-                  <label className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest block">
-                    {key.replace('_', ' ')}
-                  </label>
-                  {typeof editContent[key] === 'string' && editContent[key].length > 50 ? (
-                    <textarea 
-                      value={editContent[key]}
-                      onChange={(e) => updateField(key, e.target.value)}
-                      className="w-full bg-white/5 border border-white/5 focus:border-blue-500/50 outline-none p-3 text-sm text-white rounded-sm min-h-[100px] resize-none transition"
-                    />
-                  ) : (
-                    <input 
-                      type="text" 
-                      value={editContent[key]}
-                      onChange={(e) => updateField(key, e.target.value)}
-                      className="w-full bg-white/5 border border-white/5 focus:border-blue-500/50 outline-none p-3 text-sm text-white rounded-sm transition"
-                    />
-                  )}
-                </div>
+                <RichTextEditor 
+                  key={key}
+                  label={key.replace('_', ' ')}
+                  value={editContent[key]}
+                  onChange={(val) => updateField(key, val)}
+                  type={key.includes('title') ? 'title' : key.includes('button') ? 'button' : 'body'}
+                />
               ))}
+
+              <div className="pt-4 border-t border-white/5">
+                <button
+                  onClick={restoreOriginal}
+                  className="w-full py-3 bg-white/5 hover:bg-red-500/10 text-neutral-500 hover:text-red-400 border border-white/5 hover:border-red-500/20 rounded-sm transition text-[10px] font-bold uppercase tracking-widest flex items-center justify-center gap-2"
+                >
+                  <RefreshCw className="w-3 h-3" />
+                  Restaurar Original
+                </button>
+              </div>
             </div>
           </div>
           

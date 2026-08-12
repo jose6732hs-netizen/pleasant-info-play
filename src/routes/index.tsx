@@ -107,12 +107,9 @@ function Index() {
             <div className="flex justify-center mb-8">
               <img src={logoAsset.url} alt="064 TALENTS" className="w-full max-w-[500px] h-auto object-contain" />
             </div>
-            <p className="text-lg md:text-xl font-light uppercase tracking-[0.3em] text-neutral-300">
-              {hero.subtitle || "Artist Booking & Entertainment"}
-            </p>
-            <p className="text-md font-bold uppercase tracking-widest pt-4">
-              {hero.description || "Representando talentos. Criando conexões."}
-            </p>
+            <div className="text-lg md:text-xl font-light uppercase tracking-[0.3em] text-neutral-300 prose prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: hero.subtitle || "Artist Booking & Entertainment" }} />
+            <div className="text-md font-bold uppercase tracking-widest pt-4 prose prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: hero.description || "Representando talentos. Criando conexões." }} />
+
             <div className="flex gap-4 justify-center pt-8">
               <button onClick={() => openBooking()} className="border border-white/20 hover:bg-white hover:text-black px-8 py-3 rounded-full uppercase text-xs font-bold tracking-widest transition">
                 Contrate um artista
@@ -122,9 +119,7 @@ function Index() {
               </button>
             </div>
             {hero.complementary && (
-              <p className="text-xs uppercase tracking-[0.4em] text-neutral-500 pt-8 opacity-50">
-                {hero.complementary}
-              </p>
+              <div className="text-xs uppercase tracking-[0.4em] text-neutral-500 pt-8 opacity-50 prose prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: hero.complementary }} />
             )}
           </div>
 
@@ -187,15 +182,10 @@ function Index() {
         <section id="sobre" className="py-24 px-6 md:px-20 bg-neutral-900/30">
           <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-16 items-center">
             <div className="space-y-6">
-              <h2 className="text-4xl md:text-5xl font-bold tracking-tighter leading-tight uppercase">
-                {about.title || "MAIS DO QUE BOOKING."}
-              </h2>
-              <p className="text-neutral-400 leading-relaxed text-lg">
-                {about.text || "A 064 TALENTS é uma empresa de Artist Booking & Entertainment..."}
-              </p>
-              <p className="text-2xl font-bold uppercase italic tracking-wider text-white">
-                {about.highlight || "DO GOIÁS PRO MUNDO."}
-              </p>
+              <h2 className="text-4xl md:text-5xl font-bold tracking-tighter leading-tight uppercase prose prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: about.title || "MAIS DO QUE BOOKING." }} />
+              <div className="text-neutral-400 leading-relaxed text-lg prose prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: about.text || "A 064 TALENTS é uma empresa de Artist Booking & Entertainment..." }} />
+              <div className="text-2xl font-bold uppercase italic tracking-wider text-white prose prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: about.highlight || "DO GOIÁS PRO MUNDO." }} />
+
             </div>
             <div className="aspect-[4/5] bg-neutral-800 rounded-sm overflow-hidden shadow-2xl">
                <img src="https://images.unsplash.com/photo-1547478011-8a30602558a3?q=80&w=1500&auto=format&fit=crop" alt="Stage" className="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700" />
