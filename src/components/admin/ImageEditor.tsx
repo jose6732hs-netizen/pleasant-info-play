@@ -185,7 +185,7 @@ export function ImageEditor({ value, onChange, label }: ImageEditorProps) {
             {value.overlay && (
               <div className="w-24">
                 <Slider 
-                  value={[value.overlayOpacity ?? 0]} 
+                  value={[value.overlayOpacity || 0]} 
                   onValueChange={([v]) => updateField({ overlayOpacity: v })}
                   max={100}
                   step={1}

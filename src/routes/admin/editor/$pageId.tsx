@@ -150,7 +150,7 @@ function PageEditor() {
 
   const { data: sections, isLoading } = useQuery({
     queryKey: ['sections', pageId],
-    queryFn: () => getPageSections(pageId),
+    queryFn: () => getPageSections({ data: pageId }),
   });
 
   const updateOrderMutation = useMutation({
