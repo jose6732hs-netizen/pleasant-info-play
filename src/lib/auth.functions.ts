@@ -23,7 +23,7 @@ export const loginAdmin = createServerFn({ method: "POST" })
 
       // We'll return a cookie header for session management
       return { 
-        success: true, 
+        success: true as const, 
         user: { id: "admin-1", email: data.email, role: "admin" },
         token: "mock-jwt-token-064"
       };
@@ -38,7 +38,10 @@ export const loginAdmin = createServerFn({ method: "POST" })
       }
     });
 
-    throw new Error("Não foi possível realizar o login. Verifique suas credenciais.");
+    return {
+      success: false as const,
+      error: "Não foi possível realizar o login. Verifique suas credenciais.",
+    };
   });
 
 export const checkAuth = createServerFn({ method: "GET" })
