@@ -1,4 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { getActiveArtists } from "@/lib/cms.functions";
 import { LayoutDashboard, Users, Calendar, Briefcase, FileText, Settings, Search, Plus, MousePointer2 } from "lucide-react";
 import logoAsset from "@/assets/logo-completa.png.asset.json";
 
