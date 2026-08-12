@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 
 interface ArtistFormProps {
-  initialData?: Artist | null;
+  initialData?: Artist | null | undefined;
   initialVideos?: ArtistVideo[];
   initialGallery?: ArtistGallery[];
   onSave: (artist: Artist, videos: ArtistVideo[], gallery: ArtistGallery[]) => Promise<void>;
