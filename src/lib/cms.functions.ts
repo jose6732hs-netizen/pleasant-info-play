@@ -48,8 +48,11 @@ let sectionsStore: PageSection[] = [
       title: "064 TALENTS",
       subtitle: "Artist Booking & Entertainment",
       description: "Representando talentos. Criando conexões.",
-      complementary: "Do Goiás pro mundo."
+      complementary: "Do Goiás pro mundo.",
+      image_url: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=2574&auto=format&fit=crop",
+      video_url: ""
     },
+
     created_at: new Date().toISOString()
   },
   {
