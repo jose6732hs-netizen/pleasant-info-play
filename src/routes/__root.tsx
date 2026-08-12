@@ -9,7 +9,7 @@ import {
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 import { useLocation } from "@tanstack/react-router";
-import { capturePageView, captureClick } from "../lib/analytics-client";
+import { capturePageView, captureClick, trackEvent } from "../lib/analytics-client";
 import { Toaster } from "../components/ui/sonner";
 
 import appCss from "../styles.css?url";
