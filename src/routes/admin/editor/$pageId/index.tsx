@@ -89,9 +89,9 @@ function SortableSectionItem({ section, onEdit, onDuplicate, onToggleStatus, onD
       ref={setNodeRef}
       style={style}
       className={`
-        group bg-white/5 border rounded-sm p-4 transition-all relative
+        group bg-white/5 border rounded-sm p-3 md:p-4 transition-all relative
         ${isDragging ? 'border-blue-500 shadow-2xl scale-[1.02] bg-white/10' : 'border-white/5 hover:border-white/10'}
-        flex items-center gap-4
+        flex flex-wrap md:flex-nowrap items-center gap-3 md:gap-4
       `}
     >
       <button 
@@ -119,7 +119,7 @@ function SortableSectionItem({ section, onEdit, onDuplicate, onToggleStatus, onD
         </div>
       </div>
 
-      <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity z-10">
+      <div className="flex items-center gap-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 md:focus-within:opacity-100 transition-opacity z-10 shrink-0">
         <button
           onClick={(e) => {
             e.preventDefault();
@@ -259,25 +259,26 @@ function PageEditor() {
   });
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-500 max-w-5xl mx-auto">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
+    <div className="space-y-8 animate-in fade-in duration-500 max-w-5xl mx-auto p-4 md:p-8 w-full overflow-x-hidden">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div className="flex items-start gap-3 md:gap-4 min-w-0">
           <Link 
             to="/admin/editor"
-            className="p-2 bg-white/5 hover:bg-white/10 text-neutral-400 hover:text-white rounded-sm transition"
+            className="p-2 bg-white/5 hover:bg-white/10 text-neutral-400 hover:text-white rounded-sm transition shrink-0"
           >
             <ChevronLeft className="w-5 h-5" />
           </Link>
-          <div>
-            <div className="flex items-center gap-3">
-              <h1 className="text-3xl font-bold tracking-tight text-white">{page?.name}</h1>
+          <div className="min-w-0">
+            <div className="flex flex-wrap items-center gap-2 md:gap-3">
+              <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-white break-words">{page?.name}</h1>
               <span className="text-xs text-neutral-500 font-mono tracking-wider">{page?.slug}</span>
             </div>
-            <p className="text-neutral-400">Arraste para reordenar ou selecione uma seção para editar.</p>
+            <p className="text-neutral-400 text-sm">Arraste para reordenar ou selecione uma seção para editar.</p>
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
+
             {saveStatus === 'saving' && (
                 <div className="flex items-center gap-2 text-xs text-blue-400 animate-pulse">
                     <Save className="w-3 h-3" />
@@ -453,10 +454,12 @@ function PageEditor() {
                     key={section.id} 
                     section={section}
                     onEdit={(id) => {
-                      const target = `/admin/editor/${pageId}/edit/${id}`;
-                      console.log('Navigating to:', target);
-                      window.location.href = target;
-                    }} 
+                      navigate({
+                        to: '/admin/editor/$pageId/edit/$sectionId',
+                        params: { pageId, sectionId: id },
+                      });
+                    }}
+
 
 
 
