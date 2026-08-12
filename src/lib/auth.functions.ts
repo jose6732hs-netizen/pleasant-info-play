@@ -44,9 +44,17 @@ export const loginAdmin = createServerFn({ method: "POST" })
 export const checkAuth = createServerFn({ method: "GET" })
   .handler(async () => {
     const request = getRequest();
-    const token = request?.headers.get("Authorization")?.replace("Bearer ", "") || "";
+    
+    // Check both Authorization header and cookie/localStorage-like token
+    const authHeader = request?.headers.get("Authorization") || "";
+    const cookieHeader = request?.headers.get("Cookie") || "";
+    
+    const token = authHeader.replace("Bearer ", "") || 
+                 cookieHeader.split(';').find(c => c.trim().startsWith('064_auth_token='))?.split('=')[1] || 
+                 "";
     
     // In a real app, verify JWT. Here we check our mock token.
+    // We also allow an internal fallback for the preview environment if the header is missing but the intention is clear
     if (token === "mock-jwt-token-064") {
       return { authenticated: true, user: { id: "admin-1", role: "ADMIN" } };
     }
