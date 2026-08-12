@@ -39,6 +39,7 @@ export function AdminSidebar({ currentPath }: AdminSidebarProps) {
     { to: "/admin/editor", label: "Editor do Site", icon: Edit3 },
     { to: "/admin/artistas", label: "Ranking Artistas", icon: Award },
     { to: "/admin/artistas/gerenciar", label: "Gerenciar Artistas", icon: Users },
+    { to: "/admin/usuarios", label: "Gerenciar Usuários", icon: Users },
     { to: "/admin/leads", label: "Inteligência de Tráfego", icon: MousePointer2 },
     { to: "/admin/agenda", label: "Agenda", icon: Calendar },
     { to: "/admin/contratos", label: "Contratos", icon: Briefcase },
