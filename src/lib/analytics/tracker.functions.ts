@@ -36,15 +36,15 @@ export interface AnalyticsEvent {
     resolution: string | undefined;
   } | undefined;
   location?: {
-    city?: string;
-    region?: string;
-    region_code?: string;
-    country?: string;
-    country_code?: string;
-    latitude?: number;
-    longitude?: number;
-    timezone?: string;
-    isp?: string;
+    city?: string | undefined;
+    region?: string | undefined;
+    region_code?: string | undefined;
+    country?: string | undefined;
+    country_code?: string | undefined;
+    latitude?: number | undefined;
+    longitude?: number | undefined;
+    timezone?: string | undefined;
+    isp?: string | undefined;
   };
 }
 
@@ -76,7 +76,15 @@ export const trackRealEvent = createServerFn({ method: "POST" })
     metadata: z.any().optional(),
     client_info: ClientInfoSchema,
   }).parse(data))
-  .handler(async ({ data, request }) => {
+  .handler(async ({ data }) => {
+    // In TanStack Start, the request is available in the global context for server functions
+    const { getWebRequest } = await import("@tanstack/react-start/server");
+    const request = getWebRequest();
+    
+    if (!request) {
+      console.warn("Could not get request in server function");
+    }
+
     // Get geo info
     const location = await getGeoInfo(request);
 

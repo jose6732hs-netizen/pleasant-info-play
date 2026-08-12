@@ -17,15 +17,15 @@ export interface UserSession {
     resolution: string;
   };
   location?: {
-    city?: string;
-    region?: string;
-    region_code?: string;
-    country?: string;
-    country_code?: string;
-    latitude?: number;
-    longitude?: number;
-    timezone?: string;
-    isp?: string;
+    city?: string | undefined;
+    region?: string | undefined;
+    region_code?: string | undefined;
+    country?: string | undefined;
+    country_code?: string | undefined;
+    latitude?: number | undefined;
+    longitude?: number | undefined;
+    timezone?: string | undefined;
+    isp?: string | undefined;
   };
 }
 
