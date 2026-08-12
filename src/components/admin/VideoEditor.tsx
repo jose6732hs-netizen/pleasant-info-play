@@ -74,6 +74,7 @@ export function VideoEditor({ value, onChange, onDelete, label }: VideoEditorPro
     
     setIsUploading(true);
     const file = acceptedFiles[0];
+    if (!file) return;
     const url = URL.createObjectURL(file);
     
     // Simulate upload delay
