@@ -56,7 +56,7 @@ import {
 import { CSS } from '@dnd-kit/utilities';
 import { toast } from 'sonner';
 
-export const Route = createFileRoute('/admin/editor/$pageId')({
+export const Route = createFileRoute('/admin/editor/$pageId/')({
   component: PageEditor,
 });
 
@@ -158,7 +158,7 @@ function SortableSectionItem({ section, onEdit, onDuplicate, onToggleStatus, onD
 }
 
 function PageEditor() {
-  const { pageId } = useParams({ from: '/admin/editor/$pageId' });
+  const { pageId } = useParams({ from: '/admin/editor/$pageId/' });
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
