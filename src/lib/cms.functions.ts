@@ -11,6 +11,7 @@ export interface Page {
   name: string;
   slug: string;
   status: 'RASCUNHO' | 'PUBLICADO';
+  config?: any;
   created_at: string;
 }
 
@@ -30,7 +31,28 @@ export interface PageSection {
 
 let pagesStore: Page[] = [
   { id: 'home', name: 'Página Inicial', slug: '/', status: 'PUBLICADO', created_at: new Date().toISOString() },
-  { id: 'artistas', name: 'Artistas', slug: '/artistas', status: 'PUBLICADO', created_at: new Date().toISOString() },
+  { id: 'artistas', name: 'Artistas', slug: '/artistas', status: 'PUBLICADO', created_at: new Date().toISOString(), config: {
+    title: "Talentos",
+    subtitle: "Conheça o casting oficial 064 Talents.",
+    introText: "",
+    bannerUrl: "",
+    columnsDesktop: 3,
+    columnsTablet: 2,
+    columnsMobile: 1,
+    showGenre: true,
+    showCity: true,
+    showDescription: false,
+    showViewButton: true,
+    showBookingButton: true,
+    showFeaturedFirst: true,
+    featuredCount: 3,
+    enableFilter: true,
+    enableSearch: true,
+    cardStyle: 'glass',
+    cardHover: 'zoom',
+    spacing: 'medium',
+    background: 'black'
+  } },
   { id: 'servicos', name: 'Serviços', slug: '/servicos', status: 'PUBLICADO', created_at: new Date().toISOString() },
   { id: 'sobre', name: 'Sobre Nós', slug: '/sobre', status: 'PUBLICADO', created_at: new Date().toISOString() },
   { id: 'contratantes', name: 'Contratantes', slug: '/contratantes', status: 'PUBLICADO', created_at: new Date().toISOString() },
@@ -120,6 +142,20 @@ export const deleteSection = createServerFn({ method: "POST" })
   .handler(async ({ data: id }) => {
     sectionsStore = sectionsStore.filter(s => s.id !== id);
     return { success: true };
+  });
+
+export const savePageConfig = createServerFn({ method: "POST" })
+  .validator((data: { pageId: string, config: any }) => z.object({
+    pageId: z.string(),
+    config: z.any()
+  }).parse(data))
+  .handler(async ({ data }) => {
+    const page = pagesStore.find(p => p.id === data.pageId);
+    if (page) {
+      page.config = data.config;
+      return { success: true };
+    }
+    return { success: false, error: 'Page not found' };
   });
 
 export const getSiteContent = createServerFn({ method: "GET" })

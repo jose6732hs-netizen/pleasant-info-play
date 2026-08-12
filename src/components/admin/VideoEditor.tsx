@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Play, X, Settings2, Trash2, GripVertical, Youtube, Video, ExternalLink } from 'lucide-react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Play, X, Settings2, Trash2, GripVertical, Youtube, Video, ExternalLink, Upload, Link as LinkIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -12,6 +12,8 @@ import {
   SelectValue 
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
+import { useDropzone } from 'react-dropzone';
+import { cn } from '@/lib/utils';
 
 export interface VideoConfig {
   id: string;
@@ -38,6 +40,7 @@ interface VideoEditorProps {
 
 export function VideoEditor({ value, onChange, onDelete, label }: VideoEditorProps) {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
 
   useEffect(() => {
     if (!value.url) {
@@ -66,8 +69,29 @@ export function VideoEditor({ value, onChange, onDelete, label }: VideoEditorPro
     onChange({ ...value, ...updates });
   };
 
+  const onDrop = useCallback(async (acceptedFiles: File[]) => {
+    if (acceptedFiles.length === 0) return;
+    
+    setIsUploading(true);
+    const file = acceptedFiles[0];
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    
+    // Simulate upload delay
+    setTimeout(() => {
+      updateField({ url, source: 'direct' });
+      setIsUploading(false);
+    }, 1000);
+  }, [value, onChange]);
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: { 'video/*': ['.mp4', '.mov', '.webm'] },
+    multiple: false
+  });
+
   return (
-    <div className="space-y-6 bg-neutral-900/50 p-4 border border-white/5 rounded-sm">
+    <div className="space-y-6 bg-neutral-900/50 p-4 border border-white/5 rounded-sm animate-in fade-in duration-500">
       <div className="flex justify-between items-center">
         {label && (
           <label className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest block">
@@ -110,12 +134,12 @@ export function VideoEditor({ value, onChange, onDelete, label }: VideoEditorPro
           ) : (
             <div className="absolute inset-0 flex flex-col items-center justify-center text-neutral-700 gap-2">
               <Play className="w-12 h-12 opacity-20" />
-              <p className="text-[9px] font-bold uppercase tracking-widest">Aguardando URL</p>
+              <p className="text-[9px] font-bold uppercase tracking-widest">Aguardando URL ou Upload</p>
             </div>
           )}
         </div>
 
-        {/* Basic Config */}
+        {/* Source & URL */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
             <Label className="text-[9px] uppercase tracking-widest text-neutral-500">Fonte</Label>
@@ -129,18 +153,45 @@ export function VideoEditor({ value, onChange, onDelete, label }: VideoEditorPro
               <SelectContent className="bg-neutral-900 border-white/10">
                 <SelectItem value="youtube">YouTube</SelectItem>
                 <SelectItem value="vimeo">Vimeo</SelectItem>
-                <SelectItem value="direct">URL Direta (MP4)</SelectItem>
+                <SelectItem value="direct">Upload Direto / URL MP4</SelectItem>
               </SelectContent>
             </Select>
           </div>
           <div className="space-y-2">
-            <Label className="text-[9px] uppercase tracking-widest text-neutral-500">URL do Vídeo</Label>
-            <Input 
-              value={value.url} 
-              onChange={(e) => updateField({ url: e.target.value })}
-              className="bg-black border-white/10 text-xs h-9"
-              placeholder="https://..."
-            />
+            <Label className="text-[9px] uppercase tracking-widest text-neutral-500">URL Externa</Label>
+            <div className="relative">
+              <Input 
+                value={value.url} 
+                onChange={(e) => updateField({ url: e.target.value })}
+                className="bg-black border-white/10 text-xs h-9 pl-8"
+                placeholder="https://youtube.com/..."
+              />
+              <LinkIcon className="w-3 h-3 absolute left-3 top-1/2 -translate-y-1/2 text-neutral-600" />
+            </div>
+          </div>
+        </div>
+
+        {/* Upload Zone */}
+        <div 
+          {...getRootProps()} 
+          className={cn(
+            "border-2 border-dashed rounded-sm p-8 transition-all cursor-pointer flex flex-col items-center justify-center gap-3",
+            isDragActive ? "border-blue-500 bg-blue-500/5" : "border-white/5 hover:border-white/10 bg-white/[0.02]",
+            isUploading && "opacity-50 pointer-events-none"
+          )}
+        >
+          <input {...getInputProps()} />
+          <div className={cn(
+            "p-3 rounded-full",
+            isDragActive ? "bg-blue-500 text-white" : "bg-white/5 text-neutral-500"
+          )}>
+            {isUploading ? <Upload className="w-6 h-6 animate-bounce" /> : <Upload className="w-6 h-6" />}
+          </div>
+          <div className="text-center">
+            <p className="text-[10px] font-bold uppercase tracking-widest text-white">
+              {isUploading ? "PROCESSANDO VÍDEO..." : "ARRASRE VÍDEO PARA UPLOAD"}
+            </p>
+            <p className="text-[9px] text-neutral-600 uppercase tracking-widest mt-1">MP4, MOV OU WEBM (Máx 50MB)</p>
           </div>
         </div>
 
@@ -150,15 +201,6 @@ export function VideoEditor({ value, onChange, onDelete, label }: VideoEditorPro
             value={value.title} 
             onChange={(e) => updateField({ title: e.target.value })}
             className="bg-black border-white/10 text-xs h-9"
-          />
-        </div>
-
-        <div className="space-y-2">
-          <Label className="text-[9px] uppercase tracking-widest text-neutral-500">Descrição / Legenda</Label>
-          <Textarea 
-            value={value.description} 
-            onChange={(e) => updateField({ description: e.target.value })}
-            className="bg-black border-white/10 text-xs min-h-[60px] resize-none"
           />
         </div>
 
@@ -197,14 +239,6 @@ export function VideoEditor({ value, onChange, onDelete, label }: VideoEditorPro
                 onCheckedChange={(v) => updateField({ muted: v })}
               />
             </div>
-          </div>
-
-          <div className="flex items-center gap-3 p-3 bg-black/30 rounded-sm">
-            <Switch 
-              checked={value.isPrimary} 
-              onCheckedChange={(v) => updateField({ isPrimary: v })}
-            />
-            <Label className="text-[9px] uppercase tracking-widest text-neutral-400">Vídeo Principal da Seção</Label>
           </div>
         </div>
       </div>

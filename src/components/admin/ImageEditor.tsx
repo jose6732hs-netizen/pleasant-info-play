@@ -122,12 +122,21 @@ export function ImageEditor({ value, onChange, label }: ImageEditorProps) {
             />
           </div>
           <div className="space-y-2">
-            <Label className="text-[9px] uppercase tracking-widest text-neutral-500">Título</Label>
-            <Input 
-              value={value.title || ''} 
-              onChange={(e) => updateField({ title: e.target.value })}
-              className="bg-black border-white/10 text-xs h-9"
-            />
+            <Label className="text-[9px] uppercase tracking-widest text-neutral-500">URL da Imagem</Label>
+            <div className="flex gap-2">
+              <Input 
+                value={value.url} 
+                onChange={(e) => updateField({ url: e.target.value })}
+                className="bg-black border-white/10 text-xs h-9"
+                placeholder="URL externa..."
+              />
+              <Input 
+                value={value.title || ''} 
+                onChange={(e) => updateField({ title: e.target.value })}
+                className="bg-black border-white/10 text-xs h-9 w-1/3"
+                placeholder="Título"
+              />
+            </div>
           </div>
         </div>
 
