@@ -48,6 +48,24 @@ function Index() {
     queryKey: ["site-content"],
     queryFn: () => getSiteContent(),
   });
+  
+  const { data: analyticsEvents } = useSuspenseQuery({
+    queryKey: ["analytics-events"],
+    queryFn: () => getRealAnalyticsEvents(),
+  });
+
+  const [auditMode, setAuditMode] = useState(false);
+  
+  // Toggle audit mode with Ctrl+Shift+A
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.shiftKey && e.key === 'A') {
+        setAuditMode(prev => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   const { data: artists } = useSuspenseQuery({
     queryKey: ["active-artists"],
