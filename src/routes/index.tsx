@@ -46,12 +46,15 @@ function Index() {
     queryFn: () => getSiteContent(),
   });
   
-  const { data: analyticsEvents } = useSuspenseQuery({
+  const [auditMode, setAuditMode] = useState(false);
+
+  const { data: analyticsEvents } = useQuery({
     queryKey: ["analytics-events"],
-    queryFn: () => getRealAnalyticsEvents(),
+    queryFn: () => getRealAnalyticsEvents().catch(() => []),
+    enabled: auditMode,
+    retry: false,
   });
 
-  const [auditMode, setAuditMode] = useState(false);
   
   // Toggle audit mode with Ctrl+Shift+A
   useEffect(() => {
