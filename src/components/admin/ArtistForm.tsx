@@ -4,6 +4,7 @@ import { Save, Image as ImageIcon, Video, Globe, Info, FileText, Search, User, C
 import { ArtistProfile } from '@/components/ArtistProfile';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
+import { RichTextEditor } from './RichTextEditor';
 
 interface ArtistFormProps {
   initialData?: Artist | null | undefined;
