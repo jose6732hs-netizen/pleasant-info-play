@@ -124,7 +124,7 @@ function AdminArtists() {
           </div>
           
           <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-widest text-neutral-600">
-            <span>Mostrando 4 artistas</span>
+            <span>Mostrando {artists?.length || 0} artistas</span>
             <div className="flex gap-2">
               <button className="p-2 border border-white/5 hover:bg-white/5 transition disabled:opacity-50" disabled>Anterior</button>
               <button className="p-2 border border-white/5 hover:bg-white/5 transition disabled:opacity-50" disabled>Próximo</button>
