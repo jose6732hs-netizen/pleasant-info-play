@@ -17,9 +17,11 @@ import {
   Tablet,
   CheckCircle2,
   AlertCircle,
-  FileCode
+  FileCode,
+  LayoutTemplate
 } from 'lucide-react';
 import { ArtistsPageEditor } from '@/components/admin/ArtistsPageEditor';
+import { ArtistTemplateEditor } from '@/components/admin/ArtistTemplateEditor';
 import {
   DndContext,
   closestCenter,
@@ -315,7 +317,36 @@ function PageEditor() {
           <ArtistsPageEditor 
             value={page?.config || {}} 
             onChange={(config) => {
-              // We update local cache immediately for preview-like feel
+              queryClient.setQueryData(['page', pageId], (old: any) => ({ ...old, config }));
+            }} 
+          />
+        </div>
+      )}
+
+      {pageId === 'artist_template' && (
+        <div className="bg-white/5 border border-white/10 rounded-sm p-8 space-y-6">
+          <div className="flex items-center justify-between border-b border-white/5 pb-6">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-purple-500/10 rounded-sm text-purple-500">
+                <LayoutTemplate className="w-5 h-5" />
+              </div>
+              <div>
+                <h2 className="text-xl font-bold text-white uppercase tracking-tight">Template Global de Artistas</h2>
+                <p className="text-xs text-neutral-500 uppercase tracking-widest mt-1">Configure a estrutura visual padrão para todos os perfis</p>
+              </div>
+            </div>
+            <button 
+              onClick={() => saveConfigMutation.mutate(page?.config)}
+              className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-sm transition text-[10px] font-bold uppercase tracking-widest border border-white/10"
+            >
+              <Save className="w-4 h-4" />
+              Salvar Template
+            </button>
+          </div>
+          
+          <ArtistTemplateEditor 
+            value={page?.config || {}} 
+            onChange={(config) => {
               queryClient.setQueryData(['page', pageId], (old: any) => ({ ...old, config }));
             }} 
           />

@@ -57,6 +57,24 @@ let pagesStore: Page[] = [
   { id: 'sobre', name: 'Sobre Nós', slug: '/sobre', status: 'PUBLICADO', created_at: new Date().toISOString() },
   { id: 'contratantes', name: 'Contratantes', slug: '/contratantes', status: 'PUBLICADO', created_at: new Date().toISOString() },
   { id: 'contato', name: 'Contato', slug: '/contato', status: 'PUBLICADO', created_at: new Date().toISOString() },
+  { id: 'artist_template', name: 'Template de Artista', slug: '/template/artista', status: 'PUBLICADO', created_at: new Date().toISOString(), config: {
+    blocks: [
+      { id: 'hero', name: 'Hero (Imagem & Nome)', active: true, order: 0 },
+      { id: 'video', name: 'Vídeo Principal', active: true, order: 1 },
+      { id: 'bio', name: 'Biografia', active: true, order: 2 },
+      { id: 'gallery', name: 'Galeria de Fotos', active: true, order: 3 },
+      { id: 'trajectory', name: 'Trajetória / História', active: true, order: 4 },
+      { id: 'social', name: 'Redes Sociais', active: true, order: 5 },
+      { id: 'cta', name: 'Chamada para Ação (CTA)', active: true, order: 6 },
+    ],
+    heroStyle: 'cinematic',
+    showGenre: true,
+    showDescription: true,
+    bookingButtons: {
+      contract: true,
+      quote: true
+    }
+  } },
 ];
 
 let sectionsStore: PageSection[] = [
