@@ -34,7 +34,7 @@ function AdminAgenda() {
     queryFn: () => getActiveArtists(),
   });
 
-  const [selectedArtistId, setSelectedArtistId] = useState<string>(artists?.[0]?.id || "1");
+  const [selectedArtistId, setSelectedArtistId] = useState<string>(artists?.[0]?.id || "");
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [isAddEventOpen, setIsAddEventOpen] = useState(false);
   const [newEvent, setNewEvent] = useState({
