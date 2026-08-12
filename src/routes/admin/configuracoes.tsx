@@ -51,7 +51,13 @@ function AdminSettings() {
           </div>
 
           <div className="flex justify-end pt-8">
-            <button className="bg-destructive text-white px-8 py-3 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-destructive/80 transition">
+            <button 
+              onClick={() => {
+                localStorage.removeItem("064_auth_token");
+                window.location.href = "/auth";
+              }}
+              className="bg-destructive text-white px-8 py-3 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-destructive/80 transition"
+            >
                 Sair do Sistema
             </button>
           </div>
