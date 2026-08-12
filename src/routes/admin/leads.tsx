@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { getAnalyticsEvents, clearAnalyticsEvents } from "@/lib/analytics.functions";
+import { getRealAnalyticsEvents, clearRealAnalyticsEvents } from "@/lib/analytics/tracker.functions";
 import { MousePointer2, MapPin, Clock, Globe, Filter } from "lucide-react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -16,7 +16,7 @@ function AdminLeads() {
 
   const { data: events, isLoading, refetch } = useQuery({
     queryKey: ["analytics-events"],
-    queryFn: () => getAnalyticsEvents(),
+    queryFn: () => getRealAnalyticsEvents(),
     refetchInterval: 5000,
   });
 
@@ -37,7 +37,7 @@ function AdminLeads() {
         <button 
           onClick={async () => {
             if (confirm("Deseja realmente limpar todos os logs?")) {
-              await clearAnalyticsEvents();
+              await clearRealAnalyticsEvents();
               refetch();
             }
           }}

@@ -39,7 +39,7 @@ export function BookingModal({ isOpen, onClose, initialArtistId }: BookingModalP
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    captureClick(window.location.pathname, "Enviar Solicitação de Booking", "booking-submit-btn", { artistId: form.artist_id });
+    captureClick("Enviar Solicitação de Booking", "booking-submit-btn", { artistId: form.artist_id });
     mutation.mutate({ data: form });
   };
 

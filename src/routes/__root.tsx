@@ -9,7 +9,7 @@ import {
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 import { useLocation } from "@tanstack/react-router";
-import { capturePageView, captureClick } from "../lib/analytics-client";
+import { capturePageView, captureClick, trackEvent } from "../lib/analytics-client";
 import { Toaster } from "../components/ui/sonner";
 
 import appCss from "../styles.css?url";
@@ -122,7 +122,13 @@ function RootComponent() {
   const location = useLocation();
 
   useEffect(() => {
-    // Initial tracking
+    // Session start tracking (first hit in session)
+    if (!sessionStorage.getItem("064_tracked_session")) {
+      trackEvent('session_start');
+      sessionStorage.setItem("064_tracked_session", "true");
+    }
+
+    // Page view tracking
     capturePageView(location.pathname);
 
     // Global click listener for generic tracking
@@ -132,7 +138,7 @@ function RootComponent() {
       if (clickable) {
         const text = clickable.textContent?.trim() || "";
         const id = clickable.id || undefined;
-        captureClick(window.location.pathname, text, id);
+        captureClick(text, id);
       }
     };
 

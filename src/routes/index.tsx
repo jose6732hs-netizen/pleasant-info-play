@@ -8,6 +8,7 @@ import { IntroAnimation } from "@/components/IntroAnimation";
 import { BookingModal } from "@/components/BookingModal";
 import logoAsset from "@/assets/logo-completa.png.asset.json";
 import { captureClick } from "@/lib/analytics-client";
+import { useTracking } from "@/hooks/use-tracking";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({
@@ -27,6 +28,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  useTracking();
   const { data: contentData } = useSuspenseQuery({
     queryKey: ["site-content"],
     queryFn: () => getSiteContent(),
@@ -58,7 +60,7 @@ function Index() {
   const openBooking = (artistId?: string) => {
     setSelectedArtistId(artistId);
     setIsBookingModalOpen(true);
-    captureClick(window.location.pathname, "Abrir Modal de Booking", "booking-modal-trigger", { artistId });
+    captureClick("Abrir Modal de Booking", "booking-modal-trigger", { artistId });
   };
 
   const renderSection = (section: any) => {
@@ -263,7 +265,7 @@ function Index() {
                     to={`/artistas/${artist.slug || artist.id}` as any} 
                     key={artist.id} 
                     className="group relative aspect-[3/4] overflow-hidden bg-neutral-900 rounded-sm block"
-                    onClick={() => captureClick(window.location.pathname, `Ver Artista: ${artist.name}`, "artist-card-click", { artistId: artist.id })}
+                    onClick={() => captureClick(`Ver Artista: ${artist.name}`, "artist-card-click", { artistId: artist.id })}
                   >
                     <img 
                       src={artist.photo_url || "https://images.unsplash.com/photo-1547478011-8a30602558a3?q=80&w=1500&auto=format&fit=crop"} 

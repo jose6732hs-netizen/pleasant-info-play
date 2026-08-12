@@ -29,7 +29,7 @@ export function ArtistProfile({ artist, videos = [], gallery = [], isPreview = f
 
   const handleBookingClick = (type: string) => {
     if (isPreview) return;
-    captureClick(window.location.pathname, `Click Booking (${type})`, "artist-profile-booking", { artistName: artist.name });
+    captureClick(`Click Booking (${type})`, "artist-profile-booking", { artistName: artist.name });
     setIsBookingOpen(true);
   };
 
