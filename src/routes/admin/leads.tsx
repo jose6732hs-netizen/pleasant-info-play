@@ -149,7 +149,7 @@ function AdminLeads() {
       </header>
 
       {/* Control Panel */}
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 md:gap-8">
         {/* Filters Sidebar */}
         <div className="lg:col-span-1 space-y-6">
           <div className="bg-neutral-900/50 border border-white/5 p-6 space-y-6 rounded-sm">

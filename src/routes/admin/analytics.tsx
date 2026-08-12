@@ -232,7 +232,8 @@ function AdminAnalytics() {
       </div>
 
       {/* Main Chart Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 overflow-hidden">
+
         <div className="lg:col-span-2 bg-neutral-900/40 border border-white/5 p-8 rounded-sm space-y-6">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <h3 className="text-xs font-black uppercase tracking-[0.3em] flex items-center gap-2">
