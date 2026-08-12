@@ -100,12 +100,6 @@ function AuthPage() {
             <a href="/" className="text-[10px] uppercase tracking-widest text-neutral-600 hover:text-white transition">Voltar para o site</a>
         </div>
         
-        <div className="mt-8 p-4 bg-white/5 border border-white/5 rounded-sm">
-          <p className="text-[9px] text-neutral-500 uppercase font-bold tracking-widest text-center leading-relaxed">
-            Acesso Padrão (Primeira Conta):<br />
-            sempreteste552@gmail.com / Kaique@321
-          </p>
-        </div>
       </div>
     </div>
   );
