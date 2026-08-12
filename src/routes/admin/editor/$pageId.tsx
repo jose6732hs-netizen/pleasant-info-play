@@ -17,9 +17,11 @@ import {
   Tablet,
   CheckCircle2,
   AlertCircle,
-  FileCode
+  FileCode,
+  LayoutTemplate
 } from 'lucide-react';
 import { ArtistsPageEditor } from '@/components/admin/ArtistsPageEditor';
+import { ArtistTemplateEditor } from '@/components/admin/ArtistTemplateEditor';
 import {
   DndContext,
   closestCenter,
