@@ -5,6 +5,7 @@ import { format, parseISO } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { useState } from "react";
 import { Search, Filter, FileText, ChevronRight, LayoutDashboard, Users, Calendar, Briefcase, Settings, FileCheck } from "lucide-react";
+import logoAsset from "@/assets/logo-completa.png.asset.json";
 
 export const Route = createFileRoute("/admin/contratos/")({
   loader: async ({ context }) => {
