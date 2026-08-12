@@ -343,7 +343,7 @@ export function ArtistForm({ initialData, initialVideos = [], initialGallery = [
                           value={{
                             id: video.id,
                             title: video.title,
-                            description: video.description,
+                            description: video.description || '',
                             url: video.url,
                             source: video.url.includes('youtube') ? 'youtube' : video.url.includes('vimeo') ? 'vimeo' : 'direct',
                             autoplay: false,
@@ -358,15 +358,22 @@ export function ArtistForm({ initialData, initialVideos = [], initialGallery = [
                           }}
                           onChange={(v) => {
                             const newVideos = [...videos];
-                            newVideos[idx] = { 
-                              ...newVideos[idx], 
-                              title: v.title, 
-                              url: v.url, 
-                              description: v.description,
-                              order: v.isPrimary ? 0 : newVideos[idx].order || idx
-                            };
-                            setVideos(newVideos);
+                            const current = newVideos[idx];
+                            if (current) {
+                              newVideos[idx] = { 
+                                ...current, 
+                                title: v.title, 
+                                url: v.url, 
+                                description: v.description,
+                                order: v.isPrimary ? 0 : current.order || idx,
+                                id: current.id || `vid-${Date.now()}`,
+                                artist_id: current.artist_id || artist.id,
+                                status: current.status || 'ATIVO'
+                              };
+                              setVideos(newVideos);
+                            }
                           }}
+
                         />
                       ))}
                       
