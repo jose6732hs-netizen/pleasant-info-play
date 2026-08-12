@@ -290,22 +290,27 @@ export function ArtistForm({ initialData, initialVideos = [], initialGallery = [
             {activeTab === 2 && (
               <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4">
                  <div className="space-y-6">
-                    <div className="space-y-2">
-                      <label className="text-[10px] uppercase tracking-widest text-neutral-500 font-bold">Título Principal da Página</label>
-                      <input name="hero_title" value={artist.hero_title} onChange={handleInputChange} type="text" className="w-full bg-black border border-white/10 p-4 rounded-sm focus:outline-none focus:border-white transition" placeholder="Ex: VINI DJ — O SOM DO FUTURO" />
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-[10px] uppercase tracking-widest text-neutral-500 font-bold">Frase de Destaque</label>
-                      <textarea name="highlight_phrase" value={artist.highlight_phrase} onChange={handleInputChange} rows={2} className="w-full bg-black border border-white/10 p-4 rounded-sm focus:outline-none focus:border-white transition resize-none"></textarea>
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-[10px] uppercase tracking-widest text-neutral-500 font-bold">Bio Curta (Highlight)</label>
-                      <textarea name="short_bio" value={artist.short_bio} onChange={handleInputChange} rows={3} className="w-full bg-black border border-white/10 p-4 rounded-sm focus:outline-none focus:border-white transition resize-none"></textarea>
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-[10px] uppercase tracking-widest text-neutral-500 font-bold">Biografia Completa</label>
-                      <textarea name="full_bio" value={artist.full_bio} onChange={handleInputChange} rows={8} className="w-full bg-black border border-white/10 p-4 rounded-sm focus:outline-none focus:border-white transition resize-none"></textarea>
-                    </div>
+                    <RichTextEditor 
+                      label="Título Principal da Página" 
+                      value={artist.hero_title || ''} 
+                      onChange={(val) => updateArtistField('hero_title', val)} 
+                      type="title"
+                    />
+                    <RichTextEditor 
+                      label="Frase de Destaque" 
+                      value={artist.highlight_phrase || ''} 
+                      onChange={(val) => updateArtistField('highlight_phrase', val)} 
+                    />
+                    <RichTextEditor 
+                      label="Bio Curta (Highlight)" 
+                      value={artist.short_bio || ''} 
+                      onChange={(val) => updateArtistField('short_bio', val)} 
+                    />
+                    <RichTextEditor 
+                      label="Biografia Completa" 
+                      value={artist.full_bio || ''} 
+                      onChange={(val) => updateArtistField('full_bio', val)} 
+                    />
                  </div>
               </div>
             )}
