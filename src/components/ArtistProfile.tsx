@@ -43,9 +43,8 @@ export function ArtistProfile({ artist, videos = [], gallery = [], isPreview = f
             </h1>
           </div>
           
-          <p className="text-lg md:text-xl font-medium tracking-tight text-neutral-400 max-w-2xl leading-relaxed">
-            {artist.highlight_phrase || artist.subtitle}
-          </p>
+          <div className="text-lg md:text-xl font-medium tracking-tight text-neutral-400 max-w-2xl leading-relaxed prose prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: artist.highlight_phrase || artist.subtitle || "" }} />
+
           
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
             <button 
