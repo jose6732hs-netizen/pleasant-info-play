@@ -13,7 +13,11 @@ export const getUtmParams = () => {
 };
 
 export const getClientInfo = () => {
-  if (typeof window === "undefined") return {};
+  if (typeof window === "undefined") return {
+    userAgent: "SSR",
+    language: "en",
+    screenResolution: "0x0"
+  };
   return {
     userAgent: navigator.userAgent,
     language: navigator.language,
