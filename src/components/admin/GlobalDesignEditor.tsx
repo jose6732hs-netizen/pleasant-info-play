@@ -178,7 +178,7 @@ export function GlobalDesignEditor({ value, onChange }: GlobalDesignEditorProps)
                   step={1}
                   onValueChange={([v]) => onChange({
                     ...value,
-                    typography: { ...value.typography, baseSize: v }
+                    typography: { ...value.typography, baseSize: v ?? 16 }
                   })}
                 />
               </div>
@@ -235,7 +235,7 @@ export function GlobalDesignEditor({ value, onChange }: GlobalDesignEditorProps)
                   step={1}
                   onValueChange={([v]) => onChange({
                     ...value,
-                    buttons: { ...value.buttons, radius: v === 50 ? 9999 : v }
+                    buttons: { ...value.buttons, radius: (v ?? 0) === 50 ? 9999 : (v ?? 0) }
                   })}
                 />
               </div>
@@ -251,7 +251,7 @@ export function GlobalDesignEditor({ value, onChange }: GlobalDesignEditorProps)
                   step={2}
                   onValueChange={([v]) => onChange({
                     ...value,
-                    buttons: { ...value.buttons, height: v }
+                    buttons: { ...value.buttons, height: v ?? 48 }
                   })}
                 />
               </div>
@@ -267,7 +267,7 @@ export function GlobalDesignEditor({ value, onChange }: GlobalDesignEditorProps)
                   step={2}
                   onValueChange={([v]) => onChange({
                     ...value,
-                    buttons: { ...value.buttons, padding: v }
+                    buttons: { ...value.buttons, padding: v ?? 32 }
                   })}
                 />
               </div>
@@ -300,7 +300,7 @@ export function GlobalDesignEditor({ value, onChange }: GlobalDesignEditorProps)
                   step={1}
                   onValueChange={([v]) => onChange({
                     ...value,
-                    cards: { ...value.cards, radius: v }
+                    cards: { ...value.cards, radius: v ?? 0 }
                   })}
                 />
               </div>
