@@ -127,6 +127,8 @@ export const getRealAnalyticsEvents = createServerFn({ method: "GET" })
 
 export const clearRealAnalyticsEvents = createServerFn({ method: "POST" })
   .handler(async () => {
+    const { clearSessions } = await import("./session.server");
+    await clearSessions();
     return await clearEvents();
   });
 

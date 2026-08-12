@@ -16,7 +16,8 @@ import {
   Monitor,
   ChevronRight,
   RefreshCcw,
-  Tag
+  Tag,
+  ShieldCheck
 } from "lucide-react";
 import { format, isWithinInterval, parseISO, startOfDay, endOfDay, subDays } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -118,8 +119,12 @@ function AdminLeads() {
     <div className="p-6 md:p-12 space-y-8 min-h-screen bg-black">
       <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div>
-          <h1 className="text-3xl md:text-5xl font-black tracking-tighter uppercase">Inteligência de Tráfego</h1>
-          <p className="text-neutral-500 text-xs uppercase tracking-[0.3em] mt-2">Dados reais e filtros cruzados de performance.</p>
+          <h1 className="text-3xl md:text-5xl font-black tracking-tighter uppercase italic">
+            Inteligência <span className="text-neutral-500">de Tráfego</span>
+          </h1>
+          <p className="text-neutral-500 text-[9px] uppercase tracking-[0.3em] font-bold mt-2 flex items-center gap-2">
+            <ShieldCheck className="w-3 h-3" /> Auditoria Real & Validação de Tracking
+          </p>
         </div>
         <div className="flex gap-4 w-full md:w-auto">
           <button 

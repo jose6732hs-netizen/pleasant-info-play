@@ -54,3 +54,8 @@ export const getOrCreateSession = async (visitorId: string, sessionId: string, d
 export const getSessions = async () => {
   return Array.from(sessionsStore.values());
 };
+
+export const clearSessions = async () => {
+  sessionsStore.clear();
+  return { success: true };
+};
