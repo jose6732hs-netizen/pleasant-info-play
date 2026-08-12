@@ -364,7 +364,7 @@ export function ArtistForm({ initialData, initialVideos = [], initialGallery = [
                                 ...current, 
                                 title: v.title, 
                                 url: v.url, 
-                                description: v.description,
+                                description: v.description || '',
                                 order: v.isPrimary ? 0 : current.order || idx,
                                 id: current.id || `vid-${Date.now()}`,
                                 artist_id: current.artist_id || artist.id,
