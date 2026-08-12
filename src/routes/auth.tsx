@@ -3,7 +3,7 @@ import { useState } from "react";
 import { loginAdmin } from "@/lib/auth.functions";
 import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
-import { Loader2 } from "lucide-react";
+import { Loader2, Eye, EyeOff } from "lucide-react";
 import logoAsset from "@/assets/logo-completa.png.asset.json";
 
 export const Route = createFileRoute("/auth")({
@@ -14,6 +14,7 @@ function AuthPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const loginMutation = useMutation({
     mutationFn: (vars: any) => loginAdmin({ data: vars }),
@@ -56,14 +57,23 @@ function AuthPage() {
           </div>
           <div className="space-y-2">
             <label className="text-[10px] uppercase tracking-widest text-neutral-500 font-bold">Senha</label>
-            <input 
-              type="password" 
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              className="w-full bg-black border border-white/10 p-4 rounded-sm focus:outline-none focus:border-white transition text-sm" 
-              required
-            />
+            <div className="relative">
+              <input 
+                type={showPassword ? "text" : "password"} 
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+                className="w-full bg-black border border-white/10 p-4 rounded-sm focus:outline-none focus:border-white transition text-sm pr-12" 
+                required
+              />
+              <button 
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-white transition"
+              >
+                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              </button>
+            </div>
           </div>
           <button 
             type="submit"
@@ -82,7 +92,7 @@ function AuthPage() {
         <div className="flex flex-col gap-4 text-center pt-4">
             <button 
               type="button"
-              onClick={() => toast.info("Funcionalidade de recuperação de senha em desenvolvimento.")}
+              onClick={() => navigate({ to: "/forgot-password" })}
               className="text-[10px] uppercase tracking-widest text-neutral-600 hover:text-white transition"
             >
               Esqueci minha senha
