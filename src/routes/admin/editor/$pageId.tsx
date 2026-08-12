@@ -448,7 +448,11 @@ function PageEditor() {
                   <SortableSectionItem 
                     key={section.id} 
                     section={section}
-                    onEdit={(id) => navigate({ to: "/admin/editor/$pageId/edit/$sectionId", params: { pageId, sectionId: id } })} 
+                    onEdit={(id) => {
+                      console.log('Navigating to editor:', { pageId, sectionId: id });
+                      navigate({ to: "/admin/editor/$pageId/edit/$sectionId", params: { pageId: pageId as string, sectionId: id } });
+                    }} 
+
                     onDuplicate={handleDuplicate}
                     onToggleStatus={handleToggleStatus}
                     onDelete={handleDelete}
