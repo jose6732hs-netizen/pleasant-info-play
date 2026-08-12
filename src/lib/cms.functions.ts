@@ -407,6 +407,12 @@ export const getArtistBySlug = createServerFn({ method: "GET" })
 // Admin functions to manage the store
 export const getAllArtists = createServerFn({ method: "GET" })
   .handler(async (): Promise<Artist[]> => {
+    const { checkAuth } = await import("./auth.functions");
+    const auth = await checkAuth();
+    
+    if (!auth.authenticated || auth.user?.role !== 'ADMIN') {
+      throw new Error("Acesso negado: Área restrita.");
+    }
     return artistsStore;
   });
 

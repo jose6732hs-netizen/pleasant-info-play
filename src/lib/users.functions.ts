@@ -27,6 +27,20 @@ let users: User[] = [
 
 export const getUsers = createServerFn({ method: "GET" })
   .handler(async () => {
+    const { checkAuth } = await import("./auth.functions");
+    const auth = await checkAuth();
+    
+    if (!auth.authenticated || auth.user?.role !== 'ADMIN') {
+      await logAuditEvent({
+        data: {
+          type: 'UNAUTHORIZED_ACCESS_ATTEMPT',
+          result: 'FAILURE',
+          metadata: { action: 'getUsers' }
+        }
+      });
+      throw new Error("Acesso negado: Somente administradores podem listar usuários.");
+    }
+
     return users;
   });
 
@@ -85,7 +99,23 @@ export const updateUserRole = createServerFn({ method: "POST" })
     role: z.enum(['ADMIN', 'USER'])
   }).parse(data))
   .handler(async ({ data }) => {
+    const { checkAuth } = await import("./auth.functions");
+    const auth = await checkAuth();
+    
+    if (!auth.authenticated || auth.user?.role !== 'ADMIN') {
+      throw new Error("Acesso negado: Somente administradores podem alterar funções.");
+    }
+
     users = users.map(u => u.id === data.id ? { ...u, role: data.role } : u);
+    
+    await logAuditEvent({
+      data: {
+        type: 'ROLE_CHANGED',
+        result: 'SUCCESS',
+        metadata: { targetId: data.id, newRole: data.role }
+      }
+    });
+
     return { success: true };
   });
 

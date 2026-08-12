@@ -1,4 +1,4 @@
-/* 064 TALENTS - Site Oficial */
+/* 064 TALENTS - Enterprise Security Layer Active */
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { getRealAnalyticsEvents } from "@/lib/analytics/tracker.functions";
 import { useSuspenseQuery } from "@tanstack/react-query";

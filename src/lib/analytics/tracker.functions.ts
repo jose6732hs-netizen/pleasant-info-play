@@ -122,6 +122,12 @@ export const trackRealEvent = createServerFn({ method: "POST" })
 
 export const getRealAnalyticsEvents = createServerFn({ method: "GET" })
   .handler(async () => {
+    const { checkAuth } = await import("../auth.functions");
+    const auth = await checkAuth();
+    
+    if (!auth.authenticated || auth.user?.role !== 'ADMIN') {
+      throw new Error("Acesso negado: Somente administradores podem acessar dados de analytics.");
+    }
     return await queryEvents();
   });
 
