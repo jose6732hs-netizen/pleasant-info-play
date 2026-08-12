@@ -59,6 +59,9 @@ function Index() {
     return (contentData?.find((c: any) => c.section_name === sectionName)?.content || {}) as any;
   };
 
+  const hero = getContent("hero");
+  const about = getContent("about");
+
   const sections = contentData || [];
 
   const openBooking = (artistId?: string) => {
