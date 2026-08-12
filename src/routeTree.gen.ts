@@ -23,6 +23,7 @@ import { Route as AdminSolicitacoesRouteImport } from './routes/admin/solicitaco
 import { Route as ArtistasIndexRouteImport } from './routes/artistas/index'
 import { Route as ArtistasSlugRouteImport } from './routes/artistas/$slug'
 import { Route as AdminArtistasIndexRouteImport } from './routes/admin/artistas/index'
+import { Route as AdminArtistasIdRouteImport } from './routes/admin/artistas/$id'
 import { Route as AdminContratosIndexRouteImport } from './routes/admin/contratos/index'
 import { Route as AdminContratosIdRouteImport } from './routes/admin/contratos/$id'
 import { Route as AdminEditorIndexRouteImport } from './routes/admin/editor/index'
@@ -101,6 +102,11 @@ const AdminArtistasIndexRoute = AdminArtistasIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AdminArtistasRoute,
 } as any)
+const AdminArtistasIdRoute = AdminArtistasIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AdminArtistasRoute,
+} as any)
 const AdminContratosIndexRoute = AdminContratosIndexRouteImport.update({
   id: '/contratos/',
   path: '/contratos/',
@@ -154,6 +160,7 @@ export interface FileRoutesByFullPath {
   '/artistas/$slug': typeof ArtistasSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/artistas/': typeof ArtistasIndexRoute
+  '/admin/artistas/$id': typeof AdminArtistasIdRoute
   '/admin/contratos/$id': typeof AdminContratosIdRouteWithChildren
   '/admin/editor/$pageId': typeof AdminEditorPageIdRouteWithChildren
   '/admin/editor/configuracoes-globais': typeof AdminEditorConfiguracoesGlobaisRoute
@@ -175,6 +182,7 @@ export interface FileRoutesByTo {
   '/artistas/$slug': typeof ArtistasSlugRoute
   '/admin': typeof AdminIndexRoute
   '/artistas': typeof ArtistasIndexRoute
+  '/admin/artistas/$id': typeof AdminArtistasIdRoute
   '/admin/contratos/$id': typeof AdminContratosIdRouteWithChildren
   '/admin/editor/$pageId': typeof AdminEditorPageIdRouteWithChildren
   '/admin/editor/configuracoes-globais': typeof AdminEditorConfiguracoesGlobaisRoute
@@ -199,6 +207,7 @@ export interface FileRoutesById {
   '/artistas/$slug': typeof ArtistasSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/artistas/': typeof ArtistasIndexRoute
+  '/admin/artistas/$id': typeof AdminArtistasIdRoute
   '/admin/contratos/$id': typeof AdminContratosIdRouteWithChildren
   '/admin/editor/$pageId': typeof AdminEditorPageIdRouteWithChildren
   '/admin/editor/configuracoes-globais': typeof AdminEditorConfiguracoesGlobaisRoute
@@ -224,6 +233,7 @@ export interface FileRouteTypes {
     | '/artistas/$slug'
     | '/admin/'
     | '/artistas/'
+    | '/admin/artistas/$id'
     | '/admin/contratos/$id'
     | '/admin/editor/$pageId'
     | '/admin/editor/configuracoes-globais'
@@ -245,6 +255,7 @@ export interface FileRouteTypes {
     | '/artistas/$slug'
     | '/admin'
     | '/artistas'
+    | '/admin/artistas/$id'
     | '/admin/contratos/$id'
     | '/admin/editor/$pageId'
     | '/admin/editor/configuracoes-globais'
@@ -268,6 +279,7 @@ export interface FileRouteTypes {
     | '/artistas/$slug'
     | '/admin/'
     | '/artistas/'
+    | '/admin/artistas/$id'
     | '/admin/contratos/$id'
     | '/admin/editor/$pageId'
     | '/admin/editor/configuracoes-globais'
@@ -386,6 +398,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminArtistasIndexRouteImport
       parentRoute: typeof AdminArtistasRoute
     }
+    '/admin/artistas/$id': {
+      id: '/admin/artistas/$id'
+      path: '/$id'
+      fullPath: '/admin/artistas/$id'
+      preLoaderRoute: typeof AdminArtistasIdRouteImport
+      parentRoute: typeof AdminArtistasRoute
+    }
     '/admin/contratos/': {
       id: '/admin/contratos/'
       path: '/contratos'
@@ -439,10 +458,12 @@ declare module '@tanstack/react-router' {
 }
 
 interface AdminArtistasRouteChildren {
+  AdminArtistasIdRoute: typeof AdminArtistasIdRoute
   AdminArtistasIndexRoute: typeof AdminArtistasIndexRoute
 }
 
 const AdminArtistasRouteChildren: AdminArtistasRouteChildren = {
+  AdminArtistasIdRoute: AdminArtistasIdRoute,
   AdminArtistasIndexRoute: AdminArtistasIndexRoute,
 }
 
