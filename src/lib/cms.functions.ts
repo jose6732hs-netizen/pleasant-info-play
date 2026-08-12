@@ -129,7 +129,8 @@ export const getSiteContent = createServerFn({ method: "GET" })
       .sort((a, b) => a.display_order - b.display_order)
       .map(s => ({
         section_name: s.type,
-        content: s.content
+        content: s.content,
+        styles: s.styles
       }));
   });
 

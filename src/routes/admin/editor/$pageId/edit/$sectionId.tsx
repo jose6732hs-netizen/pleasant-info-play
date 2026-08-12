@@ -52,6 +52,7 @@ function VisualEditor() {
   
   // Local state for the section content being edited
   const [editContent, setEditContent] = useState<any>(null);
+  const [editStyles, setEditStyles] = useState<SectionStyles | null>(null);
 
   const { data: sections, isLoading } = useQuery({
     queryKey: ['sections', pageId],
@@ -63,6 +64,18 @@ function VisualEditor() {
   useEffect(() => {
     if (section && !editContent) {
       setEditContent(JSON.parse(JSON.stringify(section.content)));
+      setEditStyles(section.styles || {
+        paddingTop: 80,
+        paddingBottom: 80,
+        contentWidth: 'normal',
+        alignment: 'left',
+        backgroundType: 'color',
+        backgroundColor: 'black',
+        backgroundOverlay: false,
+        overlayOpacity: 40,
+        sectionHeight: 'auto',
+        isVisible: true
+      });
     }
   }, [section]);
 
@@ -87,6 +100,7 @@ function VisualEditor() {
     const updatedSection: PageSection = {
       ...section,
       content: editContent,
+      styles: editStyles,
       status: publish ? 'ATIVA' : section.status
     };
     
@@ -103,10 +117,11 @@ function VisualEditor() {
 
   const restoreOriginal = () => {
     if (!section) return;
-    if (confirm("Deseja restaurar o conteúdo original da seção? Todas as alterações não salvas serão perdidas.")) {
+    if (confirm("Deseja restaurar o conteúdo e estilos originais da seção? Todas as alterações não salvas serão perdidas.")) {
       setEditContent(JSON.parse(JSON.stringify(section.content)));
+      setEditStyles(section.styles || null);
       setHasChanges(false);
-      toast.info("Conteúdo original restaurado");
+      toast.info("Configurações originais restauradas");
     }
   };
 
@@ -299,9 +314,15 @@ function VisualEditor() {
              <h3 className="text-xs font-bold text-neutral-400 uppercase tracking-widest mb-4 flex items-center gap-2">
               <Layers className="w-3 h-3" /> Estilo & Layout
             </h3>
-            <p className="text-[10px] text-neutral-600 italic">
-              Configurações avançadas de design serão habilitadas na próxima etapa.
-            </p>
+            {editStyles && (
+              <SectionStyleEditor 
+                value={editStyles} 
+                onChange={(styles) => {
+                  setEditStyles(styles);
+                  setHasChanges(true);
+                }}
+              />
+            )}
           </div>
         </aside>
 
