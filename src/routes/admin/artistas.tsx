@@ -9,6 +9,11 @@ export const Route = createFileRoute("/admin/artistas")({
 });
 
 function AdminArtists() {
+  const { data: artists } = useSuspenseQuery({
+    queryKey: ["active-artists"],
+    queryFn: () => getActiveArtists(),
+  });
+
   return (
     <div className="min-h-screen bg-neutral-950 text-white flex flex-col md:flex-row w-full">
       <aside className="w-full md:w-64 border-b md:border-b-0 md:border-r border-white/5 p-6 space-y-8 bg-black/20">
