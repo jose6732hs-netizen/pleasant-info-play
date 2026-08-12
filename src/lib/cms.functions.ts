@@ -144,6 +144,20 @@ export const deleteSection = createServerFn({ method: "POST" })
     return { success: true };
   });
 
+export const savePageConfig = createServerFn({ method: "POST" })
+  .validator((data: { pageId: string, config: any }) => z.object({
+    pageId: z.string(),
+    config: z.any()
+  }).parse(data))
+  .handler(async ({ data }) => {
+    const page = pagesStore.find(p => p.id === data.pageId);
+    if (page) {
+      page.config = data.config;
+      return { success: true };
+    }
+    return { success: false, error: 'Page not found' };
+  });
+
 export const getSiteContent = createServerFn({ method: "GET" })
   .handler(async () => {
     return sectionsStore
