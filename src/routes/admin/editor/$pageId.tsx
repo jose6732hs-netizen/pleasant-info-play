@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import { ArtistsPageEditor } from '@/components/admin/ArtistsPageEditor';
 import { ArtistTemplateEditor } from '@/components/admin/ArtistTemplateEditor';
+import { GlobalNavEditor } from '@/components/admin/GlobalNavEditor';
 import {
   DndContext,
   closestCenter,
@@ -345,6 +346,36 @@ function PageEditor() {
           </div>
           
           <ArtistTemplateEditor 
+            value={page?.config || {}} 
+            onChange={(config) => {
+              queryClient.setQueryData(['page', pageId], (old: any) => ({ ...old, config }));
+            }} 
+          />
+        </div>
+      )}
+
+      {pageId === 'global_nav' && (
+        <div className="bg-white/5 border border-white/10 rounded-sm p-8 space-y-6">
+          <div className="flex items-center justify-between border-b border-white/5 pb-6">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-blue-500/10 rounded-sm text-blue-500">
+                <LayoutTemplate className="w-5 h-5" />
+              </div>
+              <div>
+                <h2 className="text-xl font-bold text-white uppercase tracking-tight">Menu & Rodapé Global</h2>
+                <p className="text-xs text-neutral-500 uppercase tracking-widest mt-1">Configure a navegação e a identidade visual de base do site</p>
+              </div>
+            </div>
+            <button 
+              onClick={() => saveConfigMutation.mutate(page?.config)}
+              className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-sm transition text-[10px] font-bold uppercase tracking-widest border border-white/10"
+            >
+              <Save className="w-4 h-4" />
+              Salvar Menu & Rodapé
+            </button>
+          </div>
+          
+          <GlobalNavEditor 
             value={page?.config || {}} 
             onChange={(config) => {
               queryClient.setQueryData(['page', pageId], (old: any) => ({ ...old, config }));
