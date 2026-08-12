@@ -6,10 +6,16 @@ import { ArtistsPageConfig } from "@/components/admin/ArtistsPageEditor";
 
 export const Route = createFileRoute("/artistas/")({
   loader: async ({ context }) => {
-    await context.queryClient.ensureQueryData({
-      queryKey: ["active-artists"],
-      queryFn: () => getActiveArtists(),
-    });
+    await Promise.all([
+      context.queryClient.ensureQueryData({
+        queryKey: ["active-artists"],
+        queryFn: () => getActiveArtists(),
+      }),
+      context.queryClient.ensureQueryData({
+        queryKey: ["pages"],
+        queryFn: () => getPages(),
+      }),
+    ]);
   },
   component: ArtistsList,
 });
