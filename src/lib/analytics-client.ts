@@ -81,3 +81,9 @@ export const capturePageView = (path: string) => {
 export const captureClick = (text: string, id?: string, metadata?: any) => {
   trackEvent('click', { element_text: text, element_id: id, metadata });
 };
+
+export const trackArtistEvent = (type: EventType, artistId: string, metadata?: any) => {
+  trackEvent(type, { artist_id: artistId, metadata });
+};
+
+import { EventType } from "./analytics/tracker.functions";

@@ -1,8 +1,9 @@
 import { Artist, ArtistVideo, ArtistGallery, getPages } from "@/lib/cms.functions";
-import { Instagram, Youtube, Globe, MessageSquare, Play } from "lucide-react";
+import { Instagram, Youtube, Globe, MessageSquare, Play, Heart, Share2 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { BookingModal } from "./BookingModal";
-import { captureClick } from "@/lib/analytics-client";
+import { captureClick, trackArtistEvent } from "@/lib/analytics-client";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
 interface ArtistProfileProps {
@@ -25,11 +26,15 @@ export function ArtistProfile({ artist, videos = [], gallery = [], isPreview = f
       }
     }
     loadTemplate();
-  }, []);
+    if (!isPreview) {
+      trackArtistEvent('artist_view', artist.id);
+    }
+  }, [artist.id, isPreview]);
 
   const handleBookingClick = (type: string) => {
     if (isPreview) return;
     captureClick(`Click Booking (${type})`, "artist-profile-booking", { artistName: artist.name });
+    trackArtistEvent('artist_click', artist.id, { button_id: type });
     setIsBookingOpen(true);
   };
 
@@ -63,7 +68,8 @@ export function ArtistProfile({ artist, videos = [], gallery = [], isPreview = f
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
             </div>
             
-            <div className="container mx-auto px-6 pb-20 md:pb-32 relative z-10 space-y-6">
+            <div className="container mx-auto px-6 pb-20 md:pb-32 relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-8">
+              <div className="space-y-6">
               <div className="space-y-2">
                 {templateConfig?.showGenre !== false && (
                   <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.4em] text-white/50 bg-white/5 px-4 py-2 border border-white/10 backdrop-blur-sm">
@@ -100,6 +106,33 @@ export function ArtistProfile({ artist, videos = [], gallery = [], isPreview = f
                   </button>
                 )}
               </div>
+              </div>
+
+              {/* Reaction & Share Quick Actions */}
+              {!isPreview && (
+                <div className="flex items-center gap-4">
+                  <button 
+                    onClick={() => trackArtistEvent('artist_reaction', artist.id, { reaction: 'heart' })}
+                    className="w-16 h-16 rounded-full border border-white/10 flex items-center justify-center hover:bg-red-500 hover:border-red-500 transition-all group"
+                  >
+                    <Heart className="w-6 h-6 group-hover:fill-white" />
+                  </button>
+                  <button 
+                    onClick={() => {
+                      if (navigator.share) {
+                        navigator.share({ title: artist.name, url: window.location.href });
+                        trackArtistEvent('artist_share', artist.id, { type: 'native' });
+                      } else {
+                        trackArtistEvent('artist_share', artist.id, { type: 'copy' });
+                        toast.success("Link copiado!");
+                      }
+                    }}
+                    className="w-16 h-16 rounded-full border border-white/10 flex items-center justify-center hover:bg-white hover:border-white hover:text-black transition-all"
+                  >
+                    <Share2 className="w-6 h-6" />
+                  </button>
+                </div>
+              )}
             </div>
           </section>
         );
@@ -131,7 +164,13 @@ export function ArtistProfile({ artist, videos = [], gallery = [], isPreview = f
                 <h3 className="text-4xl md:text-6xl font-black tracking-tighter uppercase">EM CENA</h3>
               </div>
               
-              <div className="aspect-video w-full bg-neutral-900 border border-white/10 relative group overflow-hidden">
+              <div 
+                className="aspect-video w-full bg-neutral-900 border border-white/10 relative group overflow-hidden cursor-pointer"
+                onClick={() => {
+                  if (isPreview) return;
+                  trackArtistEvent('artist_video_play', artist.id, { video_id: videos[0]?.id });
+                }}
+              >
                  <div className="absolute inset-0 flex items-center justify-center">
                     <Play className="w-20 h-20 text-white/20 group-hover:text-white group-hover:scale-110 transition-all" />
                  </div>
@@ -203,7 +242,13 @@ export function ArtistProfile({ artist, videos = [], gallery = [], isPreview = f
                 </div>
                 <div className="flex flex-wrap gap-4">
                   {artist.instagram && (
-                    <a href={artist.instagram} className="flex items-center gap-3 bg-white/5 border border-white/10 px-6 py-4 rounded-sm hover:bg-white hover:text-black transition group">
+                    <a 
+                      href={artist.instagram} 
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => !isPreview && trackArtistEvent('artist_share', artist.id, { platform: 'instagram' })}
+                      className="flex items-center gap-3 bg-white/5 border border-white/10 px-6 py-4 rounded-sm hover:bg-white hover:text-black transition group"
+                    >
                       <Instagram className="w-5 h-5" />
                       <span className="text-[10px] font-black uppercase tracking-widest">Instagram</span>
                     </a>

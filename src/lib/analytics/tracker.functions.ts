@@ -7,6 +7,9 @@ import { getRequest } from "@tanstack/react-start/server";
 
 export type EventType = 
   | 'page_view' | 'landing_view' | 'artist_view' | 'artist_click' 
+  | 'artist_video_view' | 'artist_video_play' | 'artist_reaction'
+  | 'artist_share' | 'artist_contact' | 'artist_budget_click'
+  | 'artist_whatsapp_click' | 'artist_phone_click'
   | 'button_click' | 'offer_view' | 'offer_click' | 'banner_view' 
   | 'banner_click' | 'video_view' | 'video_play' | 'reaction' 
   | 'share' | 'form_start' | 'form_submit' | 'whatsapp_click' 

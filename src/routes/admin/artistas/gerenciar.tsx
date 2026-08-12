@@ -7,7 +7,7 @@ import { ArtistForm } from "@/components/admin/ArtistForm";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/admin/artistas")({
+export const Route = createFileRoute("/admin/artistas/gerenciar")({
   component: AdminArtists,
 });
 
