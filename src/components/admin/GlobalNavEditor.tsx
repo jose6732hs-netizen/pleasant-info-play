@@ -1,5 +1,5 @@
 import React from 'react';
-import { GripVertical, Eye, EyeOff, Plus, Trash2, Link as LinkIcon, MessageSquare, MapPin, Phone, Mail, Instagram, Youtube, Facebook, Chrome } from 'lucide-react';
+import { GripVertical, Eye, EyeOff, Plus, Trash2, Link as LinkIcon, MessageSquare, MapPin, Phone, Mail, Instagram, Youtube, Facebook, Chrome, Layout } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
   DndContext,
