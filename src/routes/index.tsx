@@ -43,6 +43,16 @@ function Index() {
   };
 
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const [bookingForm, setBookingForm] = useState({
     name: "",
     email: "",
@@ -77,7 +87,7 @@ function Index() {
       {showIntro && <IntroAnimation onComplete={handleIntroComplete} />}
 
       {/* Header */}
-      <header className="fixed w-full p-3 md:p-4 flex justify-between items-center z-50 backdrop-blur-md bg-neutral-950/80 border-b border-white/5">
+      <header className={`fixed w-full p-3 md:p-4 flex justify-between items-center z-50 backdrop-blur-md bg-neutral-950/80 border-b border-white/5 transition-all duration-500 ${scrolled ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`}>
         <div className="flex items-center">
           <img src={logoAsset.url} alt="064 TALENTS" className="h-8 md:h-10 w-auto object-contain" />
         </div>
