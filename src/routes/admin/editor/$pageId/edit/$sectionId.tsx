@@ -18,10 +18,22 @@ import {
   Layers,
   Search,
   Maximize2,
-  RefreshCw
+  RefreshCw,
+  Image as ImageIcon,
+  Video,
+  Trash2
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { RichTextEditor } from '@/components/admin/RichTextEditor';
+import { ImageEditor } from '@/components/admin/ImageEditor';
+import { VideoEditor } from '@/components/admin/VideoEditor';
+import { 
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
 
 export const Route = createFileRoute('/admin/editor/$pageId/edit/$sectionId')({
   component: VisualEditor,
@@ -182,15 +194,92 @@ function VisualEditor() {
             </h3>
             
             <div className="space-y-6">
-              {editContent && Object.keys(editContent).map((key) => (
-                <RichTextEditor 
-                  key={key}
-                  label={key.replace('_', ' ')}
-                  value={editContent[key]}
-                  onChange={(val) => updateField(key, val)}
-                  type={key.includes('title') ? 'title' : key.includes('button') ? 'button' : 'body'}
-                />
-              ))}
+              <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="texts" className="border-white/5">
+                  <AccordionTrigger className="text-[10px] font-bold uppercase tracking-widest text-neutral-400 py-4 hover:no-underline">
+                    <div className="flex items-center gap-2">
+                      <Settings className="w-3 h-3" /> Textos & Conteúdo
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="space-y-6 pt-2 pb-4">
+                    {editContent && Object.keys(editContent).filter(key => 
+                      typeof editContent[key] === 'string' && !editContent[key].match(/\.(jpg|jpeg|png|webp|mp4|mov)$/i)
+                    ).map((key) => (
+                      <RichTextEditor 
+                        key={key}
+                        label={key.replace(/_/g, ' ')}
+                        value={editContent[key]}
+                        onChange={(val) => updateField(key, val)}
+                        type={key.includes('title') ? 'title' : key.includes('button') ? 'button' : 'body'}
+                      />
+                    ))}
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="media" className="border-white/5">
+                  <AccordionTrigger className="text-[10px] font-bold uppercase tracking-widest text-neutral-400 py-4 hover:no-underline">
+                    <div className="flex items-center gap-2">
+                      <ImageIcon className="w-3 h-3" /> Imagens & Banners
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="space-y-6 pt-2 pb-4">
+                    {editContent && Object.keys(editContent).filter(key => 
+                      key.includes('image') || key.includes('photo') || key.includes('banner') || key.includes('url')
+                    ).map((key) => {
+                      const isVideo = typeof editContent[key] === 'string' && editContent[key].match(/\.(mp4|mov)$/i);
+                      if (isVideo) return null;
+
+                      return (
+                        <ImageEditor
+                          key={key}
+                          label={key.replace(/_/g, ' ')}
+                          value={{
+                            url: editContent[key] || '',
+                            alt: '',
+                            position: 'center',
+                            objectFit: 'cover',
+                            overlay: false,
+                            overlayOpacity: 0,
+                            isBackground: key.includes('banner') || key.includes('bg')
+                          }}
+                          onChange={(img) => updateField(key, img.url)}
+                        />
+                      );
+                    })}
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="video" className="border-white/5">
+                  <AccordionTrigger className="text-[10px] font-bold uppercase tracking-widest text-neutral-400 py-4 hover:no-underline">
+                    <div className="flex items-center gap-2">
+                      <Video className="w-3 h-3" /> Vídeos & Backgrounds
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="space-y-6 pt-2 pb-4">
+                    {editContent && Object.keys(editContent).filter(key => 
+                      key.includes('video') || (typeof editContent[key] === 'string' && editContent[key].match(/\.(mp4|mov)$/i))
+                    ).map((key) => (
+                      <VideoEditor
+                        key={key}
+                        label={key.replace(/_/g, ' ')}
+                        value={{
+                          id: key,
+                          title: '',
+                          url: editContent[key] || '',
+                          source: editContent[key]?.includes('youtube') ? 'youtube' : editContent[key]?.includes('vimeo') ? 'vimeo' : 'direct',
+                          autoplay: true,
+                          loop: true,
+                          controls: false,
+                          muted: true,
+                          lazy: true,
+                          isPrimary: true
+                        }}
+                        onChange={(v) => updateField(key, v.url)}
+                      />
+                    ))}
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
 
               <div className="pt-4 border-t border-white/5">
                 <button
@@ -202,6 +291,7 @@ function VisualEditor() {
                 </button>
               </div>
             </div>
+
           </div>
           
           <div className="p-6">
