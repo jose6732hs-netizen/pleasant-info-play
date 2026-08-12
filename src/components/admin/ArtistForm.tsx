@@ -224,69 +224,72 @@ export function ArtistForm({ initialData, initialVideos = [], initialGallery = [
             {activeTab === 1 && (
               <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4">
                 <div className="space-y-4">
-                    <h3 className="text-sm font-bold uppercase tracking-widest text-neutral-400">Upload de Mídia</h3>
+                    <h3 className="text-sm font-bold uppercase tracking-widest text-neutral-400 border-b border-white/5 pb-2">Gestão de Imagens</h3>
+                    
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                       <div className="space-y-4">
-                          <label className="text-[10px] uppercase tracking-widest text-neutral-500 font-bold">Imagem de Perfil / Card</label>
-                          <div className="aspect-[3/4] bg-black border border-white/10 rounded-sm relative group overflow-hidden flex items-center justify-center text-center p-8">
-                             {artist.photo_url ? (
-                               <img src={artist.photo_url} className="absolute inset-0 w-full h-full object-cover" alt="Preview" />
-                             ) : (
-                               <div className="space-y-4">
-                                  <ImageIcon className="w-12 h-12 text-neutral-800 mx-auto" />
-                                  <p className="text-[9px] text-neutral-600 uppercase font-bold tracking-widest">Arraste a imagem ou clique para upload</p>
-                               </div>
-                             )}
-                             <input 
-                              type="text" 
-                              placeholder="URL da Imagem (Provisório)" 
-                              className="absolute bottom-4 left-4 right-4 bg-black/80 border border-white/10 p-2 text-[8px] focus:outline-none"
-                              value={artist.photo_url}
-                              onChange={(e) => setArtist({...artist, photo_url: e.target.value})}
-                             />
-                          </div>
-                       </div>
-                       <div className="space-y-4">
-                          <label className="text-[10px] uppercase tracking-widest text-neutral-500 font-bold">Imagem de Capa (HERO)</label>
-                          <div className="aspect-[3/4] bg-black border border-white/10 rounded-sm relative group overflow-hidden flex items-center justify-center text-center p-8">
-                            {artist.hero_url ? (
-                               <img src={artist.hero_url} className="absolute inset-0 w-full h-full object-cover" alt="Preview Hero" />
-                             ) : (
-                               <div className="space-y-4">
-                                  <ImageIcon className="w-12 h-12 text-neutral-800 mx-auto" />
-                                  <p className="text-[9px] text-neutral-600 uppercase font-bold tracking-widest">Capa para página individual</p>
-                               </div>
-                             )}
-                              <input 
-                              type="text" 
-                              placeholder="URL da Capa (Provisório)" 
-                              className="absolute bottom-4 left-4 right-4 bg-black/80 border border-white/10 p-2 text-[8px] focus:outline-none"
-                              value={artist.hero_url}
-                              onChange={(e) => setArtist({...artist, hero_url: e.target.value})}
-                             />
-                          </div>
-                       </div>
+                       <ImageEditor 
+                         label="Imagem de Perfil / Card"
+                         value={{
+                           url: artist.photo_url || '',
+                           alt: artist.name,
+                           position: 'center',
+                           objectFit: 'cover',
+                           overlay: false,
+                           overlayOpacity: 0,
+                           isBackground: false
+                         }}
+                         onChange={(img) => updateArtistField('photo_url', img.url)}
+                       />
+
+                       <ImageEditor 
+                         label="Imagem de Capa (HERO)"
+                         value={{
+                           url: artist.hero_url || '',
+                           alt: `Hero ${artist.name}`,
+                           position: 'center',
+                           objectFit: 'cover',
+                           overlay: true,
+                           overlayOpacity: 40,
+                           isBackground: true
+                         }}
+                         onChange={(img) => updateArtistField('hero_url', img.url)}
+                       />
                     </div>
                     
-                    <div className="space-y-4">
-                      <label className="text-[10px] uppercase tracking-widest text-neutral-500 font-bold">Galeria de Fotos (URLs separadas por vírgula)</label>
-                      <textarea 
-                        className="w-full bg-black border border-white/10 p-4 rounded-sm focus:outline-none focus:border-white transition resize-none h-32"
-                        placeholder="https://exemplo.com/foto1.jpg, https://exemplo.com/foto2.jpg"
-                        value={gallery.map(g => g.image_url).join(', ')}
-                        onChange={(e) => {
-                          const urls = e.target.value.split(',').map(u => u.trim()).filter(Boolean);
-                          setGallery(urls.map((url, i) => ({
-                            id: `gal-${i}`,
-                            artist_id: artist.id,
-                            image_url: url,
-                            order: i
-                          })));
-                        }}
-                      />
+                    <div className="pt-8 space-y-4">
+                      <h3 className="text-sm font-bold uppercase tracking-widest text-neutral-400 border-b border-white/5 pb-2">Galeria de Fotos</h3>
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        {gallery.map((item, idx) => (
+                          <ImageEditor 
+                            key={item.id || idx}
+                            value={{
+                              url: item.image_url,
+                              alt: item.alt_text || '',
+                              position: 'center',
+                              objectFit: 'cover',
+                              overlay: false,
+                              overlayOpacity: 0,
+                              isBackground: false
+                            }}
+                            onChange={(img) => {
+                              const newGallery = [...gallery];
+                              newGallery[idx] = { ...newGallery[idx], image_url: img.url, alt_text: img.alt };
+                              setGallery(newGallery);
+                            }}
+                          />
+                        ))}
+                        <button 
+                          onClick={() => setGallery([...gallery, { id: `gal-${Date.now()}`, artist_id: artist.id, image_url: '', order: gallery.length }])}
+                          className="aspect-square bg-white/5 border border-dashed border-white/10 rounded-sm flex flex-col items-center justify-center gap-2 hover:bg-white/10 transition"
+                        >
+                          <Plus className="w-6 h-6 text-neutral-500" />
+                          <span className="text-[9px] uppercase font-bold tracking-widest text-neutral-600">Adicionar Foto</span>
+                        </button>
+                      </div>
                     </div>
                  </div>
               </div>
+
             )}
 
             {activeTab === 2 && (
