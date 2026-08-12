@@ -95,7 +95,7 @@ export function SectionStyleEditor({ value, onChange }: SectionStyleEditorProps)
             </div>
             <Slider 
               value={[current.paddingTop]} 
-              onValueChange={([v]) => updateField({ paddingTop: v })}
+              onValueChange={([v]) => updateField({ paddingTop: v as number })}
               max={200}
               step={8}
             />
@@ -107,7 +107,7 @@ export function SectionStyleEditor({ value, onChange }: SectionStyleEditorProps)
             </div>
             <Slider 
               value={[current.paddingBottom]} 
-              onValueChange={([v]) => updateField({ paddingBottom: v })}
+              onValueChange={([v]) => updateField({ paddingBottom: v as number })}
               max={200}
               step={8}
             />
