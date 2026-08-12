@@ -89,7 +89,7 @@ function SortableSectionItem({ section, onEdit, onDuplicate, onToggleStatus, onD
       ref={setNodeRef}
       style={style}
       className={`
-        group bg-white/5 border rounded-sm p-4 transition-all
+        group bg-white/5 border rounded-sm p-4 transition-all relative
         ${isDragging ? 'border-blue-500 shadow-2xl scale-[1.02] bg-white/10' : 'border-white/5 hover:border-white/10'}
         flex items-center gap-4
       `}
