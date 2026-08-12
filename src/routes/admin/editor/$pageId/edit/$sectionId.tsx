@@ -89,6 +89,7 @@ function VisualEditor() {
   };
 
   const restoreOriginal = () => {
+    if (!section) return;
     if (confirm("Deseja restaurar o conteúdo original da seção? Todas as alterações não salvas serão perdidas.")) {
       setEditContent(JSON.parse(JSON.stringify(section.content)));
       setHasChanges(false);
@@ -96,7 +97,7 @@ function VisualEditor() {
     }
   };
 
-  if (isLoading || !section) {
+  if (isLoading) {
     return (
       <div className="h-screen flex items-center justify-center bg-black">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
