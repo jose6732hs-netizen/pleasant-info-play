@@ -79,7 +79,7 @@ function VisitorView() {
         stats[e.artist_id] = { name: artist.name, views: 0, clicks: 0, reactions: [] };
       }
       
-      const aId = e.artist_id!;
+      const aId = e.artist_id as string;
       if (e.type === 'artist_view') {
         stats[aId].views++;
       }
