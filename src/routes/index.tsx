@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { ArrowDown, Instagram, Mail, Phone, Users, Calendar, Award, Star, X } from "lucide-react";
 import { getSiteContent, getActiveArtists, submitBookingRequest } from "@/lib/cms.functions";
