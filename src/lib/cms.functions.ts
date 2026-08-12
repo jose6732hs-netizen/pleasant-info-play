@@ -431,6 +431,7 @@ export const getAllArtists = createServerFn({ method: "GET" })
 export const saveArtist = createServerFn({ method: "POST" })
   .validator((data: any) => data) // In real app use zod
   .handler(async ({ data }) => {
+    await requireAdmin();
     const index = artistsStore.findIndex(a => a.id === data.id);
     if (index > -1) {
       artistsStore[index] = { ...artistsStore[index], ...data };
@@ -444,14 +445,17 @@ export const saveArtist = createServerFn({ method: "POST" })
     return { success: true, artist: data };
   });
 
+
 export const deleteArtist = createServerFn({ method: "POST" })
   .validator((id: unknown) => z.string().parse(id))
   .handler(async ({ data: id }) => {
+    await requireAdmin();
     artistsStore = artistsStore.filter(a => a.id !== id);
     artistVideosStore = artistVideosStore.filter(v => v.artist_id !== id);
     artistGalleryStore = artistGalleryStore.filter(g => g.artist_id !== id);
     return { success: true };
   });
+
 
 export const submitBookingRequest = createServerFn({ method: "POST" })
   .validator((data: unknown) => z.object({
