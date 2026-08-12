@@ -5,6 +5,8 @@ import { ArtistProfile } from '@/components/ArtistProfile';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { RichTextEditor } from './RichTextEditor';
+import { ImageEditor, ImageConfig } from './ImageEditor';
+
 
 interface ArtistFormProps {
   initialData?: Artist | null | undefined;
