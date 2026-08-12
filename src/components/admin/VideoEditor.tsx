@@ -48,7 +48,7 @@ export function VideoEditor({ value, onChange, onDelete, label }: VideoEditorPro
     if (value.source === 'youtube') {
       const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
       const match = value.url.match(regExp);
-      if (match && match[2].length === 11) {
+      if (match && match[2] && match[2].length === 11) {
         setPreviewUrl(`https://www.youtube.com/embed/${match[2]}`);
       }
     } else if (value.source === 'vimeo') {
