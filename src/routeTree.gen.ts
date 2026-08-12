@@ -17,6 +17,7 @@ import { Route as AdminAgendaRouteImport } from './routes/admin/agenda'
 import { Route as AdminArtistasRouteImport } from './routes/admin/artistas'
 import { Route as AdminConfiguracoesRouteImport } from './routes/admin/configuracoes'
 import { Route as AdminConteudoRouteImport } from './routes/admin/conteudo'
+import { Route as AdminLeadsRouteImport } from './routes/admin/leads'
 import { Route as AdminServicosRouteImport } from './routes/admin/servicos'
 import { Route as AdminSolicitacoesRouteImport } from './routes/admin/solicitacoes'
 import { Route as ArtistasSlugRouteImport } from './routes/artistas/$slug'
@@ -64,6 +65,11 @@ const AdminConteudoRoute = AdminConteudoRouteImport.update({
   path: '/conteudo',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminLeadsRoute = AdminLeadsRouteImport.update({
+  id: '/leads',
+  path: '/leads',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminServicosRoute = AdminServicosRouteImport.update({
   id: '/servicos',
   path: '/servicos',
@@ -104,6 +110,7 @@ export interface FileRoutesByFullPath {
   '/admin/artistas': typeof AdminArtistasRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/conteudo': typeof AdminConteudoRoute
+  '/admin/leads': typeof AdminLeadsRoute
   '/admin/servicos': typeof AdminServicosRoute
   '/admin/solicitacoes': typeof AdminSolicitacoesRoute
   '/artistas/$slug': typeof ArtistasSlugRoute
@@ -119,6 +126,7 @@ export interface FileRoutesByTo {
   '/admin/artistas': typeof AdminArtistasRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/conteudo': typeof AdminConteudoRoute
+  '/admin/leads': typeof AdminLeadsRoute
   '/admin/servicos': typeof AdminServicosRoute
   '/admin/solicitacoes': typeof AdminSolicitacoesRoute
   '/artistas/$slug': typeof ArtistasSlugRoute
@@ -136,6 +144,7 @@ export interface FileRoutesById {
   '/admin/artistas': typeof AdminArtistasRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/conteudo': typeof AdminConteudoRoute
+  '/admin/leads': typeof AdminLeadsRoute
   '/admin/servicos': typeof AdminServicosRoute
   '/admin/solicitacoes': typeof AdminSolicitacoesRoute
   '/artistas/$slug': typeof ArtistasSlugRoute
@@ -154,6 +163,7 @@ export interface FileRouteTypes {
     | '/admin/artistas'
     | '/admin/configuracoes'
     | '/admin/conteudo'
+    | '/admin/leads'
     | '/admin/servicos'
     | '/admin/solicitacoes'
     | '/artistas/$slug'
@@ -169,6 +179,7 @@ export interface FileRouteTypes {
     | '/admin/artistas'
     | '/admin/configuracoes'
     | '/admin/conteudo'
+    | '/admin/leads'
     | '/admin/servicos'
     | '/admin/solicitacoes'
     | '/artistas/$slug'
@@ -185,6 +196,7 @@ export interface FileRouteTypes {
     | '/admin/artistas'
     | '/admin/configuracoes'
     | '/admin/conteudo'
+    | '/admin/leads'
     | '/admin/servicos'
     | '/admin/solicitacoes'
     | '/artistas/$slug'
@@ -259,6 +271,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminConteudoRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/leads': {
+      id: '/admin/leads'
+      path: '/leads'
+      fullPath: '/admin/leads'
+      preLoaderRoute: typeof AdminLeadsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/servicos': {
       id: '/admin/servicos'
       path: '/servicos'
@@ -320,6 +339,7 @@ interface AdminRouteChildren {
   AdminArtistasRoute: typeof AdminArtistasRoute
   AdminConfiguracoesRoute: typeof AdminConfiguracoesRoute
   AdminConteudoRoute: typeof AdminConteudoRoute
+  AdminLeadsRoute: typeof AdminLeadsRoute
   AdminServicosRoute: typeof AdminServicosRoute
   AdminSolicitacoesRoute: typeof AdminSolicitacoesRoute
   AdminIndexRoute: typeof AdminIndexRoute
@@ -332,6 +352,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminArtistasRoute: AdminArtistasRoute,
   AdminConfiguracoesRoute: AdminConfiguracoesRoute,
   AdminConteudoRoute: AdminConteudoRoute,
+  AdminLeadsRoute: AdminLeadsRoute,
   AdminServicosRoute: AdminServicosRoute,
   AdminSolicitacoesRoute: AdminSolicitacoesRoute,
   AdminIndexRoute: AdminIndexRoute,

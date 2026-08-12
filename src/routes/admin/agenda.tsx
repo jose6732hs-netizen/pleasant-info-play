@@ -3,7 +3,7 @@ import { useSuspenseQuery, useMutation, useQueryClient } from "@tanstack/react-q
 import { useState } from "react";
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isSameDay, addMonths, subMonths, isWithinInterval, parseISO } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { ChevronLeft, ChevronRight, Plus, MapPin, Clock, User, Info, AlertCircle, LayoutDashboard, Users, Calendar, Briefcase, FileText, Settings } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus, MapPin, Clock, User, Info, AlertCircle, LayoutDashboard, Users, Calendar, Briefcase, FileText, Settings, MousePointer2 } from "lucide-react";
 import { getActiveArtists } from "@/lib/cms.functions";
 import { getArtistCalendar, addCalendarEvent } from "@/lib/booking.functions";
 import { cn } from "@/lib/utils";
@@ -96,6 +96,9 @@ function AdminAgenda() {
           </Link>
           <Link to="/admin/artistas" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
             <Users className="w-4 h-4" /> Artistas
+          </Link>
+          <Link to="/admin/leads" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
+            <MousePointer2 className="w-4 h-4" /> Leads & Tracking
           </Link>
           <Link to="/admin/agenda" className="p-3 bg-white/10 text-white transition rounded-sm font-bold flex items-center gap-3">
             <Calendar className="w-4 h-4" /> Agenda

@@ -4,7 +4,7 @@ import { getContracts } from "@/lib/contracts.functions";
 import { format, parseISO } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { useState } from "react";
-import { Search, Filter, FileText, ChevronRight, LayoutDashboard, Users, Calendar, Briefcase, Settings, FileCheck } from "lucide-react";
+import { Search, Filter, FileText, ChevronRight, LayoutDashboard, Users, Calendar, Briefcase, Settings, FileCheck, MousePointer2 } from "lucide-react";
 import logoAsset from "@/assets/logo-completa.png.asset.json";
 
 export const Route = createFileRoute("/admin/contratos/")({
@@ -62,6 +62,9 @@ function AdminContracts() {
           </Link>
           <Link to="/admin/artistas" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
             <Users className="w-4 h-4" /> Artistas
+          </Link>
+          <Link to="/admin/leads" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
+            <MousePointer2 className="w-4 h-4" /> Leads & Tracking
           </Link>
           <Link to="/admin/agenda" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
             <Calendar className="w-4 h-4" /> Agenda

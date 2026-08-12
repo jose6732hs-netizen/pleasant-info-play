@@ -4,6 +4,7 @@ import { getActiveArtists } from "@/lib/cms.functions";
 import { getArtistCalendar } from "@/lib/booking.functions";
 import { format, isAfter, parseISO } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { captureClick } from "@/lib/analytics-client";
 
 export const Route = createFileRoute("/artistas/$slug")({
   loader: async ({ context, params }) => {
@@ -124,7 +125,10 @@ function ArtistDetail() {
 
             <div className="p-8 border border-white/5 bg-neutral-900/50 rounded-sm space-y-6">
                <h3 className="text-xs font-bold uppercase tracking-widest">Interessado?</h3>
-               <button className="w-full bg-white text-black py-4 rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-neutral-200 transition">
+               <button 
+                 onClick={() => captureClick(window.location.pathname, "Solicitar Data (Artist Profile)", "artist-request-btn", { artist: artist.name })}
+                 className="w-full bg-white text-black py-4 rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-neutral-200 transition"
+               >
                   Solicitar Data
                </button>
             </div>

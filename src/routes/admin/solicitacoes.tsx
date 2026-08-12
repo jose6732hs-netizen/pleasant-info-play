@@ -7,7 +7,7 @@ import { format, parseISO } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { useState } from "react";
 import { toast } from "sonner";
-import { FileText, CheckCircle, XCircle, Clock, DollarSign, Send, LayoutDashboard, Users, Calendar, Briefcase, Settings } from "lucide-react";
+import { FileText, CheckCircle, XCircle, Clock, DollarSign, Send, LayoutDashboard, Users, Calendar, Briefcase, Settings, MousePointer2 } from "lucide-react";
 import logoAsset from "@/assets/logo-completa.png.asset.json";
 
 export const Route = createFileRoute("/admin/solicitacoes")({
@@ -94,6 +94,9 @@ function AdminBookings() {
           </Link>
           <Link to="/admin/artistas" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
             <Users className="w-4 h-4" /> Artistas
+          </Link>
+          <Link to="/admin/leads" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
+            <MousePointer2 className="w-4 h-4" /> Leads & Tracking
           </Link>
           <Link to="/admin/agenda" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
             <Calendar className="w-4 h-4" /> Agenda

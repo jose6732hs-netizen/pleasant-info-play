@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { LayoutDashboard, Users, Calendar, Briefcase, FileText, Settings, Search, Plus } from "lucide-react";
+import { LayoutDashboard, Users, Calendar, Briefcase, FileText, Settings, Search, Plus, MousePointer2 } from "lucide-react";
 import logoAsset from "@/assets/logo-completa.png.asset.json";
 
 export const Route = createFileRoute("/admin/artistas")({
@@ -19,6 +19,9 @@ function AdminArtists() {
           </Link>
           <Link to="/admin/artistas" className="p-3 bg-white/10 text-white transition rounded-sm font-bold flex items-center gap-3">
             <Users className="w-4 h-4" /> Artistas
+          </Link>
+          <Link to="/admin/leads" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
+            <MousePointer2 className="w-4 h-4" /> Leads & Tracking
           </Link>
           <Link to="/admin/agenda" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
             <Calendar className="w-4 h-4" /> Agenda
