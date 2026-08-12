@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Link } from '@tanstack/react-router';
+import { Link, useNavigate } from '@tanstack/react-router';
+import { toast } from 'sonner';
 import { 
   LayoutDashboard, 
   Users, 
@@ -13,7 +14,8 @@ import {
   Sparkles,
   Layers,
   Edit3,
-  Award
+  Award,
+  LogOut
 } from 'lucide-react';
 import logoAsset from "@/assets/logo-completa.png.asset.json";
 

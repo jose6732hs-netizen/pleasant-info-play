@@ -70,11 +70,23 @@ function AuthPage() {
             disabled={loginMutation.isPending}
             className="w-full bg-white text-black py-4 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-neutral-200 transition disabled:opacity-50"
           >
-            {loginMutation.isPending ? "Autenticando..." : "Entrar no Painel"}
+            {loginMutation.isPending ? (
+              <span className="flex items-center justify-center gap-2">
+                <Loader2 className="w-4 h-4 animate-spin" />
+                Autenticando...
+              </span>
+            ) : "Entrar no Painel"}
           </button>
         </form>
         
-        <div className="text-center pt-4">
+        <div className="flex flex-col gap-4 text-center pt-4">
+            <button 
+              type="button"
+              onClick={() => toast.info("Funcionalidade de recuperação de senha em desenvolvimento.")}
+              className="text-[10px] uppercase tracking-widest text-neutral-600 hover:text-white transition"
+            >
+              Esqueci minha senha
+            </button>
             <a href="/" className="text-[10px] uppercase tracking-widest text-neutral-600 hover:text-white transition">Voltar para o site</a>
         </div>
         
