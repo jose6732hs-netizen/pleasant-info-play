@@ -1,7 +1,8 @@
 import { Artist, ArtistVideo, ArtistGallery } from "@/lib/cms.functions";
-import { Instagram, Youtube, Globe, Facebook, MessageSquare, Play, Calendar } from "lucide-react";
-import { format } from "date-fns";
-import { ptBR } from "date-fns/locale";
+import { Instagram, Youtube, Globe, MessageSquare, Play } from "lucide-react";
+import { useState } from "react";
+import { BookingModal } from "./BookingModal";
+import { captureClick } from "@/lib/analytics-client";
 
 interface ArtistProfileProps {
   artist: Artist;
@@ -11,6 +12,14 @@ interface ArtistProfileProps {
 }
 
 export function ArtistProfile({ artist, videos = [], gallery = [], isPreview = false }: ArtistProfileProps) {
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
+
+  const handleBookingClick = (type: string) => {
+    if (isPreview) return;
+    captureClick(window.location.pathname, `Click Booking (${type})`, "artist-profile-booking", { artistName: artist.name });
+    setIsBookingOpen(true);
+  };
+
   return (
     <div className={`w-full bg-black text-white min-h-screen ${isPreview ? 'h-full overflow-y-auto' : ''}`}>
       {/* HERO SECTION */}
