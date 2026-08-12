@@ -6,6 +6,8 @@ import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
 import { IntroAnimation } from "@/components/IntroAnimation";
+import logoAsset from "@/assets/logo-completa.png.asset.json";
+
 
 export const Route = createFileRoute("/")({
   loader: async ({ context }) => {
@@ -76,7 +78,9 @@ function Index() {
 
       {/* Header */}
       <header className="fixed w-full p-6 flex justify-between items-center z-50 backdrop-blur-md bg-neutral-950/80 border-b border-white/5">
-        <div className="text-2xl font-bold tracking-tighter">064 TALENTS</div>
+        <div className="flex items-center">
+          <img src={logoAsset.url} alt="064 TALENTS" className="h-10 w-auto object-contain" />
+        </div>
         <nav className="hidden md:flex gap-8 text-xs font-semibold uppercase tracking-widest text-neutral-400">
           <a href="#inicio" className="hover:text-white transition">Início</a>
           <a href="#artistas" className="hover:text-white transition">Artistas</a>
@@ -102,9 +106,9 @@ function Index() {
           </div>
           
           <div className="relative z-10 space-y-6">
-            <h1 className="text-7xl md:text-9xl font-black tracking-tighter leading-none uppercase">
-              {hero.title || "064 TALENTS"}
-            </h1>
+            <div className="flex justify-center mb-8">
+              <img src={logoAsset.url} alt="064 TALENTS" className="w-full max-w-[500px] h-auto object-contain" />
+            </div>
             <p className="text-lg md:text-xl font-light uppercase tracking-[0.3em] text-neutral-300">
               {hero.subtitle || "Artist Booking & Entertainment"}
             </p>
@@ -227,7 +231,9 @@ function Index() {
 
         {/* Footer */}
         <footer className="py-12 border-t border-white/5 bg-neutral-950 text-center">
-            <div className="text-2xl font-bold tracking-tighter mb-4 uppercase">064 TALENTS</div>
+            <div className="flex justify-center mb-6">
+                <img src={logoAsset.url} alt="064 TALENTS" className="h-16 w-auto object-contain" />
+            </div>
             <p className="text-xs text-neutral-600 uppercase tracking-widest mb-8">Representando talentos. Criando conexões. Do Goiás pro mundo.</p>
             <div className="flex justify-center gap-6 mb-8">
                 <a href="#" className="text-neutral-500 hover:text-white transition"><Instagram /></a>
