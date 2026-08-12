@@ -38,7 +38,10 @@ export const loginAdmin = createServerFn({ method: "POST" })
       }
     });
 
-    throw new Error("Não foi possível realizar o login. Verifique suas credenciais.");
+    return {
+      success: false as const,
+      error: "Não foi possível realizar o login. Verifique suas credenciais.",
+    };
   });
 
 export const checkAuth = createServerFn({ method: "GET" })
