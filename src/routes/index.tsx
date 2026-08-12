@@ -1,13 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { ArrowDown, Instagram, Mail, Phone, Users, Calendar, Award, Star, X } from "lucide-react";
-import { getSiteContent, getActiveArtists, submitBookingRequest } from "@/lib/cms.functions";
+import { ArrowDown, Instagram, Mail, Phone, Users, Calendar, Award, Star } from "lucide-react";
+import { getSiteContent, getActiveArtists } from "@/lib/cms.functions";
 import { useState, useEffect } from "react";
-import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
 import { IntroAnimation } from "@/components/IntroAnimation";
+import { BookingModal } from "@/components/BookingModal";
 import logoAsset from "@/assets/logo-completa.png.asset.json";
-import { captureClick, captureFilter } from "@/lib/analytics-client";
+import { captureClick } from "@/lib/analytics-client";
 
 
 export const Route = createFileRoute("/")({
