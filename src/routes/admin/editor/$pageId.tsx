@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { createFileRoute, Link, useParams } from '@tanstack/react-router';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { getPageSections, updateSectionsOrder, deleteSection, saveSection, getPages, savePageConfig, PageSection } from '@/lib/cms.functions';
+import { getPageSections, updateSectionsOrder, deleteSection, saveSection, getPages, savePageConfig, publishPage, PageSection } from '@/lib/cms.functions';
 import { 
   ChevronLeft, 
   GripVertical, 
@@ -19,12 +19,24 @@ import {
   AlertCircle,
   FileCode,
   LayoutTemplate,
-  Palette
+  Palette,
+  Rocket
 } from 'lucide-react';
 import { ArtistsPageEditor } from '@/components/admin/ArtistsPageEditor';
 import { ArtistTemplateEditor } from '@/components/admin/ArtistTemplateEditor';
 import { GlobalNavEditor } from '@/components/admin/GlobalNavEditor';
 import { GlobalDesignEditor } from '@/components/admin/GlobalDesignEditor';
+import { 
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import {
   DndContext,
   closestCenter,
