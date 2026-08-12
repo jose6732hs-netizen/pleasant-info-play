@@ -45,19 +45,19 @@ function VisualizarContrato() {
             <div className="text-[10px] font-sans font-bold uppercase tracking-widest text-neutral-500">Agenciamento e Produção Artística</div>
           </div>
           <div className="text-right font-sans">
-            <div className="text-lg font-bold">CONTRATO Nº {contract.contract_number}</div>
-            <div className="text-[10px] text-neutral-500 uppercase tracking-widest">Emitido em {format(parseISO(contract.created_at), "dd/MM/yyyy")}</div>
+            <div className="text-lg font-bold">CONTRATO Nº {contract?.contract_number || '---'}</div>
+            <div className="text-[10px] text-neutral-500 uppercase tracking-widest">Emitido em {contract?.created_at ? format(parseISO(contract.created_at), "dd/MM/yyyy") : '---'}</div>
           </div>
         </header>
 
-        <h1 className="text-2xl font-bold text-center uppercase mb-12 underline">{contract.terms?.title}</h1>
+        <h1 className="text-2xl font-bold text-center uppercase mb-12 underline">{contract?.terms?.title || 'CONTRATO DE PRESTAÇÃO DE SERVIÇOS'}</h1>
 
         <div className="space-y-8 text-justify leading-relaxed text-sm">
           <section>
             <h2 className="font-bold uppercase mb-2">1. DAS PARTES</h2>
             <p>
               De um lado, <strong>064 TALENTS</strong>, doravante denominada simplesmente AGÊNCIA, 
-              e de outro lado, <strong>{contract.contractor_name}</strong>, doravante denominado simplesmente CONTRATANTE, 
+              e de outro lado, <strong>{contract?.contractor_name || '---'}</strong>, doravante denominado simplesmente CONTRATANTE, 
               têm entre si justo e contratado o que segue nas cláusulas abaixo.
             </p>
           </section>
