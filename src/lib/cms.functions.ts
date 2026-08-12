@@ -27,8 +27,19 @@ export const getSiteContent = createServerFn({ method: "GET" })
     ];
   });
 
+export interface Artist {
+  id: string;
+  name: string;
+  genre: string;
+  city: string;
+  photo_url: string;
+  status: string;
+  display_order: number;
+  slug?: string;
+}
+
 export const getActiveArtists = createServerFn({ method: "GET" })
-  .handler(async () => {
+  .handler(async (): Promise<Artist[]> => {
     return [];
   });
 
