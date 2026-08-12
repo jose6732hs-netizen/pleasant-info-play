@@ -140,15 +140,17 @@ function Index() {
       case 'hero':
         return (
           <section key="hero" id="inicio" style={sectionStyle}>
-            <div className="absolute inset-0 z-0">
+            <div className="absolute inset-0 z-0 overflow-hidden">
               {content.video_url ? (
                 content.video_url.includes('youtube') || content.video_url.includes('vimeo') ? (
-                  <iframe
-                    src={content.video_url.includes('youtube') ? `https://www.youtube.com/embed/${content.video_url.split('v=')[1]}?autoplay=1&mute=1&loop=1&controls=0` : content.video_url}
-                    className="w-full h-full object-cover opacity-30 pointer-events-none"
-                    frameBorder="0"
-                    allow="autoplay; fullscreen"
-                  />
+                  <div className="w-full h-full relative">
+                    <iframe
+                      src={content.video_url.includes('youtube') ? `https://www.youtube.com/embed/${content.video_url.split('v=')[1]}?autoplay=1&mute=1&loop=1&playlist=${content.video_url.split('v=')[1]}&controls=0&showinfo=0&rel=0&modestbranding=1` : content.video_url}
+                      className="absolute top-1/2 left-1/2 min-w-full min-h-full w-auto h-auto -translate-x-1/2 -translate-y-1/2 object-cover opacity-30 pointer-events-none scale-[1.3]"
+                      frameBorder="0"
+                      allow="autoplay; fullscreen"
+                    />
+                  </div>
                 ) : (
                   <video 
                     src={content.video_url} 

@@ -171,15 +171,39 @@ export function ArtistProfile({ artist, videos = [], gallery = [], isPreview = f
                   trackArtistEvent('artist_video_play', artist.id, { video_id: videos[0]?.id });
                 }}
               >
-                 <div className="absolute inset-0 flex items-center justify-center">
-                    <Play className="w-20 h-20 text-white/20 group-hover:text-white group-hover:scale-110 transition-all" />
-                 </div>
-                 <img 
-                   src={videos[0]?.thumbnail || "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&q=80&w=2070"} 
-                   className="w-full h-full object-cover opacity-50"
-                   alt="Performance video"
-                 />
-                 <div className="absolute bottom-0 left-0 p-8">
+                {videos[0]?.url ? (
+                  videos[0].url.includes('youtube') || videos[0].url.includes('vimeo') ? (
+                    <div className="w-full h-full relative">
+                      <iframe
+                        src={videos[0].url.includes('youtube') 
+                          ? `https://www.youtube.com/embed/${videos[0].url.split('v=')[1]}?autoplay=0&mute=0&controls=1` 
+                          : videos[0].url}
+                        className="absolute inset-0 w-full h-full"
+                        frameBorder="0"
+                        allow="autoplay; fullscreen"
+                        allowFullScreen
+                      />
+                    </div>
+                  ) : (
+                    <video 
+                      src={videos[0].url} 
+                      controls
+                      className="w-full h-full object-contain"
+                    />
+                  )
+                ) : (
+                  <>
+                    <div className="absolute inset-0 flex items-center justify-center z-10">
+                       <Play className="w-20 h-20 text-white/20 group-hover:text-white group-hover:scale-110 transition-all" />
+                    </div>
+                    <img 
+                      src={videos[0]?.thumbnail || "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&q=80&w=2070"} 
+                      className="w-full h-full object-cover opacity-50"
+                      alt="Performance video"
+                    />
+                  </>
+                )}
+                 <div className="absolute bottom-0 left-0 p-8 pointer-events-none">
                    <h4 className="text-2xl font-bold uppercase">{videos[0]?.title}</h4>
                  </div>
               </div>
