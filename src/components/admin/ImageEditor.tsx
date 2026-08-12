@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 
-interface ImageConfig {
+export interface ImageConfig {
   url: string;
   mobileUrl?: string;
   alt: string;
