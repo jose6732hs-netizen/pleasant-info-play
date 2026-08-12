@@ -171,8 +171,8 @@ function VisitorView() {
                   <MapPin className="w-5 h-5 text-blue-500 shrink-0 mt-1" />
                   <div>
                     <div className="text-[10px] font-black uppercase text-neutral-500 tracking-widest mb-1">Localização Aproximada</div>
-                    <div className="text-lg font-black uppercase tracking-tight">{mainSession.location?.city || 'Cidade Desconhecida'}</div>
-                    <div className="text-[10px] font-bold text-neutral-400 uppercase">{mainSession.location?.region || 'Região'}, {mainSession.location?.country || 'País'}</div>
+                    <div className="text-lg font-black uppercase tracking-tight">{mainSession?.location?.city || 'Cidade Desconhecida'}</div>
+                    <div className="text-[10px] font-bold text-neutral-400 uppercase">{mainSession?.location?.region || 'Região'}, {mainSession?.location?.country || 'País'}</div>
                   </div>
                 </div>
 
