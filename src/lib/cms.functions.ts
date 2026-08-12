@@ -156,7 +156,8 @@ let sectionsStore: PageSection[] = [
       description: "Representando talentos. Criando conexões.",
       complementary: "Do Goiás pro mundo.",
       image_url: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=2574&auto=format&fit=crop",
-      video_url: ""
+      video_url: "",
+      button_text: "Contrate um artista"
     },
     created_at: new Date().toISOString()
   },
