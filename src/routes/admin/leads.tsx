@@ -15,7 +15,7 @@ function AdminLeads() {
   const [filterType, setFilterType] = useState<string>("all");
   const [searchPath, setSearchPath] = useState<string>("");
 
-  const { data: events, isLoading } = useQuery({
+  const { data: events, isLoading, refetch } = useQuery({
     queryKey: ["analytics-events"],
     queryFn: () => getAnalyticsEvents(),
     refetchInterval: 5000,
