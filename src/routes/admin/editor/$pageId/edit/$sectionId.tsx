@@ -219,7 +219,13 @@ function VisualEditor() {
                   </AccordionTrigger>
                   <AccordionContent className="space-y-6 pt-2 pb-4">
                     {editContent && Object.keys(editContent).filter(key => 
-                      typeof editContent[key] === 'string' && !editContent[key].match(/\.(jpg|jpeg|png|webp|mp4|mov)$/i)
+                      typeof editContent[key] === 'string' && 
+                      !editContent[key].match(/\.(jpg|jpeg|png|webp|mp4|mov|webm)$/i) &&
+                      !editContent[key].includes('youtube.com') &&
+                      !editContent[key].includes('vimeo.com') &&
+                      !key.toLowerCase().includes('url') &&
+                      !key.toLowerCase().includes('image') &&
+                      !key.toLowerCase().includes('video')
                     ).map((key) => (
                       <RichTextEditor 
                         key={key}
@@ -240,23 +246,30 @@ function VisualEditor() {
                   </AccordionTrigger>
                   <AccordionContent className="space-y-6 pt-2 pb-4">
                     {editContent && Object.keys(editContent).filter(key => 
-                      key.includes('image') || key.includes('photo') || key.includes('banner') || key.includes('url')
+                      key.toLowerCase().includes('image') || 
+                      key.toLowerCase().includes('photo') || 
+                      key.toLowerCase().includes('banner') || 
+                      key.toLowerCase().includes('url')
                     ).map((key) => {
-                      const isVideo = typeof editContent[key] === 'string' && editContent[key].match(/\.(mp4|mov)$/i);
-                      if (isVideo) return null;
+                      // Skip if it's explicitly a video field or content
+                      const value = editContent[key];
+                      const isVideo = typeof value === 'string' && 
+                        (value.match(/\.(mp4|mov|webm)$/i) || value.includes('youtube.com') || value.includes('vimeo.com'));
+                      
+                      if (isVideo && key.toLowerCase().includes('video')) return null;
 
                       return (
                         <ImageEditor
                           key={key}
                           label={key.replace(/_/g, ' ')}
                           value={{
-                            url: editContent[key] || '',
+                            url: typeof value === 'string' ? value : '',
                             alt: '',
                             position: 'center',
                             objectFit: 'cover',
-                            overlay: false,
-                            overlayOpacity: 0,
-                            isBackground: key.includes('banner') || key.includes('bg')
+                            overlay: editStyles?.backgroundOverlay || false,
+                            overlayOpacity: editStyles?.overlayOpacity || 0,
+                            isBackground: key.toLowerCase().includes('banner') || key.toLowerCase().includes('bg') || key.toLowerCase().includes('background')
                           }}
                           onChange={(img) => updateField(key, img.url)}
                         />
@@ -273,7 +286,9 @@ function VisualEditor() {
                   </AccordionTrigger>
                   <AccordionContent className="space-y-6 pt-2 pb-4">
                     {editContent && Object.keys(editContent).filter(key => 
-                      key.includes('video') || (typeof editContent[key] === 'string' && editContent[key].match(/\.(mp4|mov)$/i))
+                      key.toLowerCase().includes('video') || 
+                      (typeof editContent[key] === 'string' && editContent[key].match(/\.(mp4|mov|webm)$/i)) ||
+                      (typeof editContent[key] === 'string' && (editContent[key].includes('youtube.com') || editContent[key].includes('vimeo.com')))
                     ).map((key) => (
                       <VideoEditor
                         key={key}
