@@ -24,10 +24,6 @@ export const Route = createFileRoute("/")({
         queryKey: ["active-artists"],
         queryFn: () => getActiveArtists(),
       }),
-      context.queryClient.ensureQueryData({
-        queryKey: ["analytics-events"],
-        queryFn: () => getRealAnalyticsEvents(),
-      }),
     ]);
   },
   component: Index,
