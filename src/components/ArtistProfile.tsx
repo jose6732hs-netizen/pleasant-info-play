@@ -171,9 +171,8 @@ export function ArtistProfile({ artist, videos = [], gallery = [], isPreview = f
                 <h3 className="text-4xl md:text-5xl font-black tracking-tighter uppercase leading-[0.9]">
                   LEVE {artist.name} <br/> PARA O SEU EVENTO
                 </h3>
-                <p className="text-neutral-600 font-medium">
-                  {artist.booking_call_text || "Entre em contato agora para consultar disponibilidade e orçamentos."}
-                </p>
+                <div className="text-neutral-600 font-medium prose prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: artist.booking_call_text || "Entre em contato agora para consultar disponibilidade e orçamentos." }} />
+
                 <div className="pt-4 flex flex-col gap-4">
                   <button 
                     onClick={() => handleBookingClick('Footer Form')}
