@@ -119,11 +119,31 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const location = useLocation();
+
+  useEffect(() => {
+    // Initial tracking
+    capturePageView(location.pathname);
+
+    // Global click listener for generic tracking
+    const handleGlobalClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const clickable = target.closest("button, a, [role='button']");
+      if (clickable) {
+        const text = clickable.textContent?.trim() || "";
+        const id = clickable.id || undefined;
+        captureClick(window.location.pathname, text, id);
+      }
+    };
+
+    window.addEventListener("click", handleGlobalClick);
+    return () => window.removeEventListener("click", handleGlobalClick);
+  }, [location.pathname]);
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
+      <Toaster position="top-right" expand={true} richColors />
     </QueryClientProvider>
   );
 }
