@@ -216,7 +216,7 @@ export function ArtistForm({ initialData, initialVideos = [], initialGallery = [
 
             {activeTab === 1 && (
               <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4">
-                 <div className="space-y-4">
+                <div className="space-y-4">
                     <h3 className="text-sm font-bold uppercase tracking-widest text-neutral-400">Upload de Mídia</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                        <div className="space-y-4">
@@ -260,30 +260,124 @@ export function ArtistForm({ initialData, initialVideos = [], initialGallery = [
                           </div>
                        </div>
                     </div>
+                    
+                    <div className="space-y-4">
+                      <label className="text-[10px] uppercase tracking-widest text-neutral-500 font-bold">Galeria de Fotos (URLs separadas por vírgula)</label>
+                      <textarea 
+                        className="w-full bg-black border border-white/10 p-4 rounded-sm focus:outline-none focus:border-white transition resize-none h-32"
+                        placeholder="https://exemplo.com/foto1.jpg, https://exemplo.com/foto2.jpg"
+                        value={gallery.map(g => g.image_url).join(', ')}
+                        onChange={(e) => {
+                          const urls = e.target.value.split(',').map(u => u.trim()).filter(Boolean);
+                          setGallery(urls.map((url, i) => ({
+                            id: `gal-${i}`,
+                            artist_id: artist.id,
+                            image_url: url,
+                            order: i
+                          })));
+                        }}
+                      />
+                    </div>
                  </div>
               </div>
             )}
 
-            {activeTab === 2 && (
+            {activeTab === 3 && (
               <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4">
-                 <div className="space-y-6">
-                    <div className="space-y-2">
-                      <label className="text-[10px] uppercase tracking-widest text-neutral-500 font-bold">Título Principal da Página</label>
-                      <input name="hero_title" value={artist.hero_title} onChange={handleInputChange} type="text" className="w-full bg-black border border-white/10 p-4 rounded-sm focus:outline-none focus:border-white transition" placeholder="Ex: VINI DJ — O SOM DO FUTURO" />
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-[10px] uppercase tracking-widest text-neutral-500 font-bold">Frase de Destaque</label>
-                      <textarea name="highlight_phrase" value={artist.highlight_phrase} onChange={handleInputChange} rows={2} className="w-full bg-black border border-white/10 p-4 rounded-sm focus:outline-none focus:border-white transition resize-none"></textarea>
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-[10px] uppercase tracking-widest text-neutral-500 font-bold">Bio Curta (Highlight)</label>
-                      <textarea name="short_bio" value={artist.short_bio} onChange={handleInputChange} rows={3} className="w-full bg-black border border-white/10 p-4 rounded-sm focus:outline-none focus:border-white transition resize-none"></textarea>
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-[10px] uppercase tracking-widest text-neutral-500 font-bold">Biografia Completa</label>
-                      <textarea name="full_bio" value={artist.full_bio} onChange={handleInputChange} rows={8} className="w-full bg-black border border-white/10 p-4 rounded-sm focus:outline-none focus:border-white transition resize-none"></textarea>
+                 <div className="space-y-4">
+                    <h3 className="text-sm font-bold uppercase tracking-widest text-neutral-400">Vídeos (YouTube/Vimeo)</h3>
+                    <div className="space-y-4">
+                      {videos.map((video, idx) => (
+                        <div key={idx} className="p-6 bg-black border border-white/10 rounded-sm space-y-4">
+                          <input 
+                            placeholder="Título do Vídeo" 
+                            className="w-full bg-neutral-900 border border-white/5 p-3 text-xs"
+                            value={video.title}
+                            onChange={(e) => {
+                              const newVideos = [...videos];
+                              newVideos[idx].title = e.target.value;
+                              setVideos(newVideos);
+                            }}
+                          />
+                          <input 
+                            placeholder="URL do Vídeo" 
+                            className="w-full bg-neutral-900 border border-white/5 p-3 text-xs"
+                            value={video.url}
+                            onChange={(e) => {
+                              const newVideos = [...videos];
+                              newVideos[idx].url = e.target.value;
+                              setVideos(newVideos);
+                            }}
+                          />
+                        </div>
+                      ))}
+                      <button 
+                        type="button"
+                        onClick={() => setVideos([...videos, { id: `vid-${Date.now()}`, artist_id: artist.id, title: '', url: '', order: videos.length, status: 'ATIVO' }])}
+                        className="w-full border border-dashed border-white/20 p-4 text-[9px] font-bold uppercase tracking-widest hover:border-white transition"
+                      >
+                        + Adicionar Vídeo
+                      </button>
                     </div>
                  </div>
+              </div>
+            )}
+
+            {activeTab === 4 && (
+              <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {['instagram', 'youtube', 'tiktok', 'spotify', 'deezer', 'facebook', 'website'].map((social) => (
+                    <div key={social} className="space-y-2">
+                      <label className="text-[10px] uppercase tracking-widest text-neutral-500 font-bold capitalize">{social}</label>
+                      <input 
+                        name={social} 
+                        value={(artist as any)[social] || ''} 
+                        onChange={handleInputChange} 
+                        type="text" 
+                        className="w-full bg-black border border-white/10 p-4 rounded-sm focus:outline-none focus:border-white transition" 
+                        placeholder={`URL do ${social}`} 
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {activeTab === 5 && (
+              <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-[10px] uppercase tracking-widest text-neutral-500 font-bold">Texto do Botão</label>
+                    <input name="booking_btn_text" value={artist.booking_btn_text} onChange={handleInputChange} type="text" className="w-full bg-black border border-white/10 p-4 rounded-sm focus:outline-none focus:border-white transition" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-[10px] uppercase tracking-widest text-neutral-500 font-bold">Chamada para Booking</label>
+                    <input name="booking_call_text" value={artist.booking_call_text} onChange={handleInputChange} type="text" className="w-full bg-black border border-white/10 p-4 rounded-sm focus:outline-none focus:border-white transition" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-[10px] uppercase tracking-widest text-neutral-500 font-bold">Disponibilidade</label>
+                    <input name="availability" value={artist.availability} onChange={handleInputChange} type="text" className="w-full bg-black border border-white/10 p-4 rounded-sm focus:outline-none focus:border-white transition" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-[10px] uppercase tracking-widest text-neutral-500 font-bold">Tipos de Contratação</label>
+                    <input name="hiring_type" value={artist.hiring_type} onChange={handleInputChange} type="text" className="w-full bg-black border border-white/10 p-4 rounded-sm focus:outline-none focus:border-white transition" />
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 6 && (
+              <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4">
+                <div className="space-y-6">
+                  <div className="space-y-2">
+                    <label className="text-[10px] uppercase tracking-widest text-neutral-500 font-bold">SEO Title</label>
+                    <input name="seo_title" value={artist.seo_title} onChange={handleInputChange} type="text" className="w-full bg-black border border-white/10 p-4 rounded-sm focus:outline-none focus:border-white transition" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-[10px] uppercase tracking-widest text-neutral-500 font-bold">SEO Description</label>
+                    <textarea name="seo_description" value={artist.seo_description} onChange={handleInputChange} rows={4} className="w-full bg-black border border-white/10 p-4 rounded-sm focus:outline-none focus:border-white transition resize-none"></textarea>
+                  </div>
+                </div>
               </div>
             )}
 
