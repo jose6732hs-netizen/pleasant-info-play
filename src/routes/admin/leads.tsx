@@ -116,7 +116,7 @@ function AdminLeads() {
   const activeFilterCount = Object.values(filters).filter(v => v !== "all").length;
 
   return (
-    <div className="p-6 md:p-12 space-y-8 min-h-screen bg-black">
+    <div className="p-4 md:p-12 space-y-6 md:space-y-8 min-h-screen bg-black overflow-x-hidden">
       <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div>
           <h1 className="text-3xl md:text-5xl font-black tracking-tighter uppercase italic">
@@ -149,7 +149,7 @@ function AdminLeads() {
       </header>
 
       {/* Control Panel */}
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 md:gap-8">
         {/* Filters Sidebar */}
         <div className="lg:col-span-1 space-y-6">
           <div className="bg-neutral-900/50 border border-white/5 p-6 space-y-6 rounded-sm">

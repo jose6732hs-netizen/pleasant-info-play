@@ -167,7 +167,7 @@ function AdminAnalytics() {
   const COLORS = ['#FFFFFF', '#A3A3A3', '#525252', '#262626'];
 
   return (
-    <div className="p-6 md:p-12 space-y-8 bg-black min-h-screen text-white">
+    <div className="p-4 md:p-12 space-y-6 md:space-y-8 bg-black min-h-screen text-white overflow-x-hidden">
       {/* Premium Header */}
       <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 pb-8 border-b border-white/5">
         <div className="space-y-1">
@@ -232,7 +232,8 @@ function AdminAnalytics() {
       </div>
 
       {/* Main Chart Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 overflow-hidden">
+
         <div className="lg:col-span-2 bg-neutral-900/40 border border-white/5 p-8 rounded-sm space-y-6">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <h3 className="text-xs font-black uppercase tracking-[0.3em] flex items-center gap-2">

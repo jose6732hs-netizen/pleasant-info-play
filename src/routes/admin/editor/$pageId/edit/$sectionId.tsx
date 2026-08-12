@@ -223,9 +223,11 @@ function VisualEditor() {
         </div>
       </header>
 
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex-1 flex flex-col md:flex-row overflow-hidden md:overflow-hidden overflow-y-auto">
         {/* Left Sidebar: Properties */}
-        <aside className="w-80 border-r border-white/5 bg-black flex flex-col overflow-y-auto custom-scrollbar">
+        <aside className="w-full md:w-80 border-r border-white/5 bg-black flex flex-col overflow-y-auto custom-scrollbar md:h-full h-auto">
+
+
           <div className="p-6 border-b border-white/5">
             <h3 className="text-xs font-bold text-neutral-400 uppercase tracking-widest mb-4 flex items-center gap-2">
               <Settings className="w-3 h-3" /> Propriedades da Seção
