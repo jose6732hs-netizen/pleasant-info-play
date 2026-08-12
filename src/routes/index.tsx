@@ -182,6 +182,21 @@ function Index() {
     }
   };
 
+  const navConfig = contentData?.find((p: any) => p.id === 'global_nav')?.config;
+  const menu = navConfig?.menu || {
+    logo: logoAsset.url,
+    links: [
+      { id: '1', label: 'INÍCIO', url: '#inicio', active: true },
+      { id: '2', label: 'ARTISTAS', url: '#artistas', active: true },
+      { id: '3', label: 'SERVIÇOS', url: '#servicos', active: true },
+      { id: '4', label: 'SOBRE', url: '#sobre', active: true },
+      { id: '5', label: 'CONTATO', url: '#contato', active: true },
+    ],
+    showBookingButton: true,
+    bookingButtonText: 'CONTRATAR',
+    bookingButtonUrl: '#contratar'
+  };
+
   return (
     <div className="min-h-screen bg-neutral-950 text-white selection:bg-white selection:text-black">
       {showIntro && <IntroAnimation onComplete={handleIntroComplete} />}
@@ -189,18 +204,20 @@ function Index() {
       {/* Header */}
       <header className={`fixed w-full p-3 md:p-4 flex justify-between items-center z-50 backdrop-blur-md bg-neutral-950/80 border-b border-white/5 transition-all duration-500 ${scrolled ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`}>
         <div className="flex items-center">
-          <img src={logoAsset.url} alt="064 TALENTS" className="h-8 md:h-10 w-auto object-contain" />
+          <img src={menu.logo} alt="064 TALENTS" className="h-8 md:h-10 w-auto object-contain" />
         </div>
         <nav className="hidden md:flex gap-8 text-xs font-semibold uppercase tracking-widest text-neutral-400">
-          <a href="#inicio" className="hover:text-white transition" onClick={() => captureClick(window.location.pathname, "Nav: Início", "nav-inicio")}>Início</a>
-          <a href="#artistas" className="hover:text-white transition" onClick={() => captureClick(window.location.pathname, "Nav: Artistas", "nav-artistas")}>Artistas</a>
-          <a href="#servicos" className="hover:text-white transition" onClick={() => captureClick(window.location.pathname, "Nav: Serviços", "nav-servicos")}>Serviços</a>
-          <a href="#sobre" className="hover:text-white transition" onClick={() => captureClick(window.location.pathname, "Nav: Sobre", "nav-sobre")}>Sobre</a>
-          <a href="#contato" className="hover:text-white transition" onClick={() => captureClick(window.location.pathname, "Nav: Contato", "nav-contato")}>Contato</a>
+          {menu.links.filter((l: any) => l.active).sort((a: any, b: any) => (a.order || 0) - (b.order || 0)).map((link: any) => (
+            <a key={link.id} href={link.url} className="hover:text-white transition" onClick={() => captureClick(window.location.pathname, `Nav: ${link.label}`, `nav-${link.id}`)}>
+              {link.label}
+            </a>
+          ))}
         </nav>
-        <button onClick={() => openBooking()} className="bg-white text-black px-6 py-2 rounded-full text-xs font-bold uppercase hover:bg-neutral-200 transition">
-          Contrate um artista
-        </button>
+        {menu.showBookingButton && (
+          <button onClick={() => openBooking()} className="bg-white text-black px-6 py-2 rounded-full text-xs font-bold uppercase hover:bg-neutral-200 transition">
+            {menu.bookingButtonText}
+          </button>
+        )}
       </header>
 
       <main>
@@ -286,18 +303,54 @@ function Index() {
         </section>
 
         {/* Footer */}
-        <footer id="contato" className="py-12 border-t border-white/5 bg-neutral-950 text-center">
-            <div className="flex justify-center mb-6">
-                <img src={logoAsset.url} alt="064 TALENTS" className="h-16 w-auto object-contain" />
-            </div>
-            <p className="text-xs text-neutral-600 uppercase tracking-widest mb-8">Representando talentos. Criando conexões. Do Goiás pro mundo.</p>
-            <div className="flex justify-center gap-6 mb-8">
-                <a href="#" className="text-neutral-500 hover:text-white transition"><Instagram /></a>
-                <a href="#" className="text-neutral-500 hover:text-white transition"><Mail /></a>
-                <a href="#" className="text-neutral-500 hover:text-white transition"><Phone /></a>
-            </div>
-            <p className="text-[10px] text-neutral-700 uppercase tracking-widest">© 2026 064 TALENTS. Todos os direitos reservados.</p>
-        </footer>
+        {(() => {
+          const footer = navConfig?.footer || {
+            logo: logoAsset.url,
+            description: 'Representando talentos. Criando conexões. Do Goiás pro mundo.',
+            blocks: [
+              { id: 'social', active: true },
+              { id: 'contact', active: true },
+              { id: 'copyright', active: true }
+            ],
+            social: { instagram: '#', youtube: '#' },
+            contact: { email: 'contato@064talents.com.br', phone: '+55 62 9999-9999' },
+            copyright: '© 2026 064 TALENTS. TODOS OS DIREITOS RESERVADOS.'
+          };
+
+          return (
+            <footer id="contato" className="py-24 border-t border-white/5 bg-neutral-950 text-center">
+                <div className="flex justify-center mb-8">
+                    <img src={footer.logo} alt="064 TALENTS" className="h-24 w-auto object-contain opacity-80" />
+                </div>
+                <p className="text-xs text-neutral-500 uppercase tracking-[0.2em] mb-12 max-w-xl mx-auto px-6">{footer.description}</p>
+                
+                <div className="flex flex-col md:flex-row justify-center gap-12 mb-16 px-6">
+                    {footer.blocks?.find((b: any) => b.id === 'social')?.active && (
+                      <div className="space-y-4">
+                        <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-white">Social</h4>
+                        <div className="flex justify-center gap-6">
+                            {footer.social.instagram && <a href={footer.social.instagram} className="text-neutral-500 hover:text-white transition"><Instagram className="w-5 h-5" /></a>}
+                            {footer.social.youtube && <a href={footer.social.youtube} className="text-neutral-500 hover:text-white transition"><Youtube className="w-5 h-5" /></a>}
+                            {footer.social.facebook && <a href={footer.social.facebook} className="text-neutral-500 hover:text-white transition"><Facebook className="w-5 h-5" /></a>}
+                        </div>
+                      </div>
+                    )}
+
+                    {footer.blocks?.find((b: any) => b.id === 'contact')?.active && (
+                      <div className="space-y-4">
+                        <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-white">Contato</h4>
+                        <div className="space-y-2 text-[10px] uppercase tracking-widest text-neutral-500 font-bold">
+                            <div className="flex items-center justify-center gap-2"><Mail className="w-3 h-3" /> {footer.contact.email}</div>
+                            <div className="flex items-center justify-center gap-2"><Phone className="w-3 h-3" /> {footer.contact.phone}</div>
+                        </div>
+                      </div>
+                    )}
+                </div>
+
+                <p className="text-[10px] text-neutral-700 uppercase tracking-[0.4em] font-medium border-t border-white/5 pt-12 mx-auto max-w-xs">{footer.copyright}</p>
+            </footer>
+          );
+        })()}
       </main>
       <BookingModal 
         isOpen={isBookingModalOpen} 
