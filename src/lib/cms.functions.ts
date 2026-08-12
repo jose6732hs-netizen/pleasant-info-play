@@ -22,6 +22,7 @@ export interface PageSection {
   status: 'ATIVA' | 'OCULTA';
   display_order: number;
   content: any;
+  styles?: any;
   draft_content?: any;
   last_published_at?: string;
   created_at: string;
@@ -128,7 +129,8 @@ export const getSiteContent = createServerFn({ method: "GET" })
       .sort((a, b) => a.display_order - b.display_order)
       .map(s => ({
         section_name: s.type,
-        content: s.content
+        content: s.content,
+        styles: s.styles
       }));
   });
 
