@@ -151,7 +151,7 @@ function ContractDetails() {
                       <label className="text-[10px] uppercase font-bold text-neutral-600 tracking-widest">Artista</label>
                       <select 
                         value={editData.artist_id}
-                        onChange={(e) => setEditData({...editData, artist_id: e.target.value, artist_name: artists.find(a => a.id === e.target.value)?.name || ""})}
+                        onChange={(e) => setEditData({...editData, artist_id: e.target.value, artist_name: artists?.find((a: any) => a.id === e.target.value)?.name || ""})}
                         className="w-full bg-neutral-900 border border-white/10 p-4 text-sm focus:outline-none focus:border-white/30 transition"
                       >
                         {artists.map(artist => (
