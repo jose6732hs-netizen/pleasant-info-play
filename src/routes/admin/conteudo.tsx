@@ -1,4 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { LayoutDashboard, Users, Calendar, Briefcase, FileText, Settings, Save } from "lucide-react";
 import logoAsset from "@/assets/logo-completa.png.asset.json";
 
 export const Route = createFileRoute("/admin/conteudo")({
@@ -7,20 +8,30 @@ export const Route = createFileRoute("/admin/conteudo")({
 
 function AdminContent() {
   return (
-    <div className="min-h-screen bg-neutral-950 text-white flex flex-col md:flex-row">
+    <div className="min-h-screen bg-neutral-950 text-white flex flex-col md:flex-row w-full">
       <aside className="w-full md:w-64 border-b md:border-b-0 md:border-r border-white/5 p-6 space-y-8 bg-black/20">
         <div className="flex justify-start mb-8">
           <img src={logoAsset.url} alt="064 ADMIN" className="h-8 w-auto object-contain grayscale brightness-200" />
         </div>
         <nav className="flex flex-col gap-2 text-sm text-neutral-400 uppercase tracking-widest">
-          <a href="/admin" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm">Dashboard</a>
-          <a href="/admin/artistas" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm">Artistas</a>
-          <a href="/admin/agenda" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm">Agenda</a>
-          <a href="/admin/contratos" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm">Contratos</a>
-          <a href="/admin/servicos" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm">Serviços</a>
-          <a href="/admin/conteudo" className="p-3 bg-white/10 text-white transition rounded-sm font-bold">Conteúdo</a>
-          <a href="/admin/solicitacoes" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm">Solicitações</a>
-          <a href="/admin/configuracoes" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm mt-auto">Configurações</a>
+          <Link to="/admin" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
+            <LayoutDashboard className="w-4 h-4" /> Dashboard
+          </Link>
+          <Link to="/admin/artistas" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
+            <Users className="w-4 h-4" /> Artistas
+          </Link>
+          <Link to="/admin/agenda" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
+            <Calendar className="w-4 h-4" /> Agenda
+          </Link>
+          <Link to="/admin/contratos" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
+            <Briefcase className="w-4 h-4" /> Contratos
+          </Link>
+          <Link to="/admin/solicitacoes" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
+            <FileText className="w-4 h-4" /> Solicitações
+          </Link>
+          <Link to="/admin/configuracoes" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3 mt-auto">
+            <Settings className="w-4 h-4" /> Configurações
+          </Link>
         </nav>
       </aside>
       <main className="flex-1 p-6 md:p-12 overflow-y-auto">
