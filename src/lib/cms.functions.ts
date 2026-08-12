@@ -22,6 +22,7 @@ export interface PageSection {
   status: 'ATIVA' | 'OCULTA';
   display_order: number;
   content: any;
+  styles?: any;
   draft_content?: any;
   last_published_at?: string;
   created_at: string;
