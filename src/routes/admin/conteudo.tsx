@@ -77,8 +77,8 @@ function AdminContent() {
             </section>
 
             <div className="sticky bottom-6 flex justify-end">
-                <button className="bg-white text-black px-12 py-4 rounded-full text-xs font-bold uppercase tracking-widest shadow-2xl hover:bg-neutral-200 transition">
-                    Salvar Alterações
+                <button className="bg-white text-black px-12 py-4 text-[10px] font-bold uppercase tracking-widest hover:bg-neutral-200 transition flex items-center gap-2">
+                    <Save className="w-4 h-4" /> Salvar Alterações
                 </button>
             </div>
           </form>
