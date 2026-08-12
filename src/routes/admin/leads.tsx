@@ -13,17 +13,16 @@ export const Route = createFileRoute("/admin/leads")({
 function AdminLeads() {
   const [filterType, setFilterType] = useState<string>("all");
   const [searchPath, setSearchPath] = useState<string>("");
+  const [filters, setFilters] = useState({
+    country: "all",
+    region: "all",
+    city: "all"
+  });
 
   const { data: events, isLoading, refetch } = useQuery({
     queryKey: ["analytics-events"],
     queryFn: () => getRealAnalyticsEvents(),
     refetchInterval: 5000,
-  });
-
-  const [filters, setFilters] = useState({
-    country: "all",
-    region: "all",
-    city: "all"
   });
 
   const filteredEvents = events?.filter((event: any) => {
@@ -41,9 +40,8 @@ function AdminLeads() {
   const regions = Array.from(new Set(events?.filter((e: any) => filters.country === "all" || e.location?.country === filters.country).map((e: any) => e.location?.region).filter(Boolean) || []));
   const cities = Array.from(new Set(events?.filter((e: any) => filters.region === "all" || e.location?.region === filters.region).map((e: any) => e.location?.city).filter(Boolean) || []));
 
-
+  return (
     <div className="p-6 md:p-12 space-y-12">
-      <header className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
       <header className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
         <div>
           <h1 className="text-3xl md:text-4xl font-bold tracking-tighter uppercase">Leads & Tracking</h1>
@@ -73,7 +71,6 @@ function AdminLeads() {
           </div>
           
           <div className="aspect-[21/9] w-full bg-black/40 border border-white/5 rounded-sm relative overflow-hidden flex items-center justify-center group">
-            {/* Mock Visual do Mapa (Simulando Leaflet/Mapbox para manter leveza) */}
             <div className="absolute inset-0 opacity-20 grayscale invert pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
             
             {filteredEvents?.filter(e => e.location?.latitude).length === 0 ? (
@@ -82,7 +79,6 @@ function AdminLeads() {
               </div>
             ) : (
               <div className="relative w-full h-full">
-                {/* Heatmap/Markers Simulation */}
                 {Array.from(new Map(
                   filteredEvents
                     ?.filter(e => e.location?.latitude && e.location?.longitude)
