@@ -259,8 +259,10 @@ export const updateSectionsOrder = createServerFn({ method: "POST" })
     id: z.string(),
     display_order: z.number()
   })).parse(data))
+  .handler(async ({ data }) => {
     // Skipping requireAdmin for demo/local storage purposes
     // In production, this would be: await requireAdmin();
+
 
     data.forEach(item => {
       const section = sectionsStore.find(s => s.id === item.id);
@@ -271,8 +273,10 @@ export const updateSectionsOrder = createServerFn({ method: "POST" })
 
 export const deleteSection = createServerFn({ method: "POST" })
   .validator((id: unknown) => z.string().parse(id))
+  .handler(async ({ data: id }) => {
     // Skipping requireAdmin for demo/local storage purposes
     // In production, this would be: await requireAdmin();
+
 
     sectionsStore = sectionsStore.filter(s => s.id !== id);
     return { success: true };
@@ -283,8 +287,10 @@ export const savePageConfig = createServerFn({ method: "POST" })
     pageId: z.string(),
     config: z.any()
   }).parse(data))
+  .handler(async ({ data }) => {
     // Skipping requireAdmin for demo/local storage purposes
     // In production, this would be: await requireAdmin();
+
 
     const page = pagesStore.find(p => p.id === data.pageId);
     if (page) {
