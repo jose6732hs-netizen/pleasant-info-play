@@ -20,20 +20,7 @@ export const CalendarEventSchema = z.object({
 export type CalendarEvent = z.infer<typeof CalendarEventSchema>;
 
 // Mock data storage in memory (resets on server restart)
-let mockEvents: CalendarEvent[] = [
-  {
-    id: "evt-1",
-    artist_id: "1",
-    start_time: new Date(2026, 8, 20, 20, 0).toISOString(),
-    end_time: new Date(2026, 8, 20, 22, 0).toISOString(),
-    title: "Show de Lançamento",
-    city: "Goiânia",
-    state: "GO",
-    location: "Arena 064",
-    status: "CONFIRMADO",
-    contractor: "Eventos SA"
-  }
-];
+let mockEvents: CalendarEvent[] = [];
 
 export const getArtistCalendar = createServerFn({ method: "GET" })
   .validator((data: unknown) => z.object({
