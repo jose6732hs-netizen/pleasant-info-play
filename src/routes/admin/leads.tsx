@@ -81,8 +81,8 @@ function AdminLeads() {
               <div className="relative w-full h-full">
                 {Array.from(new Map(
                   filteredEvents
-                    ?.filter(e => e.location?.latitude && e.location?.longitude)
-                    .map(e => [`${e.location.latitude}-${e.location.longitude}`, e])
+                    ?.filter(e => e.location?.latitude !== undefined && e.location?.longitude !== undefined)
+                    .map(e => [`${e.location!.latitude}-${e.location!.longitude}`, e])
                 ).values()).map((event: any, idx) => (
                   <div 
                     key={idx}
