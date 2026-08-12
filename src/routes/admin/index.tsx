@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getAdminStats } from "@/lib/admin.functions";
-import { LayoutDashboard, Users, Calendar, Briefcase, FileText, Settings, Star, TrendingUp } from "lucide-react";
+import { LayoutDashboard, Users, Calendar, Briefcase, FileText, Settings, Star, TrendingUp, MousePointer2 } from "lucide-react";
 import logoAsset from "@/assets/logo-completa.png.asset.json";
 
 export const Route = createFileRoute("/admin/")({
