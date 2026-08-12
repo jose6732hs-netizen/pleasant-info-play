@@ -6,6 +6,7 @@ import { format, parseISO } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { useState } from "react";
 import { toast } from "sonner";
+import logoAsset from "@/assets/logo-completa.png.asset.json";
 import { 
   FileText, 
   ChevronLeft, 

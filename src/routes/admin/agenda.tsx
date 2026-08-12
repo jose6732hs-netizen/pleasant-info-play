@@ -1,14 +1,15 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isSameDay, addMonths, subMonths, isWithinInterval, parseISO } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { ChevronLeft, ChevronRight, Plus, MapPin, Clock, User, Info, AlertCircle } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus, MapPin, Clock, User, Info, AlertCircle, LayoutDashboard, Users, Calendar, Briefcase, FileText, Settings } from "lucide-react";
 import { getActiveArtists } from "@/lib/cms.functions";
 import { getArtistCalendar, addCalendarEvent } from "@/lib/booking.functions";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import logoAsset from "@/assets/logo-completa.png.asset.json";
 
 export const Route = createFileRoute("/admin/agenda")({
   loader: async ({ context }) => {
@@ -84,18 +85,30 @@ function AdminAgenda() {
   const prevMonth = () => setCurrentMonth(subMonths(currentMonth, 1));
 
   return (
-    <div className="min-h-screen bg-neutral-950 text-white flex flex-col md:flex-row">
+    <div className="min-h-screen bg-neutral-950 text-white flex flex-col md:flex-row w-full">
       <aside className="w-full md:w-64 border-b md:border-b-0 md:border-r border-white/5 p-6 space-y-8 bg-black/20">
-        <div className="text-xl font-bold tracking-tighter">064 ADMIN</div>
+        <div className="flex justify-start mb-8">
+          <img src={logoAsset.url} alt="064 ADMIN" className="h-8 w-auto object-contain grayscale brightness-200" />
+        </div>
         <nav className="flex flex-col gap-2 text-sm text-neutral-400 uppercase tracking-widest">
-          <a href="/admin" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm">Dashboard</a>
-          <a href="/admin/artistas" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm">Artistas</a>
-          <a href="/admin/agenda" className="p-3 bg-white/10 text-white transition rounded-sm font-bold">Agenda</a>
-          <a href="/admin/contratos" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm">Contratos</a>
-          <a href="/admin/servicos" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm">Serviços</a>
-          <a href="/admin/conteudo" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm">Conteúdo</a>
-          <a href="/admin/solicitacoes" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm">Solicitações</a>
-          <a href="/admin/configuracoes" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm mt-auto">Configurações</a>
+          <Link to="/admin" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
+            <LayoutDashboard className="w-4 h-4" /> Dashboard
+          </Link>
+          <Link to="/admin/artistas" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
+            <Users className="w-4 h-4" /> Artistas
+          </Link>
+          <Link to="/admin/agenda" className="p-3 bg-white/10 text-white transition rounded-sm font-bold flex items-center gap-3">
+            <Calendar className="w-4 h-4" /> Agenda
+          </Link>
+          <Link to="/admin/contratos" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
+            <Briefcase className="w-4 h-4" /> Contratos
+          </Link>
+          <Link to="/admin/solicitacoes" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
+            <FileText className="w-4 h-4" /> Solicitações
+          </Link>
+          <Link to="/admin/configuracoes" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3 mt-auto">
+            <Settings className="w-4 h-4" /> Configurações
+          </Link>
         </nav>
       </aside>
 

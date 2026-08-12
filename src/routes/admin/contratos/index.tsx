@@ -5,6 +5,7 @@ import { format, parseISO } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { useState } from "react";
 import { Search, Filter, FileText, ChevronRight, LayoutDashboard, Users, Calendar, Briefcase, Settings, FileCheck } from "lucide-react";
+import logoAsset from "@/assets/logo-completa.png.asset.json";
 
 export const Route = createFileRoute("/admin/contratos/")({
   loader: async ({ context }) => {
@@ -52,30 +53,26 @@ function AdminContracts() {
   return (
     <div className="min-h-screen bg-neutral-950 text-white flex flex-col md:flex-row">
       <aside className="w-full md:w-64 border-b md:border-b-0 md:border-r border-white/5 p-6 space-y-8 bg-black/20">
-        <div className="text-xl font-bold tracking-tighter">064 ADMIN</div>
+        <div className="flex justify-start mb-8">
+          <img src={logoAsset.url} alt="064 ADMIN" className="h-8 w-auto object-contain grayscale brightness-200" />
+        </div>
         <nav className="flex flex-col gap-2 text-sm text-neutral-400 uppercase tracking-widest">
           <Link to="/admin" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
             <LayoutDashboard className="w-4 h-4" /> Dashboard
           </Link>
-          <a href="/admin/artistas" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
+          <Link to="/admin/artistas" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
             <Users className="w-4 h-4" /> Artistas
-          </a>
-          <a href="/admin/agenda" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
-            <Calendar className="w-4 h-4" /> Agenda
-          </a>
-          <Link to="/admin/contratos" className="p-3 bg-white/10 text-white transition rounded-sm font-bold flex items-center gap-3">
-            <FileCheck className="w-4 h-4" /> Contratos
           </Link>
-          <a href="/admin/servicos" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
-            <Briefcase className="w-4 h-4" /> Serviços
-          </a>
-          <a href="/admin/conteudo" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
-            <LayoutDashboard className="w-4 h-4" /> Conteúdo
-          </a>
-          <a href="/admin/solicitacoes" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
+          <Link to="/admin/agenda" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
+            <Calendar className="w-4 h-4" /> Agenda
+          </Link>
+          <Link to="/admin/contratos" className="p-3 bg-white/10 text-white transition rounded-sm font-bold flex items-center gap-3">
+            <Briefcase className="w-4 h-4" /> Contratos
+          </Link>
+          <Link to="/admin/solicitacoes" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
             <FileText className="w-4 h-4" /> Solicitações
-          </a>
-          <Link to="/admin/configuracoes" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm mt-auto flex items-center gap-3">
+          </Link>
+          <Link to="/admin/configuracoes" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3 mt-auto">
             <Settings className="w-4 h-4" /> Configurações
           </Link>
         </nav>
