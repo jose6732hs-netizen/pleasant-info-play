@@ -25,11 +25,12 @@ export function AdminSidebar({ currentPath }: AdminSidebarProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const menuItems = [
-    { to: "/admin", label: "Dashboard", icon: LayoutDashboard },
+    { to: "/admin", label: "Overview", icon: LayoutDashboard },
+    { to: "/admin/analytics", label: "Analytics Hub", icon: Sparkles },
     { to: "/admin/editor", label: "Editor do Site", icon: Edit3 },
     { to: "/admin/artistas", label: "Ranking Artistas", icon: Award },
     { to: "/admin/artistas/gerenciar", label: "Gerenciar Artistas", icon: Users },
-    { to: "/admin/leads", label: "Leads & Tracking", icon: MousePointer2 },
+    { to: "/admin/leads", label: "Inteligência de Tráfego", icon: MousePointer2 },
     { to: "/admin/agenda", label: "Agenda", icon: Calendar },
     { to: "/admin/contratos", label: "Contratos", icon: Briefcase },
     { to: "/admin/solicitacoes", label: "Solicitações", icon: FileText },
