@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { LayoutDashboard, Users, Calendar, Briefcase, FileText, Settings, Save } from "lucide-react";
+import { LayoutDashboard, Users, Calendar, Briefcase, FileText, Settings, Save, MousePointer2 } from "lucide-react";
 import logoAsset from "@/assets/logo-completa.png.asset.json";
 
 export const Route = createFileRoute("/admin/conteudo")({
