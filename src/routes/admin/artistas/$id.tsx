@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { getArtistBySlug, getAllArtists } from "@/lib/cms.functions";
+import { getAllArtists } from "@/lib/cms.functions";
 import { getRealAnalyticsEvents } from "@/lib/analytics/tracker.functions";
 import { 
   Eye, 
@@ -20,6 +20,7 @@ import {
 import { useMemo } from "react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/admin/artistas/$id")({
   component: AdminArtistDetail,
@@ -84,6 +85,17 @@ function AdminArtistDetail() {
     );
   }
 
+  const statCards = [
+    { label: 'Total Views', value: stats.views, icon: Eye, color: 'text-blue-500' },
+    { label: 'Visitantes Únicos', value: stats.uniqueVisitors, icon: Users, color: 'text-white' },
+    { label: 'Cliques', value: stats.clicks, icon: MousePointer2, color: 'text-neutral-500' },
+    { label: 'Conversões', value: stats.contacts, icon: MessageSquare, color: 'text-green-500' },
+    { label: 'Reações', value: stats.reactions, icon: Heart, color: 'text-red-500' },
+    { label: 'Video Plays', value: stats.videoPlays, icon: Video, color: 'text-purple-500' },
+    { label: 'Compartilhamentos', value: stats.shares, icon: Share2, color: 'text-blue-400' },
+    { label: 'Eventos Totais', value: artistEvents.length, icon: TrendingUp, color: 'text-white' },
+  ];
+
   return (
     <div className="p-6 md:p-12 space-y-12 pb-24">
       <header className="space-y-6">
@@ -113,19 +125,10 @@ function AdminArtistDetail() {
 
       {/* Main Stats Grid */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {[
-          { label: 'Total Views', value: stats.views, icon: Eye, color: 'text-blue-500' },
-          { label: 'Visitantes Únicos', value: stats.uniqueVisitors, icon: Users, color: 'text-white' },
-          { label: 'Cliques', value: stats.clicks, icon: MousePointer2, color: 'text-neutral-500' },
-          { label: 'Conversões', value: stats.contacts, icon: MessageSquare, color: 'text-green-500' },
-          { label: 'Reações', value: stats.reactions, icon: Heart, color: 'text-red-500' },
-          { label: 'Video Plays', value: stats.videoPlays, icon: Video, color: 'text-purple-500' },
-          { label: 'Compartilhamentos', value: stats.shares, icon: Share2, color: 'text-blue-400' },
-          { label: 'Eventos Totais', value: artistEvents.length, icon: TrendingUp, color: 'text-white' },
-        ].map((stat, i) => (
+        {statCards.map((stat, i) => (
           <div key={i} className="bg-neutral-900/40 border border-white/5 p-6 rounded-sm space-y-4">
             <div className="flex items-center justify-between">
-              <stat.icon className={} />
+              <stat.icon className={`w-4 h-4 ${stat.color}`} />
             </div>
             <div className="space-y-1">
               <div className="text-2xl font-black tracking-tighter uppercase">{stat.value}</div>
