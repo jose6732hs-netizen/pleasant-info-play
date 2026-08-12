@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AdminAgendaRouteImport } from './routes/admin/agenda'
 import { Route as AdminArtistasRouteImport } from './routes/admin/artistas'
 import { Route as AdminConfiguracoesRouteImport } from './routes/admin/configuracoes'
@@ -37,6 +38,11 @@ const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
 } as any)
 const AdminAgendaRoute = AdminAgendaRouteImport.update({
   id: '/agenda',
@@ -101,13 +107,13 @@ export interface FileRoutesByFullPath {
   '/admin/servicos': typeof AdminServicosRoute
   '/admin/solicitacoes': typeof AdminSolicitacoesRoute
   '/artistas/$slug': typeof ArtistasSlugRoute
+  '/admin/': typeof AdminIndexRoute
   '/admin/contratos/$id': typeof AdminContratosIdRouteWithChildren
   '/admin/contratos/': typeof AdminContratosIndexRoute
   '/admin/contratos/$id/visualizar': typeof AdminContratosIdVisualizarRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
   '/admin/agenda': typeof AdminAgendaRoute
   '/admin/artistas': typeof AdminArtistasRoute
@@ -116,6 +122,7 @@ export interface FileRoutesByTo {
   '/admin/servicos': typeof AdminServicosRoute
   '/admin/solicitacoes': typeof AdminSolicitacoesRoute
   '/artistas/$slug': typeof ArtistasSlugRoute
+  '/admin': typeof AdminIndexRoute
   '/admin/contratos/$id': typeof AdminContratosIdRouteWithChildren
   '/admin/contratos': typeof AdminContratosIndexRoute
   '/admin/contratos/$id/visualizar': typeof AdminContratosIdVisualizarRoute
@@ -132,6 +139,7 @@ export interface FileRoutesById {
   '/admin/servicos': typeof AdminServicosRoute
   '/admin/solicitacoes': typeof AdminSolicitacoesRoute
   '/artistas/$slug': typeof ArtistasSlugRoute
+  '/admin/': typeof AdminIndexRoute
   '/admin/contratos/$id': typeof AdminContratosIdRouteWithChildren
   '/admin/contratos/': typeof AdminContratosIndexRoute
   '/admin/contratos/$id/visualizar': typeof AdminContratosIdVisualizarRoute
@@ -149,13 +157,13 @@ export interface FileRouteTypes {
     | '/admin/servicos'
     | '/admin/solicitacoes'
     | '/artistas/$slug'
+    | '/admin/'
     | '/admin/contratos/$id'
     | '/admin/contratos/'
     | '/admin/contratos/$id/visualizar'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/admin'
     | '/auth'
     | '/admin/agenda'
     | '/admin/artistas'
@@ -164,6 +172,7 @@ export interface FileRouteTypes {
     | '/admin/servicos'
     | '/admin/solicitacoes'
     | '/artistas/$slug'
+    | '/admin'
     | '/admin/contratos/$id'
     | '/admin/contratos'
     | '/admin/contratos/$id/visualizar'
@@ -179,6 +188,7 @@ export interface FileRouteTypes {
     | '/admin/servicos'
     | '/admin/solicitacoes'
     | '/artistas/$slug'
+    | '/admin/'
     | '/admin/contratos/$id'
     | '/admin/contratos/'
     | '/admin/contratos/$id/visualizar'
@@ -213,6 +223,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/admin/agenda': {
       id: '/admin/agenda'
@@ -305,6 +322,7 @@ interface AdminRouteChildren {
   AdminConteudoRoute: typeof AdminConteudoRoute
   AdminServicosRoute: typeof AdminServicosRoute
   AdminSolicitacoesRoute: typeof AdminSolicitacoesRoute
+  AdminIndexRoute: typeof AdminIndexRoute
   AdminContratosIdRoute: typeof AdminContratosIdRouteWithChildren
   AdminContratosIndexRoute: typeof AdminContratosIndexRoute
 }
@@ -316,6 +334,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminConteudoRoute: AdminConteudoRoute,
   AdminServicosRoute: AdminServicosRoute,
   AdminSolicitacoesRoute: AdminSolicitacoesRoute,
+  AdminIndexRoute: AdminIndexRoute,
   AdminContratosIdRoute: AdminContratosIdRouteWithChildren,
   AdminContratosIndexRoute: AdminContratosIndexRoute,
 }
