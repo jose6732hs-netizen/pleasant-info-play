@@ -70,9 +70,9 @@ function AdminSettings() {
                 localStorage.removeItem("064_auth_token");
                 window.location.href = "/auth";
               }}
-              className="bg-destructive text-white px-8 py-3 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-destructive/80 transition"
+              className="bg-red-950/20 text-red-500 border border-red-900/30 px-10 py-4 text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-red-900/40 transition flex items-center gap-3"
             >
-                Sair do Sistema
+                <LogOut className="w-4 h-4" /> Sair do Sistema
             </button>
           </div>
         </div>
