@@ -3,6 +3,7 @@ import { z } from "zod";
 import { persistEvent, queryEvents, clearEvents } from "./events.server";
 import { getOrCreateSession } from "./session.server";
 import { getGeoInfo } from "./geo.server";
+import { getWebRequest } from "@tanstack/react-start/server";
 
 export type EventType = 
   | 'page_view' | 'landing_view' | 'artist_view' | 'artist_click' 
@@ -77,13 +78,12 @@ export const trackRealEvent = createServerFn({ method: "POST" })
     client_info: ClientInfoSchema,
   }).parse(data))
   .handler(async ({ data }) => {
-    // In TanStack Start, the request is available in the global context for server functions
+    // Accessing request in TanStack Start server functions is done via the second argument 'ctx'
+    // but the input validator might interfere if not handled correctly.
+    // In React Start, you can use getWebRequest from @tanstack/react-start/server
     const { getWebRequest } = await import("@tanstack/react-start/server");
     const request = getWebRequest();
-    
-    if (!request) {
-      console.warn("Could not get request in server function");
-    }
+
 
     // Get geo info
     const location = await getGeoInfo(request);
