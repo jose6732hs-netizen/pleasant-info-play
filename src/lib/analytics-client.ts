@@ -26,6 +26,7 @@ export const getClientInfo = () => {
 };
 
 export const capturePageView = (path: string) => {
+  if (typeof window === "undefined") return;
   trackEvent({
     data: {
       type: "page_view",
@@ -37,6 +38,7 @@ export const capturePageView = (path: string) => {
 };
 
 export const captureClick = (path: string, elementText: string, elementId?: string, metadata?: any) => {
+  if (typeof window === "undefined") return;
   trackEvent({
     data: {
       type: "click",
@@ -51,6 +53,7 @@ export const captureClick = (path: string, elementText: string, elementId?: stri
 };
 
 export const captureFilter = (path: string, filterType: string, value: string) => {
+  if (typeof window === "undefined") return;
   trackEvent({
     data: {
       type: "filter",
