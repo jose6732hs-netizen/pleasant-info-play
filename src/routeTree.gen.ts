@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AdminAgendaRouteImport } from './routes/admin/agenda'
 import { Route as AdminAnalyticsRouteImport } from './routes/admin/analytics'
@@ -53,6 +54,11 @@ const AuthRoute = AuthRouteImport.update({
 const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
   id: '/forgot-password',
   path: '/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
@@ -170,6 +176,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/admin/agenda': typeof AdminAgendaRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
@@ -196,6 +203,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/admin/agenda': typeof AdminAgendaRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
@@ -224,6 +232,7 @@ export interface FileRoutesById {
   '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/admin/agenda': typeof AdminAgendaRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
@@ -253,6 +262,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/forgot-password'
+    | '/reset-password'
     | '/admin/agenda'
     | '/admin/analytics'
     | '/admin/configuracoes'
@@ -279,6 +289,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/forgot-password'
+    | '/reset-password'
     | '/admin/agenda'
     | '/admin/analytics'
     | '/admin/configuracoes'
@@ -306,6 +317,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/forgot-password'
+    | '/reset-password'
     | '/admin/agenda'
     | '/admin/analytics'
     | '/admin/configuracoes'
@@ -334,6 +346,7 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRouteWithChildren
   AuthRoute: typeof AuthRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   ArtistasSlugRoute: typeof ArtistasSlugRoute
   ArtistasIndexRoute: typeof ArtistasIndexRoute
 }
@@ -366,6 +379,13 @@ declare module '@tanstack/react-router' {
       path: '/forgot-password'
       fullPath: '/forgot-password'
       preLoaderRoute: typeof ForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/': {
@@ -587,6 +607,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRouteWithChildren,
   AuthRoute: AuthRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   ArtistasSlugRoute: ArtistasSlugRoute,
   ArtistasIndexRoute: ArtistasIndexRoute,
 }
