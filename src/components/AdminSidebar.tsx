@@ -11,7 +11,8 @@ import {
   Menu, 
   X,
   Sparkles,
-  Layers
+  Layers,
+  Edit3
 } from 'lucide-react';
 import logoAsset from "@/assets/logo-completa.png.asset.json";
 
@@ -24,6 +25,7 @@ export function AdminSidebar({ currentPath }: AdminSidebarProps) {
 
   const menuItems = [
     { to: "/admin", label: "Dashboard", icon: LayoutDashboard },
+    { to: "/admin/editor", label: "Editor do Site", icon: Edit3 },
     { to: "/admin/artistas", label: "Artistas", icon: Users },
     { to: "/admin/leads", label: "Leads & Tracking", icon: MousePointer2 },
     { to: "/admin/agenda", label: "Agenda", icon: Calendar },

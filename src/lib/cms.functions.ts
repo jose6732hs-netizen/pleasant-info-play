@@ -1,30 +1,131 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
-// Mock implementation since database integration is limited by credits
-// In a real scenario, these would call Supabase/Lovable Cloud
+// Persistence Layer
+// Since Lovable Cloud credits are unavailable, we use a robust in-memory mock 
+// that mimics database behavior. In a production environment, these would 
+// use context.supabase or supabaseAdmin.
+
+export interface Page {
+  id: string;
+  name: string;
+  slug: string;
+  status: 'RASCUNHO' | 'PUBLICADO';
+  created_at: string;
+}
+
+export interface PageSection {
+  id: string;
+  page_id: string;
+  name: string;
+  type: string;
+  status: 'ATIVA' | 'OCULTA';
+  display_order: number;
+  content: any;
+  draft_content?: any;
+  last_published_at?: string;
+  created_at: string;
+}
+
+let pagesStore: Page[] = [
+  { id: 'home', name: 'Página Inicial', slug: '/', status: 'PUBLICADO', created_at: new Date().toISOString() },
+  { id: 'artistas', name: 'Artistas', slug: '/artistas', status: 'PUBLICADO', created_at: new Date().toISOString() },
+  { id: 'servicos', name: 'Serviços', slug: '/servicos', status: 'PUBLICADO', created_at: new Date().toISOString() },
+  { id: 'sobre', name: 'Sobre Nós', slug: '/sobre', status: 'PUBLICADO', created_at: new Date().toISOString() },
+  { id: 'contratantes', name: 'Contratantes', slug: '/contratantes', status: 'PUBLICADO', created_at: new Date().toISOString() },
+  { id: 'contato', name: 'Contato', slug: '/contato', status: 'PUBLICADO', created_at: new Date().toISOString() },
+];
+
+let sectionsStore: PageSection[] = [
+  {
+    id: 's1',
+    page_id: 'home',
+    name: 'Hero Cinematic',
+    type: 'hero',
+    status: 'ATIVA',
+    display_order: 0,
+    content: {
+      title: "064 TALENTS",
+      subtitle: "Artist Booking & Entertainment",
+      description: "Representando talentos. Criando conexões.",
+      complementary: "Do Goiás pro mundo."
+    },
+    created_at: new Date().toISOString()
+  },
+  {
+    id: 's2',
+    page_id: 'home',
+    name: 'Sobre a Agência',
+    type: 'about',
+    status: 'ATIVA',
+    display_order: 1,
+    content: {
+      title: "MAIS DO QUE BOOKING. CONEXÕES QUE MOVIMENTAM O MERCADO.",
+      text: "A 064 TALENTS é uma empresa de Artist Booking & Entertainment criada em Goiás com o propósito de conectar talentos a grandes oportunidades.",
+      highlight: "DO GOIÁS PRO MUNDO."
+    },
+    created_at: new Date().toISOString()
+  }
+];
+
+export const getPages = createServerFn({ method: "GET" })
+  .handler(async (): Promise<Page[]> => {
+    return pagesStore;
+  });
+
+export const getPageSections = createServerFn({ method: "GET" })
+  .validator((pageId: unknown) => z.string().parse(pageId))
+  .handler(async ({ data: pageId }): Promise<PageSection[]> => {
+    return sectionsStore
+      .filter(s => s.page_id === pageId)
+      .sort((a, b) => a.display_order - b.display_order);
+  });
+
+export const saveSection = createServerFn({ method: "POST" })
+  .validator((data: any) => data)
+  .handler(async ({ data }) => {
+    const index = sectionsStore.findIndex(s => s.id === data.id);
+    if (index > -1) {
+      sectionsStore[index] = { ...sectionsStore[index], ...data };
+    } else {
+      sectionsStore.push({
+        ...data,
+        id: data.id || `sec-${Date.now()}`,
+        created_at: new Date().toISOString()
+      });
+    }
+    return { success: true, section: data };
+  });
+
+export const updateSectionsOrder = createServerFn({ method: "POST" })
+  .validator((data: { id: string, display_order: number }[]) => z.array(z.object({
+    id: z.string(),
+    display_order: z.number()
+  })).parse(data))
+  .handler(async ({ data }) => {
+    data.forEach(item => {
+      const section = sectionsStore.find(s => s.id === item.id);
+      if (section) section.display_order = item.display_order;
+    });
+    return { success: true };
+  });
+
+export const deleteSection = createServerFn({ method: "POST" })
+  .validator((id: unknown) => z.string().parse(id))
+  .handler(async ({ data: id }) => {
+    sectionsStore = sectionsStore.filter(s => s.id !== id);
+    return { success: true };
+  });
 
 export const getSiteContent = createServerFn({ method: "GET" })
   .handler(async () => {
-    return [
-      {
-        section_name: "hero",
-        content: {
-          title: "064 TALENTS",
-          subtitle: "Artist Booking & Entertainment",
-          description: "Representando talentos. Criando conexões.",
-          complementary: "Do Goiás pro mundo."
-        }
-      },
-      {
-        section_name: "about",
-        content: {
-          title: "MAIS DO QUE BOOKING. CONEXÕES QUE MOVIMENTAM O MERCADO.",
-          text: "A 064 TALENTS é uma empresa de Artist Booking & Entertainment criada em Goiás com o propósito de conectar talentos a grandes oportunidades.",
-          highlight: "DO GOIÁS PRO MUNDO."
-        }
-      }
-    ];
+    return sectionsStore
+      .filter(s => s.status === 'ATIVA' && s.page_id === 'home')
+      .sort((a, b) => a.display_order - b.display_order)
+      .map(s => ({
+        section_name: s.type,
+        content: s.content
+      }));
   });
 
 export interface Artist {
