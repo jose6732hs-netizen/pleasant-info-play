@@ -15,7 +15,8 @@ import {
   Layers,
   Edit3,
   Award,
-  LogOut
+  LogOut,
+  ShieldCheck
 } from 'lucide-react';
 import logoAsset from "@/assets/logo-completa.png.asset.json";
 
@@ -47,6 +48,7 @@ export function AdminSidebar({ currentPath }: AdminSidebarProps) {
     { to: "/admin/servicos", label: "Serviços", icon: Layers },
     { to: "/admin/conteudo", label: "Conteúdo", icon: Sparkles },
     { to: "/admin/configuracoes", label: "Configurações", icon: Settings },
+    { to: "/admin/seguranca/auditoria", label: "Auditoria", icon: ShieldCheck },
   ];
 
   return (

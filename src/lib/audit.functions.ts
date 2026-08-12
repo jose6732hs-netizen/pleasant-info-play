@@ -22,7 +22,7 @@ export interface AuditLog {
   timestamp: string;
   result: 'SUCCESS' | 'FAILURE';
   ip: string;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, any> | undefined;
 }
 
 // Memory-only store for the demo
