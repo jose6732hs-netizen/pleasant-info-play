@@ -1,3 +1,4 @@
+/* 064 TALENTS - Site Oficial */
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { getRealAnalyticsEvents } from "@/lib/analytics/tracker.functions";
 import { useSuspenseQuery } from "@tanstack/react-query";

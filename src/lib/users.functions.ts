@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
+import { logAuditEvent } from "./audit.functions";
 
 export interface User {
   id: string;
@@ -44,6 +45,16 @@ export const createUser = createServerFn({ method: "POST" })
       lastAccess: '-'
     };
     users = [...users, newUser];
+    
+    await logAuditEvent({
+      data: {
+        type: 'USER_CREATED',
+        userEmail: data.email,
+        result: 'SUCCESS',
+        metadata: { role: data.role }
+      }
+    });
+
     return newUser;
   });
 
@@ -53,7 +64,18 @@ export const updateUserStatus = createServerFn({ method: "POST" })
     status: z.enum(['ACTIVE', 'BLOCKED'])
   }).parse(data))
   .handler(async ({ data }) => {
+    const user = users.find(u => u.id === data.id);
     users = users.map(u => u.id === data.id ? { ...u, status: data.status } : u);
+    
+    await logAuditEvent({
+      data: {
+        type: data.status === 'BLOCKED' ? 'USER_BLOCKED' : 'USER_UNBLOCKED',
+        userEmail: user?.email,
+        result: 'SUCCESS',
+        metadata: { userId: data.id }
+      }
+    });
+
     return { success: true };
   });
 
