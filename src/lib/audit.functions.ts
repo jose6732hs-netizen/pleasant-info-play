@@ -55,7 +55,7 @@ export const logAuditEvent = createServerFn({ method: "POST" })
       timestamp: new Date().toISOString(),
       result: data.result,
       ip: '127.0.0.1', // Simplified for demo
-      metadata: data.metadata
+      metadata: data.metadata || {}
     };
     auditLogs = [newLog, ...auditLogs];
     return { success: true };
@@ -63,6 +63,6 @@ export const logAuditEvent = createServerFn({ method: "POST" })
 
 export const getAuditLogs = createServerFn({ method: "GET" })
   .handler(async () => {
-    // In a real app, we would verify ADMIN role here via context.supabase
     return auditLogs;
   });
+
