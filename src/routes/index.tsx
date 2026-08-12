@@ -119,9 +119,7 @@ function Index() {
               </button>
             </div>
             {hero.complementary && (
-              <p className="text-xs uppercase tracking-[0.4em] text-neutral-500 pt-8 opacity-50">
-                {hero.complementary}
-              </p>
+              <div className="text-xs uppercase tracking-[0.4em] text-neutral-500 pt-8 opacity-50 prose prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: hero.complementary }} />
             )}
           </div>
 
