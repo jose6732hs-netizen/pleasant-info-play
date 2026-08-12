@@ -27,7 +27,6 @@ export interface AnalyticsEvent {
 }
 
 // In a real app, this would save to a database.
-// For now, we'll store it in a mock global array or just log it.
 const events: AnalyticsEvent[] = [];
 
 export const trackEvent = createServerFn({ method: "POST" })
@@ -54,13 +53,32 @@ export const trackEvent = createServerFn({ method: "POST" })
     }).optional(),
   }).parse(data))
   .handler(async ({ data }) => {
+    // Explicitly destructure to handle exactOptionalPropertyTypes
     const newEvent: AnalyticsEvent = {
       id: Math.random().toString(36).substring(2, 15),
       timestamp: new Date().toISOString(),
-      ...data,
+      type: data.type,
+      path: data.path,
+      elementId: data.elementId ?? undefined,
+      elementText: data.elementText ?? undefined,
+      metadata: data.metadata ?? undefined,
+      utm: data.utm ? {
+        source: data.utm.source ?? undefined,
+        medium: data.utm.medium ?? undefined,
+        campaign: data.utm.campaign ?? undefined,
+        term: data.utm.term ?? undefined,
+        content: data.utm.content ?? undefined,
+      } : undefined,
+      clientInfo: data.clientInfo ? {
+        userAgent: data.clientInfo.userAgent,
+        language: data.clientInfo.language,
+        screenResolution: data.clientInfo.screenResolution,
+        city: data.clientInfo.city ?? undefined,
+        region: data.clientInfo.region ?? undefined,
+        country: data.clientInfo.country ?? undefined,
+      } : undefined,
     };
     
-    // In production, use context.supabase or a dedicated analytics DB
     console.log("[Analytics Event]:", newEvent);
     events.push(newEvent);
     
