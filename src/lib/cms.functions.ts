@@ -12,6 +12,7 @@ export interface Page {
   slug: string;
   status: 'RASCUNHO' | 'PUBLICADO';
   config?: any;
+  published_config?: any;
   created_at: string;
 }
 
@@ -25,6 +26,7 @@ export interface PageSection {
   content: any;
   styles?: any;
   draft_content?: any;
+  draft_styles?: any;
   last_published_at?: string;
   created_at: string;
 }
@@ -156,7 +158,6 @@ let sectionsStore: PageSection[] = [
       image_url: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=2574&auto=format&fit=crop",
       video_url: ""
     },
-
     created_at: new Date().toISOString()
   },
   {
@@ -205,6 +206,40 @@ export const saveSection = createServerFn({ method: "POST" })
     return { success: true, section: data };
   });
 
+export const publishPage = createServerFn({ method: "POST" })
+  .inputValidator((d) => z.object({ pageId: z.string() }).parse(d))
+  .handler(async ({ data }) => {
+    const page = pagesStore.find(p => p.id === data.pageId);
+    if (!page) throw new Error('Página não encontrada');
+    
+    sectionsStore.forEach(s => {
+      if (s.page_id === data.pageId) {
+        if (s.draft_content) s.content = JSON.parse(JSON.stringify(s.draft_content));
+        if (s.draft_styles) s.styles = JSON.parse(JSON.stringify(s.draft_styles));
+        s.draft_content = undefined;
+        s.draft_styles = undefined;
+        s.last_published_at = new Date().toISOString();
+      }
+    });
+
+    page.published_config = JSON.parse(JSON.stringify(page.config));
+    page.status = 'PUBLICADO';
+    return { success: true };
+  });
+
+export const saveSectionDraft = createServerFn({ method: "POST" })
+  .inputValidator((d) => z.object({ id: z.string(), content: z.any(), styles: z.any() }).parse(d))
+  .handler(async ({ data }) => {
+    const idx = sectionsStore.findIndex(s => s.id === data.id);
+    if (idx !== -1) {
+      sectionsStore[idx].draft_content = data.content;
+      sectionsStore[idx].draft_styles = data.styles;
+      const page = pagesStore.find(p => p.id === sectionsStore[idx].page_id);
+      if (page) page.status = 'RASCUNHO';
+    }
+    return { success: true };
+  });
+
 export const updateSectionsOrder = createServerFn({ method: "POST" })
   .validator((data: { id: string, display_order: number }[]) => z.array(z.object({
     id: z.string(),
@@ -234,6 +269,7 @@ export const savePageConfig = createServerFn({ method: "POST" })
     const page = pagesStore.find(p => p.id === data.pageId);
     if (page) {
       page.config = data.config;
+      page.status = 'RASCUNHO';
       return { success: true };
     }
     return { success: false, error: 'Page not found' };
@@ -248,6 +284,18 @@ export const getSiteContent = createServerFn({ method: "GET" })
         section_name: s.type,
         content: s.content,
         styles: s.styles
+      }));
+  });
+
+export const getSitePreview = createServerFn({ method: "GET" })
+  .handler(async () => {
+    return sectionsStore
+      .filter(s => s.status === 'ATIVA' && s.page_id === 'home')
+      .sort((a, b) => a.display_order - b.display_order)
+      .map(s => ({
+        section_name: s.type,
+        content: s.draft_content || s.content,
+        styles: s.draft_styles || s.styles
       }));
   });
 
