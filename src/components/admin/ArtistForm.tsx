@@ -296,7 +296,7 @@ export function ArtistForm({ initialData, initialVideos = [], initialGallery = [
             {/* ... Other tabs would go here ... */}
             {activeTab > 2 && activeTab < 7 && (
                <div className="py-24 text-center text-neutral-700 uppercase font-black tracking-widest text-[10px]">
-                  Campos em desenvolvimento (Abas {tabs[activeTab].label})
+                  Campos em desenvolvimento (Abas {tabs[activeTab]?.label})
                </div>
             )}
           </div>

@@ -1,17 +1,56 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { getActiveArtists } from "@/lib/cms.functions";
-import { Search, Plus } from "lucide-react";
+import { useSuspenseQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { getActiveArtists, getAllArtists, saveArtist, deleteArtist, Artist } from "@/lib/cms.functions";
+import { Search, Plus, Edit2, Trash2, Eye, Copy, Power } from "lucide-react";
+import { useState } from "react";
+import { ArtistForm } from "@/components/admin/ArtistForm";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/admin/artistas")({
   component: AdminArtists,
 });
 
 function AdminArtists() {
+  const queryClient = useQueryClient();
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [editingArtist, setEditingArtist] = useState<Artist | null>(null);
+  
   const { data: artists } = useSuspenseQuery({
-    queryKey: ["active-artists"],
-    queryFn: () => getActiveArtists(),
+    queryKey: ["all-artists"],
+    queryFn: () => getAllArtists(),
   });
+
+  const saveMutation = useMutation({
+    mutationFn: (data: { artist: Artist, videos: any[], gallery: any[] }) => saveArtist({ data: data.artist }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["all-artists"] });
+      setIsFormOpen(false);
+      setEditingArtist(null);
+    }
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: (id: string) => deleteArtist({ data: id }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["all-artists"] });
+      toast.success("Artista excluído");
+    }
+  });
+
+  if (isFormOpen) {
+    return (
+      <ArtistForm 
+        initialData={editingArtist || undefined}
+        onSave={async (artist) => {
+          saveMutation.mutate({ artist, videos: [], gallery: [] });
+        }}
+        onCancel={() => {
+          setIsFormOpen(false);
+          setEditingArtist(null);
+        }}
+      />
+    );
+  }
 
   return (
     <div className="p-6 md:p-12 space-y-12 w-full">
