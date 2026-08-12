@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Link } from '@tanstack/react-router';
+import { Link, useNavigate } from '@tanstack/react-router';
+import { toast } from 'sonner';
 import { 
   LayoutDashboard, 
   Users, 
@@ -13,7 +14,8 @@ import {
   Sparkles,
   Layers,
   Edit3,
-  Award
+  Award,
+  LogOut
 } from 'lucide-react';
 import logoAsset from "@/assets/logo-completa.png.asset.json";
 
@@ -23,6 +25,13 @@ interface AdminSidebarProps {
 
 export function AdminSidebar({ currentPath }: AdminSidebarProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("064_auth_token");
+    toast.success("Sessão encerrada");
+    navigate({ to: "/auth" });
+  };
 
   const menuItems = [
     { to: "/admin", label: "Overview", icon: LayoutDashboard },
@@ -89,6 +98,14 @@ export function AdminSidebar({ currentPath }: AdminSidebarProps) {
               <span>{item.label}</span>
             </Link>
           ))}
+          
+          <button 
+            onClick={handleLogout}
+            className="mt-4 p-3 transition rounded-sm flex items-center gap-3 text-red-900 hover:bg-red-950/30 hover:text-red-500 w-full"
+          >
+            <LogOut className="w-4 h-4" /> 
+            <span>Sair</span>
+          </button>
         </nav>
       </aside>
     </>

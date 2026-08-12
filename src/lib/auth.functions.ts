@@ -19,7 +19,7 @@ export const loginAdmin = createServerFn({ method: "POST" })
       };
     }
     
-    throw new Error("Credenciais inválidas. Use o e-mail e senha padrão do sistema.");
+    throw new Error("Não foi possível realizar o login. Verifique suas credenciais.");
   });
 
 export const checkAuth = createServerFn({ method: "GET" })
