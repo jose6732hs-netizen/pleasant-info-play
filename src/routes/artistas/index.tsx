@@ -26,6 +26,25 @@ function ArtistsList() {
     queryFn: () => getActiveArtists(),
   });
 
+  const { data: pages } = useSuspenseQuery({
+    queryKey: ["pages"],
+    queryFn: () => getPages(),
+  });
+
+  const config: ArtistsPageConfig = pages?.find(p => p.id === 'artistas')?.config || {
+    title: "NOSSOS TALENTOS",
+    subtitle: "Representamos artistas que transcendem fronteiras.",
+    columnsDesktop: 3,
+    columnsTablet: 2,
+    showGenre: true,
+    showCity: true,
+    showViewButton: true,
+    showBookingButton: true,
+    showFeaturedFirst: true,
+    cardStyle: 'glass',
+    background: 'black'
+  };
+
   const featuredArtists = artists?.filter(a => a.featured) || [];
   const regularArtists = artists?.filter(a => !a.featured) || [];
 
