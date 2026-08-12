@@ -17,8 +17,12 @@ function AuthPage() {
   const [showPassword, setShowPassword] = useState(false);
 
   const loginMutation = useMutation({
-    mutationFn: (vars: any) => loginAdmin({ data: vars }),
+    mutationFn: (vars: { email: string; password: string }) => loginAdmin({ data: vars }),
     onSuccess: (data) => {
+      if (!data.success || !("token" in data) || !data.token) {
+        toast.error(("error" in data && data.error) || "Credenciais inválidas");
+        return;
+      }
       localStorage.setItem("064_auth_token", data.token);
       // Set a cookie as well for server-side availability
       document.cookie = `064_auth_token=${data.token}; path=/; max-age=86400; SameSite=Lax`;
@@ -26,7 +30,7 @@ function AuthPage() {
       navigate({ to: "/admin" });
     },
     onError: (error: any) => {
-      toast.error(error.message || "Erro ao realizar login");
+      toast.error(error?.message || "Erro ao realizar login");
     }
   });
 

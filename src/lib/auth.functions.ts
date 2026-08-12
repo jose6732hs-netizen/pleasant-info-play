@@ -23,7 +23,7 @@ export const loginAdmin = createServerFn({ method: "POST" })
 
       // We'll return a cookie header for session management
       return { 
-        success: true, 
+        success: true as const, 
         user: { id: "admin-1", email: data.email, role: "admin" },
         token: "mock-jwt-token-064"
       };
