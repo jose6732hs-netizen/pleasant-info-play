@@ -261,6 +261,59 @@ function Index() {
     <div className="min-h-screen bg-neutral-950 text-white selection:bg-white selection:text-black" style={designStyles as any}>
       {showIntro && <IntroAnimation onComplete={handleIntroComplete} />}
 
+      {/* Audit Overlay */}
+      {auditMode && (
+        <div className="fixed bottom-6 right-6 z-[100] bg-black/90 border border-white/10 p-6 rounded-sm backdrop-blur-xl shadow-2xl max-w-sm animate-in fade-in slide-in-from-bottom-4">
+          <div className="flex items-center justify-between mb-4 border-b border-white/5 pb-2">
+            <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-500 flex items-center gap-2">
+              <ShieldCheck className="w-3 h-3" /> Auditoria de Tracking
+            </h4>
+            <button onClick={() => setAuditMode(false)} className="text-neutral-500 hover:text-white transition">
+              <ArrowDown className="w-3 h-3 rotate-180" />
+            </button>
+          </div>
+          
+          <div className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
+               <div>
+                  <div className="text-[8px] font-black text-neutral-600 uppercase tracking-widest mb-1">Status</div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                    <span className="text-[10px] font-bold uppercase">Online</span>
+                  </div>
+               </div>
+               <div>
+                  <div className="text-[8px] font-black text-neutral-600 uppercase tracking-widest mb-1">Eventos Reais</div>
+                  <div className="text-[10px] font-mono font-bold">{analyticsEvents?.length || 0}</div>
+               </div>
+            </div>
+
+            <div className="space-y-2">
+              <div className="text-[8px] font-black text-neutral-600 uppercase tracking-widest">Última Atividade</div>
+              {analyticsEvents && analyticsEvents.length > 0 ? (
+                <div className="bg-white/5 p-2 border border-white/5 rounded-sm">
+                   <div className="text-[9px] font-black uppercase text-blue-400 truncate">
+                     {analyticsEvents[analyticsEvents.length - 1].type.replace(/_/g, ' ')}
+                   </div>
+                   <div className="text-[8px] text-neutral-500 mt-1 truncate">
+                     {analyticsEvents[analyticsEvents.length - 1].element_text || analyticsEvents[analyticsEvents.length - 1].path}
+                   </div>
+                </div>
+              ) : (
+                <div className="text-[9px] text-neutral-700 italic">Aguardando interação...</div>
+              )}
+            </div>
+
+            <Link 
+              to="/admin/leads" 
+              className="block w-full text-center bg-white text-black py-2 text-[9px] font-black uppercase tracking-widest hover:bg-neutral-200 transition"
+            >
+              Ver Dashboard
+            </Link>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <header className={`fixed w-full p-3 md:p-4 flex justify-between items-center z-50 backdrop-blur-md bg-neutral-950/80 border-b border-white/5 transition-all duration-500 ${scrolled ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`}>
         <div className="flex items-center">
