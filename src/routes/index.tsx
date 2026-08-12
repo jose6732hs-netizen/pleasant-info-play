@@ -94,11 +94,11 @@ function Index() {
           <img src={logoAsset.url} alt="064 TALENTS" className="h-8 md:h-10 w-auto object-contain" />
         </div>
         <nav className="hidden md:flex gap-8 text-xs font-semibold uppercase tracking-widest text-neutral-400">
-          <a href="#inicio" className="hover:text-white transition">Início</a>
-          <a href="#artistas" className="hover:text-white transition">Artistas</a>
-          <a href="#servicos" className="hover:text-white transition">Serviços</a>
-          <a href="#sobre" className="hover:text-white transition">Sobre</a>
-          <a href="#contato" className="hover:text-white transition">Contato</a>
+          <a href="#inicio" className="hover:text-white transition" onClick={() => captureClick(window.location.pathname, "Nav: Início", "nav-inicio")}>Início</a>
+          <a href="#artistas" className="hover:text-white transition" onClick={() => captureClick(window.location.pathname, "Nav: Artistas", "nav-artistas")}>Artistas</a>
+          <a href="#servicos" className="hover:text-white transition" onClick={() => captureClick(window.location.pathname, "Nav: Serviços", "nav-servicos")}>Serviços</a>
+          <a href="#sobre" className="hover:text-white transition" onClick={() => captureClick(window.location.pathname, "Nav: Sobre", "nav-sobre")}>Sobre</a>
+          <a href="#contato" className="hover:text-white transition" onClick={() => captureClick(window.location.pathname, "Nav: Contato", "nav-contato")}>Contato</a>
         </nav>
         <button onClick={() => openBooking()} className="bg-white text-black px-6 py-2 rounded-full text-xs font-bold uppercase hover:bg-neutral-200 transition">
           Contrate um artista
@@ -158,7 +158,12 @@ function Index() {
             {artists?.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {artists.map((artist: any) => (
-                  <a href={`/artistas/${artist.slug || artist.id}`} key={artist.id} className="group relative aspect-[3/4] overflow-hidden bg-neutral-900 rounded-sm block">
+                  <Link 
+                    to={`/artistas/${artist.slug || artist.id}`} 
+                    key={artist.id} 
+                    className="group relative aspect-[3/4] overflow-hidden bg-neutral-900 rounded-sm block"
+                    onClick={() => captureClick(window.location.pathname, `Ver Artista: ${artist.name}`, "artist-card-click", { artistId: artist.id })}
+                  >
                     <img 
                       src={artist.photo_url || "https://images.unsplash.com/photo-1547478011-8a30602558a3?q=80&w=1500&auto=format&fit=crop"} 
                       alt={artist.name}
@@ -180,7 +185,7 @@ function Index() {
                         </button>
                       </div>
                     </div>
-                    </a>
+                    </Link>
                 ))}
               </div>
             ) : (
