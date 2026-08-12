@@ -55,12 +55,11 @@ function Index() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const getContent = (section: string) => {
-    return (contentData?.find((c: any) => c.section_name === section)?.content || {}) as any;
+  const getContent = (sectionName: string) => {
+    return (contentData?.find((c: any) => c.section_name === sectionName)?.content || {}) as any;
   };
 
-  const hero = getContent("hero");
-  const about = getContent("about");
+  const sections = contentData || [];
 
   const openBooking = (artistId?: string) => {
     setSelectedArtistId(artistId);
