@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { ArrowDown, Instagram, Mail, Phone, Users, Calendar, Award, Star } from "lucide-react";
+import { ArrowDown, Instagram, Mail, Phone, Users, Calendar, Award, Star, Youtube, Facebook } from "lucide-react";
 import { getSiteContent, getActiveArtists } from "@/lib/cms.functions";
 import { useState, useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
@@ -182,7 +182,7 @@ function Index() {
     }
   };
 
-  const navConfig = contentData?.find((p: any) => p.id === 'global_nav')?.config;
+  const navConfig = (contentData as any)?.find((p: any) => p.id === 'global_nav')?.config;
   const menu = navConfig?.menu || {
     logo: logoAsset.url,
     links: [
