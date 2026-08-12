@@ -19,7 +19,13 @@ export interface UserSession {
   location?: {
     city?: string;
     region?: string;
+    region_code?: string;
     country?: string;
+    country_code?: string;
+    latitude?: number;
+    longitude?: number;
+    timezone?: string;
+    isp?: string;
   };
 }
 
