@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
 import { IntroAnimation } from "@/components/IntroAnimation";
 import logoAsset from "@/assets/logo-completa.png.asset.json";
+import { captureClick, captureFilter } from "@/lib/analytics-client";
 
 
 export const Route = createFileRoute("/")({
