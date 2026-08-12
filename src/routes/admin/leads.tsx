@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { getAnalyticsEvents } from "@/lib/analytics.functions";
+import { getAnalyticsEvents, clearAnalyticsEvents } from "@/lib/analytics.functions";
 import { LayoutDashboard, Users, Calendar, Briefcase, FileText, Settings, MousePointer2, MapPin, Clock, Globe, Filter } from "lucide-react";
 import logoAsset from "@/assets/logo-completa.png.asset.json";
 import { format } from "date-fns";
@@ -66,6 +66,17 @@ function AdminLeads() {
               <h1 className="text-4xl font-bold tracking-tighter uppercase">Leads & Tracking</h1>
               <p className="text-neutral-500 text-sm mt-2">Monitoramento de tráfego e comportamento em tempo real.</p>
             </div>
+            <button 
+              onClick={async () => {
+                if (confirm("Deseja realmente limpar todos os logs?")) {
+                  await clearAnalyticsEvents();
+                  refetch();
+                }
+              }}
+              className="text-[10px] uppercase font-bold tracking-widest bg-red-950/20 text-red-500 border border-red-900/30 px-6 py-2 hover:bg-red-900/40 transition"
+            >
+              Limpar Logs
+            </button>
           </header>
 
           <div className="grid grid-cols-1 gap-8">
