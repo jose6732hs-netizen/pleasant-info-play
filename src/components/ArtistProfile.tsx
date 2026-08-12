@@ -68,18 +68,13 @@ export function ArtistProfile({ artist, videos = [], gallery = [], isPreview = f
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
           <div className="space-y-8">
             <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-white/30">O Talento</h2>
-            <h3 className="text-4xl md:text-6xl font-black tracking-tighter uppercase leading-tight">
-              {artist.hero_title || `SOBRE ${artist.name}`}
-            </h3>
+            <h3 className="text-4xl md:text-6xl font-black tracking-tighter uppercase leading-tight prose prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: artist.hero_title || `SOBRE ${artist.name}` }} />
           </div>
           <div className="space-y-8">
-            <p className="text-xl md:text-2xl font-light text-neutral-400 leading-relaxed italic">
-              {artist.short_bio}
-            </p>
+            <div className="text-xl md:text-2xl font-light text-neutral-400 leading-relaxed italic prose prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: artist.short_bio || "" }} />
             <div className="h-px w-20 bg-white/20" />
-            <p className="text-neutral-500 leading-relaxed text-lg whitespace-pre-line">
-              {artist.full_bio}
-            </p>
+            <div className="text-neutral-500 leading-relaxed text-lg prose prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: artist.full_bio || "" }} />
+
           </div>
         </div>
       </section>
