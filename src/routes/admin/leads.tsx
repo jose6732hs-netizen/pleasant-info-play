@@ -16,7 +16,8 @@ import {
   Monitor,
   ChevronRight,
   RefreshCcw,
-  Tag
+  Tag,
+  ShieldCheck
 } from "lucide-react";
 import { format, isWithinInterval, parseISO, startOfDay, endOfDay, subDays } from "date-fns";
 import { ptBR } from "date-fns/locale";
