@@ -383,13 +383,20 @@ export function ArtistForm({ initialData, initialVideos = [], initialGallery = [
             {activeTab === 5 && (
               <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label className="text-[10px] uppercase tracking-widest text-neutral-500 font-bold">Texto do Botão</label>
-                    <input name="booking_btn_text" value={artist.booking_btn_text} onChange={handleInputChange} type="text" className="w-full bg-black border border-white/10 p-4 rounded-sm focus:outline-none focus:border-white transition" />
+                  <div className="space-y-2 col-span-2">
+                    <RichTextEditor 
+                      label="Texto do Botão" 
+                      value={artist.booking_btn_text || ''} 
+                      onChange={(val) => updateArtistField('booking_btn_text', val)} 
+                      type="button"
+                    />
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-[10px] uppercase tracking-widest text-neutral-500 font-bold">Chamada para Booking</label>
-                    <input name="booking_call_text" value={artist.booking_call_text} onChange={handleInputChange} type="text" className="w-full bg-black border border-white/10 p-4 rounded-sm focus:outline-none focus:border-white transition" />
+                  <div className="space-y-2 col-span-2">
+                    <RichTextEditor 
+                      label="Chamada para Booking" 
+                      value={artist.booking_call_text || ''} 
+                      onChange={(val) => updateArtistField('booking_call_text', val)} 
+                    />
                   </div>
                   <div className="space-y-2">
                     <label className="text-[10px] uppercase tracking-widest text-neutral-500 font-bold">Disponibilidade</label>
