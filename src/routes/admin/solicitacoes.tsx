@@ -7,7 +7,7 @@ import { format, parseISO } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { useState } from "react";
 import { toast } from "sonner";
-import { FileText, CheckCircle, XCircle, Clock, DollarSign, Send, LayoutDashboard, Users, Calendar, Briefcase, Settings } from "lucide-react";
+import { FileText, CheckCircle, XCircle, Clock, DollarSign, Send, LayoutDashboard, Users, Calendar, Briefcase, Settings, MousePointer2 } from "lucide-react";
 import logoAsset from "@/assets/logo-completa.png.asset.json";
 
 export const Route = createFileRoute("/admin/solicitacoes")({
