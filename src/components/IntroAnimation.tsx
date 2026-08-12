@@ -91,7 +91,7 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
           </div>
 
           {/* NÚMEROS EM LINHA RETA (0 6 4) - Ajustados para o mesmo tamanho visual */}
-          <div className="flex items-center justify-center gap-1 md:gap-2 -mt-4 md:-mt-8">
+          <div className="flex items-center justify-center gap-1 md:gap-2 -mt-2 md:-mt-4">
             <div 
               className={`${animationBaseClass} flex items-center justify-center`}
               style={{
@@ -126,7 +126,7 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
 
           {/* TALENTS */}
           <div 
-            className={`${animationBaseClass} -mt-3 md:-mt-6`}
+            className={`${animationBaseClass} -mt-1 md:-mt-2`}
             style={stage >= 5 ? visibleStyle : hiddenStyle}
           >
             <img 
