@@ -126,7 +126,7 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
 
           {/* TALENTS */}
           <div 
-            className={`${animationBaseClass} -mt-6 md:-mt-12`}
+            className={`${animationBaseClass} -mt-10 md:-mt-20`}
             style={stage >= 5 ? visibleStyle : hiddenStyle}
           >
             <img 
