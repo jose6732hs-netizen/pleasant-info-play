@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useSuspenseQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getBookingRequests, updateBookingRequestStatus } from "@/lib/admin.functions";
 import { generateContractFromProposal } from "@/lib/contracts.functions";
@@ -7,8 +7,7 @@ import { format, parseISO } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { useState } from "react";
 import { toast } from "sonner";
-import { FileText, CheckCircle, XCircle, Clock, DollarSign, Send, LayoutDashboard, Users, Calendar, Briefcase, Settings, MousePointer2 } from "lucide-react";
-import logoAsset from "@/assets/logo-completa.png.asset.json";
+import { FileText, CheckCircle, XCircle, DollarSign } from "lucide-react";
 
 export const Route = createFileRoute("/admin/solicitacoes")({
   loader: async ({ context }) => {
@@ -58,10 +57,9 @@ function AdminBookings() {
 
   const contractMutation = useMutation({
     mutationFn: (variables: any) => generateContractFromProposal({ data: variables }),
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["contracts"] });
       toast.success("Contrato gerado com sucesso!");
-      // Could redirect to contract details
     },
     onError: () => toast.error("Erro ao gerar contrato")
   });
@@ -83,132 +81,101 @@ function AdminBookings() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-950 text-white flex flex-col md:flex-row w-full">
-      <aside className="w-full md:w-64 border-b md:border-b-0 md:border-r border-white/5 p-6 space-y-8 bg-black/20">
-        <div className="flex justify-start mb-8">
-          <img src={logoAsset.url} alt="064 ADMIN" className="h-8 w-auto object-contain grayscale brightness-200" />
+    <div className="p-6 md:p-12 space-y-12">
+      <header className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+        <div>
+          <h1 className="text-3xl md:text-4xl font-bold tracking-tighter uppercase">Solicitações</h1>
+          <p className="text-neutral-500 text-sm mt-2">Pedidos de contratação e negociações em curso.</p>
         </div>
-        <nav className="flex flex-col gap-2 text-sm text-neutral-400 uppercase tracking-widest">
-          <Link to="/admin" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
-            <LayoutDashboard className="w-4 h-4" /> Dashboard
-          </Link>
-          <Link to="/admin/artistas" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
-            <Users className="w-4 h-4" /> Artistas
-          </Link>
-          <Link to="/admin/leads" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
-            <MousePointer2 className="w-4 h-4" /> Leads & Tracking
-          </Link>
-          <Link to="/admin/agenda" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
-            <Calendar className="w-4 h-4" /> Agenda
-          </Link>
-          <Link to="/admin/contratos" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3">
-            <Briefcase className="w-4 h-4" /> Contratos
-          </Link>
-          <Link to="/admin/solicitacoes" className="p-3 bg-white/10 text-white transition rounded-sm font-bold flex items-center gap-3">
-            <FileText className="w-4 h-4" /> Solicitações
-          </Link>
-          <Link to="/admin/configuracoes" className="p-3 hover:bg-white/5 hover:text-white transition rounded-sm flex items-center gap-3 mt-auto">
-            <Settings className="w-4 h-4" /> Configurações
-          </Link>
-        </nav>
-      </aside>
+        
+        <div className="flex flex-wrap gap-2 bg-neutral-900 p-1 rounded-sm border border-white/5 overflow-x-auto">
+          {['TODAS', 'NOVA', 'PROPOSTA_ENVIADA', 'CONFIRMADA'].map((f) => (
+            <button 
+              key={f} 
+              onClick={() => setFilter(f)}
+              className={`text-[9px] font-bold uppercase tracking-widest px-4 py-2 rounded-sm transition whitespace-nowrap ${filter === f ? 'bg-white text-black' : 'text-neutral-500 hover:text-white'}`}
+            >
+              {f.replace('_', ' ')}
+            </button>
+          ))}
+        </div>
+      </header>
 
-      <main className="flex-1 p-6 md:p-12 overflow-y-auto">
-        <div className="max-w-6xl mx-auto space-y-12">
-          <header className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
-            <div>
-              <h1 className="text-4xl font-bold tracking-tighter uppercase">Solicitações</h1>
-              <p className="text-neutral-500 text-sm mt-2">Pedidos de contratação e negociações em curso.</p>
-            </div>
-            
-            <div className="flex gap-2 bg-neutral-900 p-1 rounded-sm border border-white/5">
-              {['TODAS', 'NOVA', 'PROPOSTA_ENVIADA', 'CONFIRMADA'].map((f) => (
-                <button 
-                  key={f} 
-                  onClick={() => setFilter(f)}
-                  className={`text-[9px] font-bold uppercase tracking-widest px-4 py-2 rounded-sm transition ${filter === f ? 'bg-white text-black' : 'text-neutral-500 hover:text-white'}`}
-                >
-                  {f.replace('_', ' ')}
-                </button>
-              ))}
-            </div>
-          </header>
-
-          <div className="grid grid-cols-1 gap-4">
-            {filteredRequests && filteredRequests.length > 0 ? (
-              filteredRequests.map((req: any) => (
-                <div key={req.id} className="bg-neutral-900 border border-white/5 hover:border-white/10 transition p-6 rounded-sm grid md:grid-cols-4 gap-6 items-center">
-                  <div className="space-y-1">
-                    <div className="text-[10px] uppercase font-bold text-neutral-500 tracking-widest">Contratante</div>
-                    <div className="font-bold">{req.name}</div>
-                    <div className="text-xs text-neutral-400">{req.whatsapp}</div>
-                  </div>
-                  
-                  <div className="space-y-1">
-                    <div className="text-[10px] uppercase font-bold text-neutral-500 tracking-widest">Artista & Data</div>
-                    <div className="font-bold">{getArtistName(req.artist_id)}</div>
-                    <div className="text-xs text-neutral-400">{req.event_date ? format(parseISO(req.event_date), "dd/MM/yyyy") : "A definir"}</div>
-                  </div>
-
-                  <div>
-                    <span className={`text-[9px] font-bold uppercase tracking-widest px-3 py-1 border rounded-full ${getStatusColor(req.status)}`}>
-                      {req.status.replace('_', ' ')}
-                    </span>
-                  </div>
-
-                  <div className="flex justify-end gap-2">
-                    <button 
-                      onClick={() => setSelectedRequest(req)}
-                      className="bg-white/5 hover:bg-white text-neutral-400 hover:text-black p-2 rounded-sm transition border border-white/5"
-                    >
-                      <FileText className="w-4 h-4" />
-                    </button>
-                    {req.status === 'NOVA' && (
-                      <button 
-                        onClick={() => statusMutation.mutate({ id: req.id, status: 'PROPOSTA_ENVIADA' })}
-                        className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 text-[10px] font-bold uppercase tracking-widest rounded-sm transition"
-                      >
-                        Enviar Proposta
-                      </button>
-                    )}
-                  </div>
+      <div className="grid grid-cols-1 gap-4">
+        {filteredRequests && filteredRequests.length > 0 ? (
+          filteredRequests.map((req: any) => (
+            <div key={req.id} className="bg-neutral-900 border border-white/5 hover:border-white/10 transition p-6 rounded-sm flex flex-col md:flex-row gap-6 items-start md:items-center justify-between">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 flex-1 w-full">
+                <div className="space-y-1">
+                  <div className="text-[10px] uppercase font-bold text-neutral-500 tracking-widest">Contratante</div>
+                  <div className="font-bold truncate">{req.name}</div>
+                  <div className="text-xs text-neutral-400">{req.whatsapp}</div>
                 </div>
-              ))
-            ) : (
-              <div className="text-center py-24 border border-dashed border-white/5 rounded-sm">
-                <p className="text-neutral-600 text-[10px] uppercase tracking-widest">Nenhuma solicitação nesta categoria.</p>
+                
+                <div className="space-y-1">
+                  <div className="text-[10px] uppercase font-bold text-neutral-500 tracking-widest">Artista & Data</div>
+                  <div className="font-bold truncate">{getArtistName(req.artist_id)}</div>
+                  <div className="text-xs text-neutral-400">{req.event_date ? format(parseISO(req.event_date), "dd/MM/yyyy") : "A definir"}</div>
+                </div>
+
+                <div className="flex items-center">
+                  <span className={`text-[9px] font-bold uppercase tracking-widest px-3 py-1 border rounded-full whitespace-nowrap ${getStatusColor(req.status)}`}>
+                    {req.status.replace('_', ' ')}
+                  </span>
+                </div>
               </div>
-            )}
+
+              <div className="flex w-full md:w-auto justify-end gap-2 pt-4 md:pt-0 border-t md:border-t-0 border-white/5">
+                <button 
+                  onClick={() => setSelectedRequest(req)}
+                  className="bg-white/5 hover:bg-white text-neutral-400 hover:text-black p-2 rounded-sm transition border border-white/5 flex-1 md:flex-none flex justify-center"
+                >
+                  <FileText className="w-4 h-4" />
+                </button>
+                {req.status === 'NOVA' && (
+                  <button 
+                    onClick={() => statusMutation.mutate({ id: req.id, status: 'PROPOSTA_ENVIADA' })}
+                    className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 text-[10px] font-bold uppercase tracking-widest rounded-sm transition flex-1 md:flex-none"
+                  >
+                    Enviar Proposta
+                  </button>
+                )}
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="text-center py-24 border border-dashed border-white/5 rounded-sm">
+            <p className="text-neutral-600 text-[10px] uppercase tracking-widest">Nenhuma solicitação nesta categoria.</p>
           </div>
-        </div>
-      </main>
+        )}
+      </div>
 
       {/* Proposal/Detail Drawer */}
       {selectedRequest && (
         <div className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex justify-end">
-          <div className="w-full max-w-xl bg-neutral-900 border-l border-white/10 p-8 h-full overflow-y-auto space-y-8 animate-in slide-in-from-right duration-300">
+          <div className="w-full sm:max-w-xl bg-neutral-900 border-l border-white/10 p-6 md:p-8 h-full overflow-y-auto space-y-8 animate-in slide-in-from-right duration-300">
             <div className="flex justify-between items-start">
-              <h2 className="text-3xl font-black uppercase tracking-tighter">Detalhes da Solicitação</h2>
+              <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tighter">Detalhes</h2>
               <button onClick={() => setSelectedRequest(null)} className="text-neutral-500 hover:text-white">
                 <XCircle className="w-6 h-6" />
               </button>
             </div>
 
-            <div className="grid grid-cols-2 gap-8 py-8 border-y border-white/5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 py-8 border-y border-white/5">
               <div className="space-y-4">
                 <div className="space-y-1">
                   <div className="text-[9px] uppercase font-bold text-neutral-600 tracking-widest">Contratante</div>
-                  <div className="text-lg font-bold">{selectedRequest.name}</div>
+                  <div className="text-lg font-bold truncate">{selectedRequest.name}</div>
                   <div className="text-sm text-neutral-400">{selectedRequest.email}</div>
                   <div className="text-sm text-neutral-400">{selectedRequest.whatsapp}</div>
                 </div>
                 <div className="space-y-1">
                   <div className="text-[9px] uppercase font-bold text-neutral-600 tracking-widest">Mensagem</div>
-                  <div className="text-sm italic text-neutral-500">"{selectedRequest.message || "Sem mensagem adicional."}"</div>
+                  <div className="text-sm italic text-neutral-500 break-words">"{selectedRequest.message || "Sem mensagem adicional."}"</div>
                 </div>
               </div>
               
-              <div className="space-y-4 text-right">
+              <div className="space-y-4 sm:text-right">
                 <div className="space-y-1">
                   <div className="text-[9px] uppercase font-bold text-neutral-600 tracking-widest">Status Atual</div>
                   <div className={`text-sm font-bold uppercase tracking-widest ${getStatusColor(selectedRequest.status).split(' ')[0]}`}>
@@ -222,15 +189,14 @@ function AdminBookings() {
               </div>
             </div>
 
-            {/* Negotiation Section (Visible only to Admin) */}
             <div className="space-y-6">
               <div className="flex items-center gap-2">
                 <DollarSign className="w-5 h-5 text-neutral-500" />
-                <h3 className="text-sm font-bold uppercase tracking-widest">Painel de Negociação (Restrito)</h3>
+                <h3 className="text-sm font-bold uppercase tracking-widest">Painel de Negociação</h3>
               </div>
               
               <div className="bg-black/40 p-6 rounded-sm border border-white/5 space-y-6">
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <label className="text-[10px] uppercase font-bold text-neutral-500 tracking-widest">Cachê Líquido (R$)</label>
                     <input 
@@ -253,7 +219,7 @@ function AdminBookings() {
                 </div>
                 
                 <div className="space-y-2">
-                  <label className="text-[10px] uppercase font-bold text-neutral-500 tracking-widest">Total com Despesas Estimadas (Aéreo/Hospedagem)</label>
+                  <label className="text-[10px] uppercase font-bold text-neutral-500 tracking-widest">Total com Despesas Estimadas</label>
                   <input 
                     type="number" 
                     value={proposalData.despesas}
@@ -263,7 +229,7 @@ function AdminBookings() {
                   />
                 </div>
 
-                <div className="flex gap-4 pt-4">
+                <div className="flex flex-col sm:flex-row gap-4 pt-4">
                   <button 
                     onClick={() => {
                       contractMutation.mutate({
@@ -271,7 +237,7 @@ function AdminBookings() {
                         artist_id: selectedRequest.artist_id,
                         artist_name: getArtistName(selectedRequest.artist_id),
                         contractor_name: selectedRequest.name,
-                        event_name: selectedRequest.name, // Fallback to contractor name if not specified
+                        event_name: selectedRequest.name, 
                         event_date: selectedRequest.event_date || new Date().toISOString(),
                         city: "A definir",
                         state: "GO",
@@ -280,13 +246,13 @@ function AdminBookings() {
                       });
                     }}
                     disabled={contractMutation.isPending}
-                    className="flex-1 bg-white text-black py-3 text-[10px] font-bold uppercase tracking-widest rounded-sm hover:bg-neutral-200 transition flex items-center justify-center gap-2"
+                    className="flex-1 bg-white text-black py-4 text-[10px] font-bold uppercase tracking-widest rounded-sm hover:bg-neutral-200 transition flex items-center justify-center gap-2"
                   >
                     <FileText className="w-3 h-3" /> {contractMutation.isPending ? "Gerando..." : "Gerar Contrato"}
                   </button>
                   <button 
                     onClick={() => statusMutation.mutate({ id: selectedRequest.id, status: 'CONFIRMADA' })}
-                    className="flex-1 bg-green-600 text-white py-3 text-[10px] font-bold uppercase tracking-widest rounded-sm hover:bg-green-500 transition flex items-center justify-center gap-2"
+                    className="flex-1 bg-green-600 text-white py-4 text-[10px] font-bold uppercase tracking-widest rounded-sm hover:bg-green-500 transition flex items-center justify-center gap-2"
                   >
                     <CheckCircle className="w-3 h-3" /> Fechar Show
                   </button>
@@ -294,7 +260,7 @@ function AdminBookings() {
                 
                 <button 
                   onClick={() => statusMutation.mutate({ id: selectedRequest.id, status: 'RECUSADA' })}
-                  className="w-full bg-transparent border border-red-900/50 text-red-500/50 hover:bg-red-900/20 py-3 text-[10px] font-bold uppercase tracking-widest rounded-sm transition"
+                  className="w-full bg-transparent border border-red-900/50 text-red-500/50 hover:bg-red-900/20 py-4 text-[10px] font-bold uppercase tracking-widest rounded-sm transition"
                 >
                   Recusar Solicitação
                 </button>
