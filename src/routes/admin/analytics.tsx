@@ -167,7 +167,7 @@ function AdminAnalytics() {
   const COLORS = ['#FFFFFF', '#A3A3A3', '#525252', '#262626'];
 
   return (
-    <div className="p-6 md:p-12 space-y-8 bg-black min-h-screen text-white">
+    <div className="p-4 md:p-12 space-y-6 md:space-y-8 bg-black min-h-screen text-white overflow-x-hidden">
       {/* Premium Header */}
       <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 pb-8 border-b border-white/5">
         <div className="space-y-1">

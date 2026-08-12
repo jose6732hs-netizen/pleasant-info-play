@@ -225,7 +225,13 @@ function VisualEditor() {
 
       <div className="flex-1 flex overflow-hidden">
         {/* Left Sidebar: Properties */}
-        <aside className="w-80 border-r border-white/5 bg-black flex flex-col overflow-y-auto custom-scrollbar">
+        <aside className={`
+          fixed md:relative z-50 h-[calc(100vh-64px)] w-80 border-r border-white/5 bg-black 
+          transition-transform duration-300 ease-in-out
+          ${false ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+          flex flex-col overflow-y-auto custom-scrollbar
+        `}>
+
           <div className="p-6 border-b border-white/5">
             <h3 className="text-xs font-bold text-neutral-400 uppercase tracking-widest mb-4 flex items-center gap-2">
               <Settings className="w-3 h-3" /> Propriedades da Seção
