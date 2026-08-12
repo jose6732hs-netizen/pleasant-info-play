@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { getRealAnalyticsEvents, clearRealAnalyticsEvents, getRealSessions } from "@/lib/analytics/tracker.functions";
 import { getAllArtists } from "@/lib/cms.functions";
