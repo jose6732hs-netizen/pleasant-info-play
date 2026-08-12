@@ -29,7 +29,7 @@ function AdminLayout() {
   return (
     <div className="min-h-screen bg-neutral-950 text-white flex flex-col md:flex-row">
       <AdminSidebar currentPath={location.pathname} />
-      <main className="flex-1 w-full overflow-x-hidden">
+      <main className="flex-1 w-full min-w-0 overflow-x-hidden">
         <Outlet />
       </main>
     </div>

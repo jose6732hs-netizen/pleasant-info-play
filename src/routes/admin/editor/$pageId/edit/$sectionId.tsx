@@ -156,7 +156,7 @@ function VisualEditor() {
             Isso pode ocorrer se a seção foi excluída ou se o link expirou.
           </p>
           <Link 
-            to="/admin/editor/$pageId" 
+            to="/admin/editor/$pageId/" 
             params={{ pageId }}
             className="inline-block px-6 py-3 bg-white/10 hover:bg-white/20 text-white rounded-sm transition text-xs font-bold uppercase tracking-widest border border-white/10"
           >
@@ -169,14 +169,14 @@ function VisualEditor() {
 
 
   return (
-    <div className="h-screen flex flex-col bg-black overflow-hidden animate-in fade-in duration-500">
+    <div className="min-h-screen md:h-screen flex flex-col bg-black md:overflow-hidden animate-in fade-in duration-500 w-full">
       {/* Top Bar */}
-      <header className="h-16 border-b border-white/5 bg-black flex items-center justify-between px-6 z-50">
-        <div className="flex items-center gap-4">
+      <header className="border-b border-white/5 bg-black flex flex-wrap items-center justify-between gap-3 px-4 md:px-6 py-3 md:h-16 md:py-0 z-50 sticky top-0">
+        <div className="flex items-center gap-3 md:gap-4 min-w-0">
           <Link 
-            to="/admin/editor/$pageId"
+            to="/admin/editor/$pageId/"
             params={{ pageId }}
-            className="p-2 bg-white/5 hover:bg-white/10 text-neutral-400 hover:text-white rounded-sm transition"
+            className="p-2 bg-white/5 hover:bg-white/10 text-neutral-400 hover:text-white rounded-sm transition shrink-0"
           >
             <ChevronLeft className="w-5 h-5" />
           </Link>
@@ -233,9 +233,10 @@ function VisualEditor() {
         </div>
       </header>
 
-      <div className="flex-1 flex flex-col md:flex-row overflow-hidden md:overflow-hidden overflow-y-auto">
+      <div className="flex-1 flex flex-col md:flex-row md:overflow-hidden min-h-0">
         {/* Left Sidebar: Properties */}
-        <aside className="w-full md:w-80 border-r border-white/5 bg-black flex flex-col overflow-y-auto custom-scrollbar md:h-full h-auto">
+        <aside className="w-full md:w-80 md:shrink-0 border-b md:border-b-0 md:border-r border-white/5 bg-black flex flex-col md:overflow-y-auto custom-scrollbar md:h-full">
+
 
 
           <div className="p-6 border-b border-white/5">
@@ -376,12 +377,12 @@ function VisualEditor() {
         </aside>
 
         {/* Center: Preview Canvas */}
-        <main className="flex-1 bg-neutral-900/50 p-8 overflow-y-auto custom-scrollbar flex flex-col items-center">
+        <main className="flex-1 bg-neutral-900/50 p-4 md:p-8 md:overflow-y-auto custom-scrollbar flex flex-col items-center min-w-0">
           <div className={`
-            bg-black shadow-2xl transition-all duration-300 border border-white/5 overflow-hidden
+            bg-black shadow-2xl transition-all duration-300 border border-white/5 overflow-hidden max-w-full
             ${viewMode === 'desktop' ? 'w-full max-w-6xl aspect-video' : ''}
-            ${viewMode === 'tablet' ? 'w-[768px] h-[1024px]' : ''}
-            ${viewMode === 'mobile' ? 'w-[375px] h-[667px]' : ''}
+            ${viewMode === 'tablet' ? 'w-full md:w-[768px] h-[600px] md:h-[1024px]' : ''}
+            ${viewMode === 'mobile' ? 'w-full md:w-[375px] max-w-[375px] h-[600px] md:h-[667px]' : ''}
           `}>
             {/* The actual preview would render the section component with editContent */}
             <div className="w-full h-full flex flex-col">

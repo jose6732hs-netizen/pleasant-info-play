@@ -43,7 +43,7 @@ function AdminEditorDashboard() {
           pages?.map((page) => (
             <Link 
               key={page.id}
-              to="/admin/editor/$pageId"
+              to="/admin/editor/$pageId/"
               params={{ pageId: page.id }}
               className="group relative overflow-hidden bg-white/5 border border-white/5 hover:border-white/20 transition-all p-6 rounded-sm flex flex-col justify-between min-h-[160px]"
             >
