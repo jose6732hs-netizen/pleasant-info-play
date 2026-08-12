@@ -1,36 +1,53 @@
 ---
-name: Full Admin Implementation
-description: Plan to implement full administrative functionality including CRUD operations and dynamic content reflection on the frontend using Lovable Cloud.
+name: Professional Artist Management System (064 TALENTS)
+description: A complete system for artist registration, management, and professional presentation with dynamic individual pages and real-time admin preview.
 type: feature
 ---
-# Plan: Full Admin Implementation & Dynamic Content
 
-Implement persistent storage and management for all system entities (Artists, Content, Bookings, Contracts) to ensure admin edits reflect on the live site.
+# Plan: Professional Artist Management System
+
+Transform the artists' area into a robust booking and management system. This includes a comprehensive administrative panel for CRUD operations and premium, dynamically generated public profiles.
 
 ## Proposed Changes
 
 ### 1. Database Schema (Lovable Cloud)
-- **site_content**: Store hero and about section texts.
-- **artists**: Store artist profiles (name, genre, city, photo_url, slug, etc.).
-- **calendar_events**: Manage artist availability and confirmed shows.
-- **booking_requests**: Track new hiring solicitations and their negotiation state.
-- **contracts**: Store generated contract documents and payment status.
+- **Table: `artists`**
+  - ID, Slug (unique), Status (Active/Inactive), Featured (Boolean), Display Order.
+  - Basic Info: Artistic Name, Full Name, Main Category, Genre, Sub-genre.
+  - Location: City, State, Country.
+  - Texts: Hero title, Subtitle, Short Bio, Full Bio, History, Career Highlights.
+  - Media: Main image (Hero), Thumbnail preview.
+  - Social: Instagram, TikTok, YouTube, Spotify, Deezer, Facebook, Site.
+  - Booking: Availability text, types of hiring, region, commercial notes.
+  - SEO: Title, Description, OG Image.
+- **Table: `artist_videos`**
+  - ID, Artist ID (FK), Title, URL, Source (YouTube/Vimeo), Order, Status.
+- **Table: `artist_gallery`**
+  - ID, Artist ID (FK), Image URL, Title, Caption, Alt Text, Order.
 
-### 2. Admin Logic (`src/lib/*.functions.ts`)
-- Update server functions to interact with the database using the injected Supabase client.
-- Implement full CRUD handlers for each entity.
+### 2. Administrative Panel (`/admin/artistas`)
+- **List View**: Refined table with photo previews, status toggles, and multi-filter (active, genre, recent).
+- **Multi-Tab Form**: 8-step wizard for adding/editing artists.
+  - Step 1: Info (Names, categories, slug).
+  - Step 2: Images (High-end upload with preview).
+  - Step 3: Texts (Full BIO and career history).
+  - Step 4: Videos (Dynamic list of external URLs).
+  - Step 5: Social Media.
+  - Step 6: Booking (Commercial terms).
+  - Step 7: SEO.
+  - Step 8: Preview (Real-time cinematic rendering).
 
-### 3. Admin UI Updates
-- **Artists**: Add "Add Artist" and "Edit Artist" modals/forms.
-- **Content**: Connect "Save Changes" button to the `updateSiteContent` server function.
-- **Agenda**: Persist new events and status updates.
-- **Requests**: Implement status transitions (Proposta Enviada -> Confirmada -> Contrato).
+### 3. Public Professional Profiles (`/artistas/$slug`)
+- **Cinematic Layout**: Large hero images, urban/luxury aesthetic.
+- **Dynamic Content**: Auto-rendered sections for Bio, Video Highlight, Gallery (Masonry), and Social Links.
+- **Conversion Focused**: "Contract Artist" CTA always visible, opening a pre-filled booking form.
 
-### 4. Frontend Integration
-- Update `src/routes/index.tsx` and `src/routes/artistas/$slug.tsx` to fetch data from the live database instead of empty mocks.
+### 4. Integration & Persistence
+- Update `cms.functions.ts` to fetch real data from Supabase.
+- Implement storage handling for artist images and gallery photos.
 
 ## Technical Details
-- Enable Lovable Cloud for persistent storage.
-- Use `createServerFn` with `.middleware([requireSupabaseAuth])` for all admin write operations.
-- Implement Zod validation for all data entry points.
-- Use TanStack Query for cache invalidation after mutations to ensure immediate UI feedback.
+- **Tech Stack**: TanStack Start, Supabase (Lovable Cloud), Tailwind v4.
+- **Media**: Integrated with Lovable Storage.
+- **Validation**: Zod for all form schemas.
+- **State**: TanStack Query for caching and real-time UI updates.
