@@ -27,6 +27,7 @@ import { toast } from 'sonner';
 import { RichTextEditor } from '@/components/admin/RichTextEditor';
 import { ImageEditor } from '@/components/admin/ImageEditor';
 import { VideoEditor } from '@/components/admin/VideoEditor';
+import { SectionStyleEditor, SectionStyles } from '@/components/admin/SectionStyleEditor';
 import { 
   Accordion,
   AccordionContent,
