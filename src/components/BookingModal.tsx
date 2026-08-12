@@ -9,7 +9,7 @@ import { captureClick } from "@/lib/analytics-client";
 interface BookingModalProps {
   isOpen: boolean;
   onClose: () => void;
-  initialArtistId?: string;
+  initialArtistId?: string | undefined;
 }
 
 export function BookingModal({ isOpen, onClose, initialArtistId }: BookingModalProps) {
