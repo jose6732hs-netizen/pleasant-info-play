@@ -1,5 +1,14 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
+import { checkAuth } from "./auth.functions";
+
+async function requireAdmin() {
+  const auth = await checkAuth();
+  if (!auth.authenticated || auth.user?.role !== 'ADMIN') {
+    throw new Error("Unauthorized");
+  }
+}
+
 
 // Persistence Layer
 // Since Lovable Cloud credits are unavailable, we use a robust in-memory mock 
@@ -194,6 +203,7 @@ export const getPageSections = createServerFn({ method: "GET" })
 export const saveSection = createServerFn({ method: "POST" })
   .validator((data: any) => data)
   .handler(async ({ data }) => {
+    await requireAdmin();
     const index = sectionsStore.findIndex(s => s.id === data.id);
     if (index > -1) {
       sectionsStore[index] = { ...sectionsStore[index], ...data };
@@ -206,6 +216,7 @@ export const saveSection = createServerFn({ method: "POST" })
     }
     return { success: true, section: data };
   });
+
 
 export const publishPage = createServerFn({ method: "POST" })
   .inputValidator((d) => z.object({ pageId: z.string() }).parse(d))
@@ -420,6 +431,7 @@ export const getAllArtists = createServerFn({ method: "GET" })
 export const saveArtist = createServerFn({ method: "POST" })
   .validator((data: any) => data) // In real app use zod
   .handler(async ({ data }) => {
+    await requireAdmin();
     const index = artistsStore.findIndex(a => a.id === data.id);
     if (index > -1) {
       artistsStore[index] = { ...artistsStore[index], ...data };
@@ -433,14 +445,17 @@ export const saveArtist = createServerFn({ method: "POST" })
     return { success: true, artist: data };
   });
 
+
 export const deleteArtist = createServerFn({ method: "POST" })
   .validator((id: unknown) => z.string().parse(id))
   .handler(async ({ data: id }) => {
+    await requireAdmin();
     artistsStore = artistsStore.filter(a => a.id !== id);
     artistVideosStore = artistVideosStore.filter(v => v.artist_id !== id);
     artistGalleryStore = artistGalleryStore.filter(g => g.artist_id !== id);
     return { success: true };
   });
+
 
 export const submitBookingRequest = createServerFn({ method: "POST" })
   .validator((data: unknown) => z.object({
