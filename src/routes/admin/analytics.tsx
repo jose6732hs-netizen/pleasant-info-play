@@ -96,7 +96,7 @@ function AdminAnalytics() {
 
     const visitors = new Set(events.map(e => e.visitor_id)).size;
     const views = events.filter(e => e.type === 'page_view' || e.type === 'artist_view').length;
-    const clicks = events.filter(e => e.type === 'click' || e.type.includes('click')).length;
+    const clicks = events.filter(e => e.type === 'click' || (e.type as string).includes('click')).length;
     const uniqueArtists = new Set(events.map(e => e.artist_id).filter(Boolean)).size;
     const reactions = events.filter(e => e.type.includes('reaction')).length;
     const conversions = events.filter(e => e.type === 'artist_contact').length;
@@ -116,7 +116,7 @@ function AdminAnalytics() {
       return {
         date: format(day, "dd/MM"),
         views: dayEvents.filter(e => e.type === 'page_view' || e.type === 'artist_view').length,
-        clicks: dayEvents.filter(e => e.type === 'click' || e.type.includes('click')).length,
+        clicks: dayEvents.filter(e => (e.type as string) === 'click' || (e.type as string).includes('click')).length,
         visitors: new Set(dayEvents.map(e => e.visitor_id)).size,
       };
     });
@@ -397,7 +397,7 @@ function AdminAnalytics() {
                         dataKey="value"
                       >
                         {sourcesData.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length] || '#FFFFFF'} />
                         ))}
                       </Pie>
                       <Tooltip 
