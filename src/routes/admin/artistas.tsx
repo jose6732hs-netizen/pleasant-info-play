@@ -40,9 +40,9 @@ function AdminArtists() {
   if (isFormOpen) {
     return (
       <ArtistForm 
-        initialData={editingArtist || undefined}
-        onSave={async (artist) => {
-          saveMutation.mutate({ artist, videos: [], gallery: [] });
+        initialData={editingArtist}
+        onSave={async (artist, videos, gallery) => {
+          saveMutation.mutate({ artist, videos, gallery });
         }}
         onCancel={() => {
           setIsFormOpen(false);
