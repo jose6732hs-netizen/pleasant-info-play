@@ -8,7 +8,7 @@ import { IntroAnimation } from "@/components/IntroAnimation";
 import { BookingModal } from "@/components/BookingModal";
 import logoAsset from "@/assets/logo-completa.png.asset.json";
 import { captureClick } from "@/lib/analytics-client";
-
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({
   loader: async ({ context }) => {
@@ -55,19 +55,131 @@ function Index() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const getContent = (sectionName: string) => {
-    return (contentData?.find((c: any) => c.section_name === sectionName)?.content || {}) as any;
-  };
-
-  const hero = getContent("hero");
-  const about = getContent("about");
-
-  const sections = contentData || [];
-
   const openBooking = (artistId?: string) => {
     setSelectedArtistId(artistId);
     setIsBookingModalOpen(true);
     captureClick(window.location.pathname, "Abrir Modal de Booking", "booking-modal-trigger", { artistId });
+  };
+
+  const renderSection = (section: any) => {
+    const { content, styles } = section;
+    const isVisible = styles?.isVisible !== false;
+
+    if (!isVisible) return null;
+
+    const sectionStyle = {
+      paddingTop: `${styles?.paddingTop ?? 80}px`,
+      paddingBottom: `${styles?.paddingBottom ?? 80}px`,
+      backgroundColor: styles?.backgroundType === 'color' 
+        ? (styles.backgroundColor === 'graphite' ? '#1a1a1a' : styles.backgroundColor === 'white' ? '#ffffff' : '#000000')
+        : undefined,
+      backgroundImage: styles?.backgroundType === 'image' && styles.backgroundImage ? `url(${styles.backgroundImage})` : undefined,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      minHeight: styles?.sectionHeight === 'viewport' ? '100vh' : 
+                 styles?.sectionHeight === 'large' ? '80vh' :
+                 styles?.sectionHeight === 'medium' ? '60vh' :
+                 styles?.sectionHeight === 'small' ? '40vh' : 'auto',
+      display: 'flex',
+      flexDirection: 'column' as const,
+      justifyContent: 'center',
+      position: 'relative' as const,
+    };
+
+    const containerClass = cn(
+      "container mx-auto px-6 relative z-10",
+      styles?.contentWidth === 'wide' ? "max-w-7xl" : 
+      styles?.contentWidth === 'full' ? "max-w-none" : "max-w-5xl",
+      styles?.alignment === 'center' ? "text-center" :
+      styles?.alignment === 'right' ? "text-right" : "text-left"
+    );
+
+    const overlay = styles?.backgroundOverlay && (
+      <div 
+        className="absolute inset-0 bg-black pointer-events-none z-0" 
+        style={{ opacity: (styles.overlayOpacity ?? 40) / 100 }} 
+      />
+    );
+
+    switch (section.section_name) {
+      case 'hero':
+        return (
+          <section key="hero" id="inicio" style={sectionStyle}>
+            <div className="absolute inset-0 z-0">
+              {content.video_url ? (
+                content.video_url.includes('youtube') || content.video_url.includes('vimeo') ? (
+                  <iframe
+                    src={content.video_url.includes('youtube') ? `https://www.youtube.com/embed/${content.video_url.split('v=')[1]}?autoplay=1&mute=1&loop=1&controls=0` : content.video_url}
+                    className="w-full h-full object-cover opacity-30 pointer-events-none"
+                    frameBorder="0"
+                    allow="autoplay; fullscreen"
+                  />
+                ) : (
+                  <video 
+                    src={content.video_url} 
+                    autoPlay 
+                    muted 
+                    loop 
+                    playsInline
+                    className="w-full h-full object-cover opacity-30"
+                  />
+                )
+              ) : (
+                <div className="absolute inset-0 bg-gradient-to-b from-neutral-950/60 via-neutral-950/20 to-neutral-950"></div>
+              )}
+            </div>
+            {overlay}
+            <div className={containerClass}>
+              <div className="space-y-6">
+                <div className="flex justify-center mb-8">
+                  <img src={logoAsset.url} alt="064 TALENTS" className="w-full max-w-[500px] h-auto object-contain" />
+                </div>
+                <div className="text-lg md:text-xl font-light uppercase tracking-[0.3em] text-neutral-300 prose prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: content.subtitle || "Artist Booking & Entertainment" }} />
+                <div className="text-md font-bold uppercase tracking-widest pt-4 prose prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: content.description || "Representando talentos. Criando conexões." }} />
+
+                <div className="flex gap-4 justify-center pt-8">
+                  <button onClick={() => openBooking()} className="border border-white/20 hover:bg-white hover:text-black px-8 py-3 rounded-full uppercase text-xs font-bold tracking-widest transition">
+                    Contrate um artista
+                  </button>
+                  <button className="bg-white text-black px-8 py-3 rounded-full uppercase text-xs font-bold tracking-widest hover:bg-neutral-200 transition">
+                    Conheça a 064
+                  </button>
+                </div>
+                {content.complementary && (
+                  <div className="text-xs uppercase tracking-[0.4em] text-neutral-500 pt-8 opacity-50 prose prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: content.complementary }} />
+                )}
+              </div>
+            </div>
+            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+              <ArrowDown className="w-6 h-6 text-white/50" />
+            </div>
+          </section>
+        );
+      case 'about':
+        return (
+          <section key="about" id="sobre" style={sectionStyle}>
+            {overlay}
+            <div className={containerClass}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-center">
+                <div className="space-y-8">
+                  <h2 className="text-4xl md:text-5xl font-bold tracking-tighter leading-tight uppercase prose prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: content.title || "MAIS DO QUE BOOKING." }} />
+                  <div className="text-neutral-400 leading-relaxed text-lg prose prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: content.text || "A 064 TALENTS é uma empresa de Artist Booking & Entertainment..." }} />
+                  <div className="text-2xl font-bold uppercase italic tracking-wider text-white prose prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: content.highlight || "DO GOIÁS PRO MUNDO." }} />
+                </div>
+                <div className="aspect-[4/5] bg-neutral-800 rounded-sm overflow-hidden shadow-2xl group">
+                   <img 
+                    src={content.image_url || "https://images.unsplash.com/photo-1547478011-8a30602558a3?q=80&w=1500&auto=format&fit=crop"} 
+                    alt="Stage" 
+                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition duration-700" 
+                  />
+                </div>
+              </div>
+            </div>
+          </section>
+        );
+      default:
+        return null;
+    }
   };
 
   return (
@@ -92,62 +204,7 @@ function Index() {
       </header>
 
       <main>
-        {/* Hero Section */}
-        <section id="inicio" className="relative h-screen flex flex-col items-center justify-center text-center px-4">
-          <div className="absolute inset-0 z-0">
-            {hero.video_url ? (
-              hero.video_url.includes('youtube') || hero.video_url.includes('vimeo') ? (
-                <iframe
-                  src={hero.video_url.includes('youtube') ? `https://www.youtube.com/embed/${hero.video_url.split('v=')[1]}?autoplay=1&mute=1&loop=1&controls=0` : hero.video_url}
-                  className="w-full h-full object-cover opacity-30 pointer-events-none"
-                  frameBorder="0"
-                  allow="autoplay; fullscreen"
-                />
-              ) : (
-                <video 
-                  src={hero.video_url} 
-                  autoPlay 
-                  muted 
-                  loop 
-                  playsInline
-                  className="w-full h-full object-cover opacity-30"
-                />
-              )
-            ) : (
-              <img 
-                src={hero.image_url || "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=2574&auto=format&fit=crop"}
-                alt="CROWD"
-                className="w-full h-full object-cover opacity-30"
-              />
-            )}
-
-            <div className="absolute inset-0 bg-gradient-to-b from-neutral-950/60 via-neutral-950/20 to-neutral-950"></div>
-          </div>
-          
-          <div className="relative z-10 space-y-6">
-            <div className="flex justify-center mb-8">
-              <img src={logoAsset.url} alt="064 TALENTS" className="w-full max-w-[500px] h-auto object-contain" />
-            </div>
-            <div className="text-lg md:text-xl font-light uppercase tracking-[0.3em] text-neutral-300 prose prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: hero.subtitle || "Artist Booking & Entertainment" }} />
-            <div className="text-md font-bold uppercase tracking-widest pt-4 prose prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: hero.description || "Representando talentos. Criando conexões." }} />
-
-            <div className="flex gap-4 justify-center pt-8">
-              <button onClick={() => openBooking()} className="border border-white/20 hover:bg-white hover:text-black px-8 py-3 rounded-full uppercase text-xs font-bold tracking-widest transition">
-                Contrate um artista
-              </button>
-              <button className="bg-white text-black px-8 py-3 rounded-full uppercase text-xs font-bold tracking-widest hover:bg-neutral-200 transition">
-                Conheça a 064
-              </button>
-            </div>
-            {hero.complementary && (
-              <div className="text-xs uppercase tracking-[0.4em] text-neutral-500 pt-8 opacity-50 prose prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: hero.complementary }} />
-            )}
-          </div>
-
-          <div className="absolute bottom-10 animate-bounce">
-            <ArrowDown className="w-6 h-6 text-white/50" />
-          </div>
-        </section>
+        {contentData?.map((section: any) => renderSection(section))}
 
         {/* Artists Section */}
         <section id="artistas" className="py-24 px-6 md:px-20 bg-neutral-950">
@@ -162,7 +219,6 @@ function Index() {
                 {artists.map((artist: any) => (
                   <Link 
                     to={`/artistas/${artist.slug || artist.id}` as any} 
-
                     key={artist.id} 
                     className="group relative aspect-[3/4] overflow-hidden bg-neutral-900 rounded-sm block"
                     onClick={() => captureClick(window.location.pathname, `Ver Artista: ${artist.name}`, "artist-card-click", { artistId: artist.id })}
@@ -199,21 +255,6 @@ function Index() {
           </div>
         </section>
 
-        {/* About Section */}
-        <section id="sobre" className="py-24 px-6 md:px-20 bg-neutral-900/30">
-          <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-            <div className="space-y-6">
-              <h2 className="text-4xl md:text-5xl font-bold tracking-tighter leading-tight uppercase prose prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: about.title || "MAIS DO QUE BOOKING." }} />
-              <div className="text-neutral-400 leading-relaxed text-lg prose prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: about.text || "A 064 TALENTS é uma empresa de Artist Booking & Entertainment..." }} />
-              <div className="text-2xl font-bold uppercase italic tracking-wider text-white prose prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: about.highlight || "DO GOIÁS PRO MUNDO." }} />
-
-            </div>
-            <div className="aspect-[4/5] bg-neutral-800 rounded-sm overflow-hidden shadow-2xl">
-               <img src={about.image_url || "https://images.unsplash.com/photo-1547478011-8a30602558a3?q=80&w=1500&auto=format&fit=crop"} alt="Stage" className="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700" />
-            </div>
-          </div>
-        </section>
-
         {/* Services Section */}
         <section id="servicos" className="py-24 px-6 md:px-20 bg-neutral-950">
            <div className="max-w-6xl mx-auto">
@@ -245,7 +286,7 @@ function Index() {
         </section>
 
         {/* Footer */}
-        <footer className="py-12 border-t border-white/5 bg-neutral-950 text-center">
+        <footer id="contato" className="py-12 border-t border-white/5 bg-neutral-950 text-center">
             <div className="flex justify-center mb-6">
                 <img src={logoAsset.url} alt="064 TALENTS" className="h-16 w-auto object-contain" />
             </div>
