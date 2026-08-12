@@ -79,18 +79,16 @@ function VisitorView() {
         stats[e.artist_id] = { name: artist.name, views: 0, clicks: 0, reactions: [] };
       }
       
+      const aId = e.artist_id!;
       if (e.type === 'artist_view') {
-        const id = e.artist_id!;
-        stats[id].views++;
+        stats[aId].views++;
       }
       if (e.type === 'artist_click' || e.type.includes('click')) {
-        const id = e.artist_id!;
-        stats[id].clicks++;
+        stats[aId].clicks++;
       }
       if (e.type === 'artist_reaction') {
-        const id = e.artist_id!;
         const emoji = e.metadata?.reaction || '❤️';
-        stats[id].reactions.push(emoji);
+        stats[aId].reactions.push(emoji);
       }
     });
     
