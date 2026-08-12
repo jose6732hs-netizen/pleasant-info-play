@@ -11,6 +11,7 @@ export interface Page {
   name: string;
   slug: string;
   status: 'RASCUNHO' | 'PUBLICADO';
+  config?: any;
   created_at: string;
 }
 
