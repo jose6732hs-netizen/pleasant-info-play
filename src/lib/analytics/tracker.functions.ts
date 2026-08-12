@@ -2,6 +2,8 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { persistEvent, queryEvents, clearEvents } from "./events.server";
 import { getOrCreateSession } from "./session.server";
+import { getGeoInfo } from "./geo.server";
+import { getRequest } from "@tanstack/react-start/server";
 
 export type EventType = 
   | 'page_view' | 'landing_view' | 'artist_view' | 'artist_click' 
@@ -34,6 +36,17 @@ export interface AnalyticsEvent {
     language: string | undefined;
     resolution: string | undefined;
   } | undefined;
+  location?: {
+    city?: string | undefined;
+    region?: string | undefined;
+    region_code?: string | undefined;
+    country?: string | undefined;
+    country_code?: string | undefined;
+    latitude?: number | undefined;
+    longitude?: number | undefined;
+    timezone?: string | undefined;
+    isp?: string | undefined;
+  };
 }
 
 const UtmSchema = z.object({
@@ -65,6 +78,15 @@ export const trackRealEvent = createServerFn({ method: "POST" })
     client_info: ClientInfoSchema,
   }).parse(data))
   .handler(async ({ data }) => {
+    // Accessing request in TanStack Start server functions is done via the second argument 'ctx'
+    // but the input validator might interfere if not handled correctly.
+    // In React Start, you can use getWebRequest from @tanstack/react-start/server
+    // Wait, let's try to get it from context if possible or use the helper
+    const request = getRequest();
+
+    // Get geo info
+    const location = await getGeoInfo(request!);
+
     // Sync session first
     await getOrCreateSession(data.visitor_id, data.session_id, {
       utm: data.utm as any,
@@ -72,7 +94,8 @@ export const trackRealEvent = createServerFn({ method: "POST" })
         browser: data.client_info?.userAgent || 'unknown',
         os: 'unknown',
         resolution: data.client_info?.resolution || 'unknown'
-      }
+      },
+      location
     });
 
     const event: AnalyticsEvent = {
@@ -87,7 +110,8 @@ export const trackRealEvent = createServerFn({ method: "POST" })
       utm: data.utm as any,
       metadata: data.metadata,
       client_info: data.client_info as any,
-      type: data.type as EventType
+      type: data.type as EventType,
+      location
     };
 
     return await persistEvent(event);
