@@ -172,7 +172,7 @@ export function GlobalDesignEditor({ value, onChange }: GlobalDesignEditorProps)
                   <span className="text-[10px] text-white">{value.typography.baseSize}px</span>
                 </div>
                 <Slider 
-                  value={[value.typography.baseSize]} 
+                  value={[value.typography.baseSize || 16]} 
                   min={12} 
                   max={24} 
                   step={1}
@@ -229,7 +229,7 @@ export function GlobalDesignEditor({ value, onChange }: GlobalDesignEditorProps)
                   <span className="text-[10px] text-white">{value.buttons.radius}px</span>
                 </div>
                 <Slider 
-                  value={[value.buttons.radius > 50 ? 50 : value.buttons.radius]} 
+                  value={[value.buttons.radius > 50 ? 50 : (value.buttons.radius || 0)]} 
                   min={0} 
                   max={50} 
                   step={1}
@@ -245,7 +245,7 @@ export function GlobalDesignEditor({ value, onChange }: GlobalDesignEditorProps)
                   <span className="text-[10px] text-white">{value.buttons.height}px</span>
                 </div>
                 <Slider 
-                  value={[value.buttons.height]} 
+                  value={[value.buttons.height || 48]} 
                   min={32} 
                   max={64} 
                   step={2}
@@ -261,7 +261,7 @@ export function GlobalDesignEditor({ value, onChange }: GlobalDesignEditorProps)
                   <span className="text-[10px] text-white">{value.buttons.padding}px</span>
                 </div>
                 <Slider 
-                  value={[value.buttons.padding]} 
+                  value={[value.buttons.padding || 32]} 
                   min={16} 
                   max={64} 
                   step={2}
@@ -294,7 +294,7 @@ export function GlobalDesignEditor({ value, onChange }: GlobalDesignEditorProps)
                   <span className="text-[10px] text-white">{value.cards.radius}px</span>
                 </div>
                 <Slider 
-                  value={[value.cards.radius]} 
+                  value={[value.cards.radius || 0]} 
                   min={0} 
                   max={32} 
                   step={1}

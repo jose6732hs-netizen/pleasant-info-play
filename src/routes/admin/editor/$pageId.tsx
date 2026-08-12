@@ -18,11 +18,13 @@ import {
   CheckCircle2,
   AlertCircle,
   FileCode,
-  LayoutTemplate
+  LayoutTemplate,
+  Palette
 } from 'lucide-react';
 import { ArtistsPageEditor } from '@/components/admin/ArtistsPageEditor';
 import { ArtistTemplateEditor } from '@/components/admin/ArtistTemplateEditor';
 import { GlobalNavEditor } from '@/components/admin/GlobalNavEditor';
+import { GlobalDesignEditor } from '@/components/admin/GlobalDesignEditor';
 import {
   DndContext,
   closestCenter,
@@ -376,6 +378,36 @@ function PageEditor() {
           </div>
           
           <GlobalNavEditor 
+            value={page?.config || {}} 
+            onChange={(config) => {
+              queryClient.setQueryData(['page', pageId], (old: any) => ({ ...old, config }));
+            }} 
+          />
+        </div>
+      )}
+
+      {pageId === 'global_design' && (
+        <div className="bg-white/5 border border-white/10 rounded-sm p-8 space-y-6">
+          <div className="flex items-center justify-between border-b border-white/5 pb-6">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-pink-500/10 rounded-sm text-pink-500">
+                <Palette className="w-5 h-5" />
+              </div>
+              <div>
+                <h2 className="text-xl font-bold text-white uppercase tracking-tight">Design & Identidade Global</h2>
+                <p className="text-xs text-neutral-500 uppercase tracking-widest mt-1">Configure as variáveis visuais e a alma estética do site</p>
+              </div>
+            </div>
+            <button 
+              onClick={() => saveConfigMutation.mutate(page?.config)}
+              className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-sm transition text-[10px] font-bold uppercase tracking-widest border border-white/10"
+            >
+              <Save className="w-4 h-4" />
+              Salvar Design
+            </button>
+          </div>
+          
+          <GlobalDesignEditor 
             value={page?.config || {}} 
             onChange={(config) => {
               queryClient.setQueryData(['page', pageId], (old: any) => ({ ...old, config }));
