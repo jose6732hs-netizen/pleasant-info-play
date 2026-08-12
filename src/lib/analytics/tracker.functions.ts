@@ -3,7 +3,7 @@ import { z } from "zod";
 import { persistEvent, queryEvents, clearEvents } from "./events.server";
 import { getOrCreateSession } from "./session.server";
 import { getGeoInfo } from "./geo.server";
-import { getWebRequest as getRequest } from "@tanstack/react-start/server";
+import { getRequest } from "@tanstack/react-start/server";
 
 export type EventType = 
   | 'page_view' | 'landing_view' | 'artist_view' | 'artist_click' 
@@ -82,7 +82,7 @@ export const trackRealEvent = createServerFn({ method: "POST" })
     // but the input validator might interfere if not handled correctly.
     // In React Start, you can use getWebRequest from @tanstack/react-start/server
     // Wait, let's try to get it from context if possible or use the helper
-    const request = getWebRequest();
+    const request = getRequest();
 
     // Get geo info
     const location = await getGeoInfo(request!);
