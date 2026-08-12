@@ -26,7 +26,7 @@ function AdminContracts() {
     queryFn: () => getContracts(),
   });
 
-  const filteredContracts = contracts.filter(c => {
+  const filteredContracts = (contracts || []).filter(c => {
     const matchesSearch = 
       c.contractor_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       c.artist_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -142,7 +142,7 @@ function AdminContracts() {
                         </td>
                         <td className="p-4 text-neutral-300">{contract.contractor_name}</td>
                         <td className="p-4">
-                          <div>{format(parseISO(contract.event_date), "dd/MM/yyyy")}</div>
+                          <div>{contract.event_date ? format(parseISO(contract.event_date), "dd/MM/yyyy") : "N/A"}</div>
                           <div className="text-[10px] text-neutral-500 uppercase tracking-widest">{contract.city} - {contract.state}</div>
                         </td>
                         <td className="p-4 text-right font-bold text-white">

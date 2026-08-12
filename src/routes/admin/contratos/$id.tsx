@@ -90,10 +90,10 @@ function ContractDetails() {
             </Link>
             <div>
               <div className="text-[10px] uppercase font-bold text-neutral-500 tracking-widest flex items-center gap-2">
-                Contrato #{contract.contract_number} 
-                <span className={`w-2 h-2 rounded-full bg-current ${getStatusColor(contract.status)}`} />
+                Contrato #{contract?.contract_number || '---'} 
+                <span className={`w-2 h-2 rounded-full bg-current ${contract ? getStatusColor(contract.status) : ''}`} />
               </div>
-              <h1 className="text-xl font-bold tracking-tighter uppercase">{contract.artist_name} — {contract.event_name}</h1>
+              <h1 className="text-xl font-bold tracking-tighter uppercase">{contract?.artist_name || '---'} — {contract?.event_name || '---'}</h1>
             </div>
           </div>
 
@@ -151,10 +151,10 @@ function ContractDetails() {
                       <label className="text-[10px] uppercase font-bold text-neutral-600 tracking-widest">Artista</label>
                       <select 
                         value={editData.artist_id}
-                        onChange={(e) => setEditData({...editData, artist_id: e.target.value, artist_name: artists.find(a => a.id === e.target.value)?.name || ""})}
+                        onChange={(e) => setEditData({...editData, artist_id: e.target.value, artist_name: artists?.find((a: any) => a.id === e.target.value)?.name || ""})}
                         className="w-full bg-neutral-900 border border-white/10 p-4 text-sm focus:outline-none focus:border-white/30 transition"
                       >
-                        {artists.map(artist => (
+                        {artists?.map((artist: any) => (
                           <option key={artist.id} value={artist.id}>{artist.name}</option>
                         ))}
                       </select>
@@ -229,7 +229,7 @@ function ContractDetails() {
                   </div>
 
                   <div className="space-y-4">
-                    {contract.installments?.length > 0 ? (
+                    {contract?.installments && contract.installments.length > 0 ? (
                       contract.installments.map((inst: any) => (
                         <div key={inst.id} className="flex items-center justify-between p-4 bg-black/40 border border-white/5 rounded-sm">
                            <div className="flex items-center gap-4">

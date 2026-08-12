@@ -26,8 +26,8 @@ export interface AnalyticsEvent {
   } | undefined;
 }
 
-// In a real app, this would save to a database.
-const events: AnalyticsEvent[] = [];
+// Memory storage (resets on restart)
+let events: AnalyticsEvent[] = [];
 
 export const trackEvent = createServerFn({ method: "POST" })
   .inputValidator((data) => z.object({
@@ -59,7 +59,7 @@ export const trackEvent = createServerFn({ method: "POST" })
       ...data,
     };
     
-    console.log("[Analytics Event]:", newEvent);
+    // In production, we'd persist this to a database
     events.push(newEvent);
     
     return { success: true };
@@ -68,4 +68,10 @@ export const trackEvent = createServerFn({ method: "POST" })
 export const getAnalyticsEvents = createServerFn({ method: "GET" })
   .handler(async () => {
     return events;
+  });
+
+export const clearAnalyticsEvents = createServerFn({ method: "POST" })
+  .handler(async () => {
+    events = [];
+    return { success: true };
   });

@@ -1,4 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { getActiveArtists } from "@/lib/cms.functions";
 import { LayoutDashboard, Users, Calendar, Briefcase, FileText, Settings, Search, Plus, MousePointer2 } from "lucide-react";
 import logoAsset from "@/assets/logo-completa.png.asset.json";
 
@@ -7,6 +9,11 @@ export const Route = createFileRoute("/admin/artistas")({
 });
 
 function AdminArtists() {
+  const { data: artists } = useSuspenseQuery({
+    queryKey: ["active-artists"],
+    queryFn: () => getActiveArtists(),
+  });
+
   return (
     <div className="min-h-screen bg-neutral-950 text-white flex flex-col md:flex-row w-full">
       <aside className="w-full md:w-64 border-b md:border-b-0 md:border-r border-white/5 p-6 space-y-8 bg-black/20">
@@ -79,38 +86,45 @@ function AdminArtists() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
-                {[
-                  { name: "DJ Jiraya Uai", genre: "Eletrofunk", location: "Goiânia, GO", status: "Ativo" },
-                  { name: "Wam Baster", genre: "Eletrofunk", location: "Goiânia, GO", status: "Ativo" },
-                  { name: "DJ Netto", genre: "House / Eletrofunk", location: "Goiânia, GO", status: "Ativo" },
-                  { name: "DJ Low", genre: "House / Tech House", location: "Goiânia, GO", status: "Ativo" },
-                ].map((artist, idx) => (
-                  <tr key={idx} className="hover:bg-white/5 transition group">
-                    <td className="p-6 flex items-center gap-4">
-                      <div className="w-12 h-12 bg-neutral-800 rounded-sm overflow-hidden border border-white/5">
-                        <div className="w-full h-full bg-gradient-to-br from-neutral-800 to-neutral-900 flex items-center justify-center text-[10px] font-bold text-neutral-600">064</div>
-                      </div>
-                      <span className="font-bold uppercase tracking-tighter text-lg">{artist.name}</span>
-                    </td>
-                    <td className="p-6 text-neutral-500 text-xs font-bold uppercase tracking-widest">{artist.genre}</td>
-                    <td className="p-6 text-neutral-500 text-xs font-bold uppercase tracking-widest">{artist.location}</td>
-                    <td className="p-6">
-                      <span className="px-3 py-1 bg-green-500/10 text-green-500 text-[9px] font-black uppercase tracking-widest border border-green-500/20">
-                        {artist.status}
-                      </span>
-                    </td>
-                    <td className="p-6 text-right space-x-4">
-                      <button className="text-[10px] font-bold uppercase tracking-widest text-neutral-500 hover:text-white transition">Editar</button>
-                      <button className="text-[10px] font-bold uppercase tracking-widest text-red-500/50 hover:text-red-500 transition">Excluir</button>
+                {artists?.length === 0 ? (
+                  <tr>
+                    <td colSpan={5} className="p-12 text-center text-neutral-500 uppercase text-[10px] tracking-widest font-bold">
+                      Nenhum artista cadastrado.
                     </td>
                   </tr>
-                ))}
+                ) : (
+                  artists.map((artist: any, idx: number) => (
+                    <tr key={idx} className="hover:bg-white/5 transition group">
+                      <td className="p-6 flex items-center gap-4">
+                        <div className="w-12 h-12 bg-neutral-800 rounded-sm overflow-hidden border border-white/5">
+                          {artist.photo_url ? (
+                            <img src={artist.photo_url} alt={artist.name} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition" />
+                          ) : (
+                            <div className="w-full h-full bg-gradient-to-br from-neutral-800 to-neutral-900 flex items-center justify-center text-[10px] font-bold text-neutral-600">064</div>
+                          )}
+                        </div>
+                        <span className="font-bold uppercase tracking-tighter text-lg">{artist.name}</span>
+                      </td>
+                      <td className="p-6 text-neutral-500 text-xs font-bold uppercase tracking-widest">{artist.genre}</td>
+                      <td className="p-6 text-neutral-500 text-xs font-bold uppercase tracking-widest">{artist.city}</td>
+                      <td className="p-6">
+                        <span className="px-3 py-1 bg-green-500/10 text-green-500 text-[9px] font-black uppercase tracking-widest border border-green-500/20">
+                          {artist.status}
+                        </span>
+                      </td>
+                      <td className="p-6 text-right space-x-4">
+                        <button className="text-[10px] font-bold uppercase tracking-widest text-neutral-500 hover:text-white transition">Editar</button>
+                        <button className="text-[10px] font-bold uppercase tracking-widest text-red-500/50 hover:text-red-500 transition">Excluir</button>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>
           
           <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-widest text-neutral-600">
-            <span>Mostrando 4 artistas</span>
+            <span>Mostrando {artists?.length || 0} artistas</span>
             <div className="flex gap-2">
               <button className="p-2 border border-white/5 hover:bg-white/5 transition disabled:opacity-50" disabled>Anterior</button>
               <button className="p-2 border border-white/5 hover:bg-white/5 transition disabled:opacity-50" disabled>Próximo</button>
