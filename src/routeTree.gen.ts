@@ -25,6 +25,7 @@ import { Route as ArtistasSlugRouteImport } from './routes/artistas/$slug'
 import { Route as AdminContratosIndexRouteImport } from './routes/admin/contratos/index'
 import { Route as AdminContratosIdRouteImport } from './routes/admin/contratos/$id'
 import { Route as AdminEditorIndexRouteImport } from './routes/admin/editor/index'
+import { Route as AdminEditorPageIdRouteImport } from './routes/admin/editor/$pageId'
 import { Route as AdminContratosIdVisualizarRouteImport } from './routes/admin/contratos/$id.visualizar'
 
 const IndexRoute = IndexRouteImport.update({
@@ -107,6 +108,11 @@ const AdminEditorIndexRoute = AdminEditorIndexRouteImport.update({
   path: '/editor/',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminEditorPageIdRoute = AdminEditorPageIdRouteImport.update({
+  id: '/editor/$pageId',
+  path: '/editor/$pageId',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminContratosIdVisualizarRoute =
   AdminContratosIdVisualizarRouteImport.update({
     id: '/visualizar',
@@ -129,6 +135,7 @@ export interface FileRoutesByFullPath {
   '/admin/': typeof AdminIndexRoute
   '/artistas/': typeof ArtistasIndexRoute
   '/admin/contratos/$id': typeof AdminContratosIdRouteWithChildren
+  '/admin/editor/$pageId': typeof AdminEditorPageIdRoute
   '/admin/contratos/': typeof AdminContratosIndexRoute
   '/admin/editor/': typeof AdminEditorIndexRoute
   '/admin/contratos/$id/visualizar': typeof AdminContratosIdVisualizarRoute
@@ -147,6 +154,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminIndexRoute
   '/artistas': typeof ArtistasIndexRoute
   '/admin/contratos/$id': typeof AdminContratosIdRouteWithChildren
+  '/admin/editor/$pageId': typeof AdminEditorPageIdRoute
   '/admin/contratos': typeof AdminContratosIndexRoute
   '/admin/editor': typeof AdminEditorIndexRoute
   '/admin/contratos/$id/visualizar': typeof AdminContratosIdVisualizarRoute
@@ -167,6 +175,7 @@ export interface FileRoutesById {
   '/admin/': typeof AdminIndexRoute
   '/artistas/': typeof ArtistasIndexRoute
   '/admin/contratos/$id': typeof AdminContratosIdRouteWithChildren
+  '/admin/editor/$pageId': typeof AdminEditorPageIdRoute
   '/admin/contratos/': typeof AdminContratosIndexRoute
   '/admin/editor/': typeof AdminEditorIndexRoute
   '/admin/contratos/$id/visualizar': typeof AdminContratosIdVisualizarRoute
@@ -188,6 +197,7 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/artistas/'
     | '/admin/contratos/$id'
+    | '/admin/editor/$pageId'
     | '/admin/contratos/'
     | '/admin/editor/'
     | '/admin/contratos/$id/visualizar'
@@ -206,6 +216,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/artistas'
     | '/admin/contratos/$id'
+    | '/admin/editor/$pageId'
     | '/admin/contratos'
     | '/admin/editor'
     | '/admin/contratos/$id/visualizar'
@@ -225,6 +236,7 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/artistas/'
     | '/admin/contratos/$id'
+    | '/admin/editor/$pageId'
     | '/admin/contratos/'
     | '/admin/editor/'
     | '/admin/contratos/$id/visualizar'
@@ -352,6 +364,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminEditorIndexRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/editor/$pageId': {
+      id: '/admin/editor/$pageId'
+      path: '/editor/$pageId'
+      fullPath: '/admin/editor/$pageId'
+      preLoaderRoute: typeof AdminEditorPageIdRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/contratos/$id/visualizar': {
       id: '/admin/contratos/$id/visualizar'
       path: '/visualizar'
@@ -383,6 +402,7 @@ interface AdminRouteChildren {
   AdminSolicitacoesRoute: typeof AdminSolicitacoesRoute
   AdminIndexRoute: typeof AdminIndexRoute
   AdminContratosIdRoute: typeof AdminContratosIdRouteWithChildren
+  AdminEditorPageIdRoute: typeof AdminEditorPageIdRoute
   AdminContratosIndexRoute: typeof AdminContratosIndexRoute
   AdminEditorIndexRoute: typeof AdminEditorIndexRoute
 }
@@ -397,6 +417,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminSolicitacoesRoute: AdminSolicitacoesRoute,
   AdminIndexRoute: AdminIndexRoute,
   AdminContratosIdRoute: AdminContratosIdRouteWithChildren,
+  AdminEditorPageIdRoute: AdminEditorPageIdRoute,
   AdminContratosIndexRoute: AdminContratosIndexRoute,
   AdminEditorIndexRoute: AdminEditorIndexRoute,
 }
