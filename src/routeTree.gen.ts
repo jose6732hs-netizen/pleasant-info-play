@@ -27,6 +27,7 @@ import { Route as AdminContratosIdRouteImport } from './routes/admin/contratos/$
 import { Route as AdminEditorIndexRouteImport } from './routes/admin/editor/index'
 import { Route as AdminEditorPageIdRouteImport } from './routes/admin/editor/$pageId'
 import { Route as AdminContratosIdVisualizarRouteImport } from './routes/admin/contratos/$id.visualizar'
+import { Route as AdminEditorPageIdEditSectionIdRouteImport } from './routes/admin/editor/$pageId/edit/$sectionId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -119,6 +120,12 @@ const AdminContratosIdVisualizarRoute =
     path: '/visualizar',
     getParentRoute: () => AdminContratosIdRoute,
   } as any)
+const AdminEditorPageIdEditSectionIdRoute =
+  AdminEditorPageIdEditSectionIdRouteImport.update({
+    id: '/edit/$sectionId',
+    path: '/edit/$sectionId',
+    getParentRoute: () => AdminEditorPageIdRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -135,10 +142,11 @@ export interface FileRoutesByFullPath {
   '/admin/': typeof AdminIndexRoute
   '/artistas/': typeof ArtistasIndexRoute
   '/admin/contratos/$id': typeof AdminContratosIdRouteWithChildren
-  '/admin/editor/$pageId': typeof AdminEditorPageIdRoute
+  '/admin/editor/$pageId': typeof AdminEditorPageIdRouteWithChildren
   '/admin/contratos/': typeof AdminContratosIndexRoute
   '/admin/editor/': typeof AdminEditorIndexRoute
   '/admin/contratos/$id/visualizar': typeof AdminContratosIdVisualizarRoute
+  '/admin/editor/$pageId/edit/$sectionId': typeof AdminEditorPageIdEditSectionIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -154,10 +162,11 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminIndexRoute
   '/artistas': typeof ArtistasIndexRoute
   '/admin/contratos/$id': typeof AdminContratosIdRouteWithChildren
-  '/admin/editor/$pageId': typeof AdminEditorPageIdRoute
+  '/admin/editor/$pageId': typeof AdminEditorPageIdRouteWithChildren
   '/admin/contratos': typeof AdminContratosIndexRoute
   '/admin/editor': typeof AdminEditorIndexRoute
   '/admin/contratos/$id/visualizar': typeof AdminContratosIdVisualizarRoute
+  '/admin/editor/$pageId/edit/$sectionId': typeof AdminEditorPageIdEditSectionIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -175,10 +184,11 @@ export interface FileRoutesById {
   '/admin/': typeof AdminIndexRoute
   '/artistas/': typeof ArtistasIndexRoute
   '/admin/contratos/$id': typeof AdminContratosIdRouteWithChildren
-  '/admin/editor/$pageId': typeof AdminEditorPageIdRoute
+  '/admin/editor/$pageId': typeof AdminEditorPageIdRouteWithChildren
   '/admin/contratos/': typeof AdminContratosIndexRoute
   '/admin/editor/': typeof AdminEditorIndexRoute
   '/admin/contratos/$id/visualizar': typeof AdminContratosIdVisualizarRoute
+  '/admin/editor/$pageId/edit/$sectionId': typeof AdminEditorPageIdEditSectionIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -201,6 +211,7 @@ export interface FileRouteTypes {
     | '/admin/contratos/'
     | '/admin/editor/'
     | '/admin/contratos/$id/visualizar'
+    | '/admin/editor/$pageId/edit/$sectionId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -220,6 +231,7 @@ export interface FileRouteTypes {
     | '/admin/contratos'
     | '/admin/editor'
     | '/admin/contratos/$id/visualizar'
+    | '/admin/editor/$pageId/edit/$sectionId'
   id:
     | '__root__'
     | '/'
@@ -240,6 +252,7 @@ export interface FileRouteTypes {
     | '/admin/contratos/'
     | '/admin/editor/'
     | '/admin/contratos/$id/visualizar'
+    | '/admin/editor/$pageId/edit/$sectionId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -378,6 +391,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminContratosIdVisualizarRouteImport
       parentRoute: typeof AdminContratosIdRoute
     }
+    '/admin/editor/$pageId/edit/$sectionId': {
+      id: '/admin/editor/$pageId/edit/$sectionId'
+      path: '/edit/$sectionId'
+      fullPath: '/admin/editor/$pageId/edit/$sectionId'
+      preLoaderRoute: typeof AdminEditorPageIdEditSectionIdRouteImport
+      parentRoute: typeof AdminEditorPageIdRoute
+    }
   }
 }
 
@@ -392,6 +412,17 @@ const AdminContratosIdRouteChildren: AdminContratosIdRouteChildren = {
 const AdminContratosIdRouteWithChildren =
   AdminContratosIdRoute._addFileChildren(AdminContratosIdRouteChildren)
 
+interface AdminEditorPageIdRouteChildren {
+  AdminEditorPageIdEditSectionIdRoute: typeof AdminEditorPageIdEditSectionIdRoute
+}
+
+const AdminEditorPageIdRouteChildren: AdminEditorPageIdRouteChildren = {
+  AdminEditorPageIdEditSectionIdRoute: AdminEditorPageIdEditSectionIdRoute,
+}
+
+const AdminEditorPageIdRouteWithChildren =
+  AdminEditorPageIdRoute._addFileChildren(AdminEditorPageIdRouteChildren)
+
 interface AdminRouteChildren {
   AdminAgendaRoute: typeof AdminAgendaRoute
   AdminArtistasRoute: typeof AdminArtistasRoute
@@ -402,7 +433,7 @@ interface AdminRouteChildren {
   AdminSolicitacoesRoute: typeof AdminSolicitacoesRoute
   AdminIndexRoute: typeof AdminIndexRoute
   AdminContratosIdRoute: typeof AdminContratosIdRouteWithChildren
-  AdminEditorPageIdRoute: typeof AdminEditorPageIdRoute
+  AdminEditorPageIdRoute: typeof AdminEditorPageIdRouteWithChildren
   AdminContratosIndexRoute: typeof AdminContratosIndexRoute
   AdminEditorIndexRoute: typeof AdminEditorIndexRoute
 }
@@ -417,7 +448,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminSolicitacoesRoute: AdminSolicitacoesRoute,
   AdminIndexRoute: AdminIndexRoute,
   AdminContratosIdRoute: AdminContratosIdRouteWithChildren,
-  AdminEditorPageIdRoute: AdminEditorPageIdRoute,
+  AdminEditorPageIdRoute: AdminEditorPageIdRouteWithChildren,
   AdminContratosIndexRoute: AdminContratosIndexRoute,
   AdminEditorIndexRoute: AdminEditorIndexRoute,
 }
