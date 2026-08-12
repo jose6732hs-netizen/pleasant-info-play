@@ -4,6 +4,7 @@ import { getActiveArtists } from "@/lib/cms.functions";
 import { getArtistCalendar } from "@/lib/booking.functions";
 import { format, isAfter, parseISO } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { captureClick } from "@/lib/analytics-client";
 
 export const Route = createFileRoute("/artistas/$slug")({
   loader: async ({ context, params }) => {
