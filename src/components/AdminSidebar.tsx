@@ -11,7 +11,8 @@ import {
   Menu, 
   X,
   Sparkles,
-  Layers
+  Layers,
+  Edit3
 } from 'lucide-react';
 import logoAsset from "@/assets/logo-completa.png.asset.json";
 
