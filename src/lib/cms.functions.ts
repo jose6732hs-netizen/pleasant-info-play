@@ -57,6 +57,42 @@ let pagesStore: Page[] = [
   { id: 'sobre', name: 'Sobre Nós', slug: '/sobre', status: 'PUBLICADO', created_at: new Date().toISOString() },
   { id: 'contratantes', name: 'Contratantes', slug: '/contratantes', status: 'PUBLICADO', created_at: new Date().toISOString() },
   { id: 'contato', name: 'Contato', slug: '/contato', status: 'PUBLICADO', created_at: new Date().toISOString() },
+  { id: 'global_nav', name: 'Menu & Rodapé', slug: '/global/nav', status: 'PUBLICADO', created_at: new Date().toISOString(), config: {
+    menu: {
+      logo: 'https://pleasant-info-play.lovable.app/logo-metallic.png',
+      links: [
+        { id: '1', label: 'INÍCIO', url: '/', active: true, order: 0 },
+        { id: '2', label: 'ARTISTAS', url: '/artistas', active: true, order: 1 },
+        { id: '3', label: 'AGÊNCIA', url: '/#sobre', active: true, order: 2 },
+        { id: '4', label: 'CONTATO', url: '/contato', active: true, order: 3 },
+      ],
+      showBookingButton: true,
+      bookingButtonText: 'CONTRATAR',
+      bookingButtonUrl: '#contratar'
+    },
+    footer: {
+      logo: 'https://pleasant-info-play.lovable.app/logo-metallic.png',
+      description: 'AGÊNCIA PREMIUM DE GESTÃO DE CARREIRA E BOOKING. DO GOIÁS PARA O MUNDO.',
+      blocks: [
+        { id: 'links', name: 'Links Rápidos', active: true, order: 0 },
+        { id: 'social', name: 'Redes Sociais', active: true, order: 1 },
+        { id: 'contact', name: 'Contato', active: true, order: 2 },
+        { id: 'newsletter', name: 'Newsletter', active: false, order: 3 }
+      ],
+      social: {
+        instagram: 'https://instagram.com/064talents',
+        youtube: 'https://youtube.com/@064talents',
+        facebook: '',
+        tiktok: ''
+      },
+      contact: {
+        email: 'contato@064talents.com.br',
+        phone: '+55 62 9999-9999',
+        address: 'Goiânia, Goiás'
+      },
+      copyright: '© 2026 064 TALENTS. TODOS OS DIREITOS RESERVADOS.'
+    }
+  } },
   { id: 'artist_template', name: 'Template de Artista', slug: '/template/artista', status: 'PUBLICADO', created_at: new Date().toISOString(), config: {
     blocks: [
       { id: 'hero', name: 'Hero (Imagem & Nome)', active: true, order: 0 },
