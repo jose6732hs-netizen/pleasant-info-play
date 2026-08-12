@@ -203,6 +203,7 @@ export const getPageSections = createServerFn({ method: "GET" })
 export const saveSection = createServerFn({ method: "POST" })
   .validator((data: any) => data)
   .handler(async ({ data }) => {
+    await requireAdmin();
     const index = sectionsStore.findIndex(s => s.id === data.id);
     if (index > -1) {
       sectionsStore[index] = { ...sectionsStore[index], ...data };
@@ -215,6 +216,7 @@ export const saveSection = createServerFn({ method: "POST" })
     }
     return { success: true, section: data };
   });
+
 
 export const publishPage = createServerFn({ method: "POST" })
   .inputValidator((d) => z.object({ pageId: z.string() }).parse(d))
