@@ -81,12 +81,11 @@ export const trackRealEvent = createServerFn({ method: "POST" })
     // Accessing request in TanStack Start server functions is done via the second argument 'ctx'
     // but the input validator might interfere if not handled correctly.
     // In React Start, you can use getWebRequest from @tanstack/react-start/server
-    const { getWebRequest } = await import("@tanstack/react-start/server");
+    // Wait, let's try to get it from context if possible or use the helper
     const request = getWebRequest();
 
-
     // Get geo info
-    const location = await getGeoInfo(request);
+    const location = await getGeoInfo(request!);
 
     // Sync session first
     await getOrCreateSession(data.visitor_id, data.session_id, {
