@@ -92,7 +92,7 @@ function AuthPage() {
         <div className="flex flex-col gap-4 text-center pt-4">
             <button 
               type="button"
-              onClick={() => toast.info("Funcionalidade de recuperação de senha em desenvolvimento.")}
+              onClick={() => navigate({ to: "/forgot-password" })}
               className="text-[10px] uppercase tracking-widest text-neutral-600 hover:text-white transition"
             >
               Esqueci minha senha
