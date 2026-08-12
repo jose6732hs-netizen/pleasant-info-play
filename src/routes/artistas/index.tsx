@@ -49,16 +49,15 @@ function ArtistsList() {
   const regularArtists = artists?.filter(a => !a.featured) || [];
 
   return (
-    <div className="min-h-screen bg-black text-white pt-32 pb-24">
+    <div className={cn(
+      "min-h-screen pt-32 pb-24",
+      config.background === 'graphite' ? "bg-neutral-900" : "bg-black"
+    )}>
       <div className="container mx-auto px-6 space-y-24">
         {/* Header Section */}
         <header className="space-y-6 max-w-4xl">
-          <h1 className="text-6xl md:text-8xl font-black tracking-tighter uppercase leading-[0.85]">
-            NOSSOS <br/> <span className="text-neutral-500">TALENTOS</span>
-          </h1>
-          <p className="text-neutral-400 text-lg md:text-xl font-medium max-w-2xl">
-            Representamos artistas que transcendem fronteiras. Do Goiás para os maiores palcos do mundo.
-          </p>
+          <h1 className="text-6xl md:text-8xl font-black tracking-tighter uppercase leading-[0.85] prose prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: config.title }} />
+          <p className="text-neutral-400 text-lg md:text-xl font-medium max-w-2xl prose prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: config.subtitle }} />
         </header>
 
         {/* Featured Section */}
