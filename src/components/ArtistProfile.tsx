@@ -181,7 +181,10 @@ export function ArtistProfile({ artist, videos = [], gallery = [], isPreview = f
                   {artist.booking_call_text || "Entre em contato agora para consultar disponibilidade e orçamentos."}
                 </p>
                 <div className="pt-4 flex flex-col gap-4">
-                  <button className="w-full bg-black text-white py-5 text-xs font-black uppercase tracking-[0.3em] hover:bg-neutral-800 transition">
+                  <button 
+                    onClick={() => handleBookingClick('Footer Form')}
+                    className="w-full bg-black text-white py-5 text-xs font-black uppercase tracking-[0.3em] hover:bg-neutral-800 transition"
+                  >
                     {artist.booking_btn_text || "CONTRATAR AGORA"}
                   </button>
                   <p className="text-[9px] text-center font-bold uppercase tracking-widest text-neutral-400">
@@ -201,6 +204,14 @@ export function ArtistProfile({ artist, videos = [], gallery = [], isPreview = f
       <footer className="py-12 border-t border-white/5 text-center">
         <p className="text-[10px] font-black uppercase tracking-[0.5em] text-white/20">064 TALENTS © 2026</p>
       </footer>
+
+      {!isPreview && (
+        <BookingModal 
+          isOpen={isBookingOpen} 
+          onClose={() => setIsBookingOpen(false)} 
+          initialArtistId={artist.id}
+        />
+      )}
     </div>
   );
 }
