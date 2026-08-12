@@ -94,6 +94,10 @@ export function ArtistForm({ initialData, initialVideos = [], initialGallery = [
     });
   };
 
+  const updateArtistField = (name: string, value: any) => {
+    setArtist(prev => ({ ...prev, [name]: value }));
+  };
+
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!artist.name || !artist.slug) {
