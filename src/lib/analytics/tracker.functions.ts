@@ -129,3 +129,9 @@ export const clearRealAnalyticsEvents = createServerFn({ method: "POST" })
   .handler(async () => {
     return await clearEvents();
   });
+
+export const getRealSessions = createServerFn({ method: "GET" })
+  .handler(async () => {
+    const { getSessions } = await import("./session.server");
+    return await getSessions();
+  });

@@ -25,6 +25,16 @@ export const Route = createFileRoute("/")({
     ]);
   },
   component: Index,
+  head: () => ({
+    title: "064 TALENTS — Booking & Entertainment",
+    meta: [
+      { name: "description", content: "A 064 TALENTS é uma agência premium de booking artístico e entretenimento. Representando talentos do Goiás para o mundo." },
+      { property: "og:title", content: "064 TALENTS — Booking & Entertainment" },
+      { property: "og:description", content: "Agência premium de booking artístico e entretenimento. Do Goiás pro mundo." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
 });
 
 function Index() {
