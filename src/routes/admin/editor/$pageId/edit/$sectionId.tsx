@@ -18,10 +18,22 @@ import {
   Layers,
   Search,
   Maximize2,
-  RefreshCw
+  RefreshCw,
+  Image as ImageIcon,
+  Video,
+  Trash2
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { RichTextEditor } from '@/components/admin/RichTextEditor';
+import { ImageEditor } from '@/components/admin/ImageEditor';
+import { VideoEditor } from '@/components/admin/VideoEditor';
+import { 
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
 
 export const Route = createFileRoute('/admin/editor/$pageId/edit/$sectionId')({
   component: VisualEditor,
