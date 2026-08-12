@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { getActiveArtists, Artist } from "@/lib/cms.functions";
+import { getActiveArtists, Artist, getPages } from "@/lib/cms.functions";
 import { cn } from "@/lib/utils";
+import { ArtistsPageConfig } from "@/components/admin/ArtistsPageEditor";
 
 export const Route = createFileRoute("/artistas/")({
   loader: async ({ context }) => {
