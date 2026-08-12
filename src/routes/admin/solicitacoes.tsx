@@ -70,7 +70,7 @@ function AdminBookings() {
     filter === "TODAS" || r.status === filter
   );
 
-  const getArtistName = (id: string) => artists?.find(a => a.id === id)?.name || "N/A";
+  const getArtistName = (id: string) => (artists as any[])?.find((a: any) => a.id === id)?.name || "N/A";
 
   const getStatusColor = (status: string) => {
     switch (status) {

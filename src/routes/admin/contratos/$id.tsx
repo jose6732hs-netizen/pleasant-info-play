@@ -154,7 +154,7 @@ function ContractDetails() {
                         onChange={(e) => setEditData({...editData, artist_id: e.target.value, artist_name: artists?.find((a: any) => a.id === e.target.value)?.name || ""})}
                         className="w-full bg-neutral-900 border border-white/10 p-4 text-sm focus:outline-none focus:border-white/30 transition"
                       >
-                        {artists.map(artist => (
+                        {artists?.map((artist: any) => (
                           <option key={artist.id} value={artist.id}>{artist.name}</option>
                         ))}
                       </select>

@@ -159,7 +159,8 @@ function Index() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {artists.map((artist: any) => (
                   <Link 
-                    to={`/artistas/${artist.slug || artist.id}`} 
+                    to={`/artistas/${artist.slug || artist.id}` as any} 
+
                     key={artist.id} 
                     className="group relative aspect-[3/4] overflow-hidden bg-neutral-900 rounded-sm block"
                     onClick={() => captureClick(window.location.pathname, `Ver Artista: ${artist.name}`, "artist-card-click", { artistId: artist.id })}
