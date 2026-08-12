@@ -61,12 +61,12 @@ function ArtistsList() {
         </header>
 
         {/* Featured Section */}
-        {featuredArtists.length > 0 && (
+        {config.showFeaturedFirst && featuredArtists.length > 0 && (
           <section className="space-y-12">
             <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-white/30">Destaques</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {featuredArtists.map((artist) => (
-                <ArtistCard key={artist.id} artist={artist} featured />
+                <ArtistCard key={artist.id} artist={artist} featured config={config} />
               ))}
             </div>
           </section>
