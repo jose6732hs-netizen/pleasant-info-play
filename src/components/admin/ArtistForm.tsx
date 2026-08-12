@@ -333,47 +333,56 @@ export function ArtistForm({ initialData, initialVideos = [], initialGallery = [
             {activeTab === 3 && (
               <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4">
                  <div className="space-y-4">
-                    <h3 className="text-sm font-bold uppercase tracking-widest text-neutral-400">Vídeos (YouTube/Vimeo)</h3>
-                    <div className="space-y-4">
+                    <h3 className="text-sm font-bold uppercase tracking-widest text-neutral-400 border-b border-white/5 pb-2">Gestão de Vídeos</h3>
+                    
+                    <div className="grid grid-cols-1 gap-6">
                       {videos.map((video, idx) => (
-                        <div key={video.id || idx} className="p-6 bg-black border border-white/10 rounded-sm space-y-4">
-                          <input 
-                            placeholder="Título do Vídeo" 
-                            className="w-full bg-neutral-900 border border-white/5 p-3 text-xs"
-                            value={video.title}
-                            onChange={(e) => {
-                              const newVideos = [...videos];
-                              if (newVideos[idx]) {
-                                newVideos[idx] = { ...newVideos[idx], title: e.target.value };
-                                setVideos(newVideos);
-                              }
-                            }}
-                          />
-                          <input 
-                            placeholder="URL do Vídeo" 
-                            className="w-full bg-neutral-900 border border-white/5 p-3 text-xs"
-                            value={video.url}
-                            onChange={(e) => {
-                              const newVideos = [...videos];
-                              if (newVideos[idx]) {
-                                newVideos[idx] = { ...newVideos[idx], url: e.target.value };
-                                setVideos(newVideos);
-                              }
-                            }}
-                          />
-                        </div>
+                        <VideoEditor 
+                          key={video.id || idx}
+                          label={`Vídeo #${idx + 1}`}
+                          value={{
+                            id: video.id,
+                            title: video.title,
+                            description: video.description,
+                            url: video.url,
+                            source: video.url.includes('youtube') ? 'youtube' : video.url.includes('vimeo') ? 'vimeo' : 'direct',
+                            autoplay: false,
+                            loop: false,
+                            controls: true,
+                            muted: false,
+                            lazy: true,
+                            isPrimary: video.order === 0
+                          }}
+                          onDelete={() => {
+                            setVideos(videos.filter((_, i) => i !== idx));
+                          }}
+                          onChange={(v) => {
+                            const newVideos = [...videos];
+                            newVideos[idx] = { 
+                              ...newVideos[idx], 
+                              title: v.title, 
+                              url: v.url, 
+                              description: v.description,
+                              order: v.isPrimary ? 0 : newVideos[idx].order || idx
+                            };
+                            setVideos(newVideos);
+                          }}
+                        />
                       ))}
+                      
                       <button 
                         type="button"
                         onClick={() => setVideos([...videos, { id: `vid-${Date.now()}`, artist_id: artist.id, title: '', url: '', order: videos.length, status: 'ATIVO' }])}
-                        className="w-full border border-dashed border-white/20 p-4 text-[9px] font-bold uppercase tracking-widest hover:border-white transition"
+                        className="w-full border border-dashed border-white/20 p-8 text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-white/5 hover:border-white transition flex flex-col items-center justify-center gap-3 rounded-sm"
                       >
-                        + Adicionar Vídeo
+                        <Plus className="w-5 h-5 text-neutral-600" />
+                        Adicionar Novo Vídeo
                       </button>
                     </div>
                  </div>
               </div>
             )}
+
 
             {activeTab === 4 && (
               <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4">
