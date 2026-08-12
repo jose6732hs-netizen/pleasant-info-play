@@ -293,10 +293,10 @@ function Index() {
               {analyticsEvents && analyticsEvents.length > 0 ? (
                 <div className="bg-white/5 p-2 border border-white/5 rounded-sm">
                    <div className="text-[9px] font-black uppercase text-blue-400 truncate">
-                     {analyticsEvents[analyticsEvents.length - 1].type.replace(/_/g, ' ')}
+                     {analyticsEvents[analyticsEvents.length - 1]?.type.replace(/_/g, ' ')}
                    </div>
                    <div className="text-[8px] text-neutral-500 mt-1 truncate">
-                     {analyticsEvents[analyticsEvents.length - 1].element_text || analyticsEvents[analyticsEvents.length - 1].path}
+                     {analyticsEvents[analyticsEvents.length - 1]?.element_text || analyticsEvents[analyticsEvents.length - 1]?.path}
                    </div>
                 </div>
               ) : (
