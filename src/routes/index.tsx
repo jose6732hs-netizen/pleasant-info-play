@@ -107,12 +107,9 @@ function Index() {
             <div className="flex justify-center mb-8">
               <img src={logoAsset.url} alt="064 TALENTS" className="w-full max-w-[500px] h-auto object-contain" />
             </div>
-            <p className="text-lg md:text-xl font-light uppercase tracking-[0.3em] text-neutral-300">
-              {hero.subtitle || "Artist Booking & Entertainment"}
-            </p>
-            <p className="text-md font-bold uppercase tracking-widest pt-4">
-              {hero.description || "Representando talentos. Criando conexões."}
-            </p>
+            <div className="text-lg md:text-xl font-light uppercase tracking-[0.3em] text-neutral-300 prose prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: hero.subtitle || "Artist Booking & Entertainment" }} />
+            <div className="text-md font-bold uppercase tracking-widest pt-4 prose prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: hero.description || "Representando talentos. Criando conexões." }} />
+
             <div className="flex gap-4 justify-center pt-8">
               <button onClick={() => openBooking()} className="border border-white/20 hover:bg-white hover:text-black px-8 py-3 rounded-full uppercase text-xs font-bold tracking-widest transition">
                 Contrate um artista
