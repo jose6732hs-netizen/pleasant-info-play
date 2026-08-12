@@ -33,6 +33,7 @@ import { Route as AdminContratosIdRouteImport } from './routes/admin/contratos/$
 import { Route as AdminEditorIndexRouteImport } from './routes/admin/editor/index'
 import { Route as AdminEditorPageIdRouteImport } from './routes/admin/editor/$pageId'
 import { Route as AdminEditorConfiguracoesGlobaisRouteImport } from './routes/admin/editor/configuracoes-globais'
+import { Route as AdminSegurancaAuditoriaRouteImport } from './routes/admin/seguranca/auditoria'
 import { Route as AdminVisitantesVisitorIdRouteImport } from './routes/admin/visitantes/$visitorId'
 import { Route as AdminContratosIdVisualizarRouteImport } from './routes/admin/contratos/$id.visualizar'
 import { Route as AdminEditorPageIdEditSectionIdRouteImport } from './routes/admin/editor/$pageId/edit/$sectionId'
@@ -158,6 +159,11 @@ const AdminEditorConfiguracoesGlobaisRoute =
     path: '/editor/configuracoes-globais',
     getParentRoute: () => AdminRoute,
   } as any)
+const AdminSegurancaAuditoriaRoute = AdminSegurancaAuditoriaRouteImport.update({
+  id: '/seguranca/auditoria',
+  path: '/seguranca/auditoria',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminVisitantesVisitorIdRoute =
   AdminVisitantesVisitorIdRouteImport.update({
     id: '/visitantes/$visitorId',
@@ -199,6 +205,7 @@ export interface FileRoutesByFullPath {
   '/admin/contratos/$id': typeof AdminContratosIdRouteWithChildren
   '/admin/editor/$pageId': typeof AdminEditorPageIdRouteWithChildren
   '/admin/editor/configuracoes-globais': typeof AdminEditorConfiguracoesGlobaisRoute
+  '/admin/seguranca/auditoria': typeof AdminSegurancaAuditoriaRoute
   '/admin/visitantes/$visitorId': typeof AdminVisitantesVisitorIdRoute
   '/admin/artistas/': typeof AdminArtistasIndexRoute
   '/admin/contratos/': typeof AdminContratosIndexRoute
@@ -227,6 +234,7 @@ export interface FileRoutesByTo {
   '/admin/contratos/$id': typeof AdminContratosIdRouteWithChildren
   '/admin/editor/$pageId': typeof AdminEditorPageIdRouteWithChildren
   '/admin/editor/configuracoes-globais': typeof AdminEditorConfiguracoesGlobaisRoute
+  '/admin/seguranca/auditoria': typeof AdminSegurancaAuditoriaRoute
   '/admin/visitantes/$visitorId': typeof AdminVisitantesVisitorIdRoute
   '/admin/artistas': typeof AdminArtistasIndexRoute
   '/admin/contratos': typeof AdminContratosIndexRoute
@@ -257,6 +265,7 @@ export interface FileRoutesById {
   '/admin/contratos/$id': typeof AdminContratosIdRouteWithChildren
   '/admin/editor/$pageId': typeof AdminEditorPageIdRouteWithChildren
   '/admin/editor/configuracoes-globais': typeof AdminEditorConfiguracoesGlobaisRoute
+  '/admin/seguranca/auditoria': typeof AdminSegurancaAuditoriaRoute
   '/admin/visitantes/$visitorId': typeof AdminVisitantesVisitorIdRoute
   '/admin/artistas/': typeof AdminArtistasIndexRoute
   '/admin/contratos/': typeof AdminContratosIndexRoute
@@ -288,6 +297,7 @@ export interface FileRouteTypes {
     | '/admin/contratos/$id'
     | '/admin/editor/$pageId'
     | '/admin/editor/configuracoes-globais'
+    | '/admin/seguranca/auditoria'
     | '/admin/visitantes/$visitorId'
     | '/admin/artistas/'
     | '/admin/contratos/'
@@ -316,6 +326,7 @@ export interface FileRouteTypes {
     | '/admin/contratos/$id'
     | '/admin/editor/$pageId'
     | '/admin/editor/configuracoes-globais'
+    | '/admin/seguranca/auditoria'
     | '/admin/visitantes/$visitorId'
     | '/admin/artistas'
     | '/admin/contratos'
@@ -345,6 +356,7 @@ export interface FileRouteTypes {
     | '/admin/contratos/$id'
     | '/admin/editor/$pageId'
     | '/admin/editor/configuracoes-globais'
+    | '/admin/seguranca/auditoria'
     | '/admin/visitantes/$visitorId'
     | '/admin/artistas/'
     | '/admin/contratos/'
@@ -533,6 +545,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminEditorConfiguracoesGlobaisRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/seguranca/auditoria': {
+      id: '/admin/seguranca/auditoria'
+      path: '/seguranca/auditoria'
+      fullPath: '/admin/seguranca/auditoria'
+      preLoaderRoute: typeof AdminSegurancaAuditoriaRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/visitantes/$visitorId': {
       id: '/admin/visitantes/$visitorId'
       path: '/visitantes/$visitorId'
@@ -594,6 +613,7 @@ interface AdminRouteChildren {
   AdminContratosIdRoute: typeof AdminContratosIdRouteWithChildren
   AdminEditorPageIdRoute: typeof AdminEditorPageIdRouteWithChildren
   AdminEditorConfiguracoesGlobaisRoute: typeof AdminEditorConfiguracoesGlobaisRoute
+  AdminSegurancaAuditoriaRoute: typeof AdminSegurancaAuditoriaRoute
   AdminVisitantesVisitorIdRoute: typeof AdminVisitantesVisitorIdRoute
   AdminArtistasIndexRoute: typeof AdminArtistasIndexRoute
   AdminContratosIndexRoute: typeof AdminContratosIndexRoute
@@ -615,6 +635,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminContratosIdRoute: AdminContratosIdRouteWithChildren,
   AdminEditorPageIdRoute: AdminEditorPageIdRouteWithChildren,
   AdminEditorConfiguracoesGlobaisRoute: AdminEditorConfiguracoesGlobaisRoute,
+  AdminSegurancaAuditoriaRoute: AdminSegurancaAuditoriaRoute,
   AdminVisitantesVisitorIdRoute: AdminVisitantesVisitorIdRoute,
   AdminArtistasIndexRoute: AdminArtistasIndexRoute,
   AdminContratosIndexRoute: AdminContratosIndexRoute,
@@ -635,3 +656,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

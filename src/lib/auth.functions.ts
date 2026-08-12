@@ -13,6 +13,13 @@ export const loginAdmin = createServerFn({ method: "POST" })
     // In a real app with Supabase enabled, we would use supabase.auth.signInWithPassword
     // Since Cloud is disabled, we implement a persistent mock login for the first account
     if (data.email === "sempreteste552@gmail.com" && data.password === "Kaique@321") {
+      await logAuditEvent({
+        type: 'LOGIN_SUCCESS',
+        userEmail: data.email,
+        result: 'SUCCESS',
+        metadata: { method: 'credentials' }
+      });
+
       return { 
         success: true, 
         user: { id: "admin-1", email: data.email, role: "admin" },
@@ -20,6 +27,13 @@ export const loginAdmin = createServerFn({ method: "POST" })
       };
     }
     
+    await logAuditEvent({
+      type: 'LOGIN_FAILURE',
+      userEmail: data.email,
+      result: 'FAILURE',
+      metadata: { error: 'Invalid credentials' }
+    });
+
     throw new Error("Não foi possível realizar o login. Verifique suas credenciais.");
   });
 

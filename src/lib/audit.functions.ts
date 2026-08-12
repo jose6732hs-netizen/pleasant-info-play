@@ -17,8 +17,8 @@ export type AuditEventType =
 export interface AuditLog {
   id: string;
   type: AuditEventType;
-  userId?: string;
-  userEmail?: string;
+  userId?: string | undefined;
+  userEmail?: string | undefined;
   timestamp: string;
   result: 'SUCCESS' | 'FAILURE';
   ip: string;
