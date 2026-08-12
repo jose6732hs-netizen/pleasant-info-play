@@ -22,6 +22,7 @@ import { Route as AdminServicosRouteImport } from './routes/admin/servicos'
 import { Route as AdminSolicitacoesRouteImport } from './routes/admin/solicitacoes'
 import { Route as ArtistasIndexRouteImport } from './routes/artistas/index'
 import { Route as ArtistasSlugRouteImport } from './routes/artistas/$slug'
+import { Route as AdminArtistasIndexRouteImport } from './routes/admin/artistas/index'
 import { Route as AdminContratosIndexRouteImport } from './routes/admin/contratos/index'
 import { Route as AdminContratosIdRouteImport } from './routes/admin/contratos/$id'
 import { Route as AdminEditorIndexRouteImport } from './routes/admin/editor/index'
@@ -95,6 +96,11 @@ const ArtistasSlugRoute = ArtistasSlugRouteImport.update({
   path: '/artistas/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminArtistasIndexRoute = AdminArtistasIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminArtistasRoute,
+} as any)
 const AdminContratosIndexRoute = AdminContratosIndexRouteImport.update({
   id: '/contratos/',
   path: '/contratos/',
@@ -139,7 +145,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
   '/admin/agenda': typeof AdminAgendaRoute
-  '/admin/artistas': typeof AdminArtistasRoute
+  '/admin/artistas': typeof AdminArtistasRouteWithChildren
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/conteudo': typeof AdminConteudoRoute
   '/admin/leads': typeof AdminLeadsRoute
@@ -151,6 +157,7 @@ export interface FileRoutesByFullPath {
   '/admin/contratos/$id': typeof AdminContratosIdRouteWithChildren
   '/admin/editor/$pageId': typeof AdminEditorPageIdRouteWithChildren
   '/admin/editor/configuracoes-globais': typeof AdminEditorConfiguracoesGlobaisRoute
+  '/admin/artistas/': typeof AdminArtistasIndexRoute
   '/admin/contratos/': typeof AdminContratosIndexRoute
   '/admin/editor/': typeof AdminEditorIndexRoute
   '/admin/contratos/$id/visualizar': typeof AdminContratosIdVisualizarRoute
@@ -160,7 +167,6 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/admin/agenda': typeof AdminAgendaRoute
-  '/admin/artistas': typeof AdminArtistasRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/conteudo': typeof AdminConteudoRoute
   '/admin/leads': typeof AdminLeadsRoute
@@ -172,6 +178,7 @@ export interface FileRoutesByTo {
   '/admin/contratos/$id': typeof AdminContratosIdRouteWithChildren
   '/admin/editor/$pageId': typeof AdminEditorPageIdRouteWithChildren
   '/admin/editor/configuracoes-globais': typeof AdminEditorConfiguracoesGlobaisRoute
+  '/admin/artistas': typeof AdminArtistasIndexRoute
   '/admin/contratos': typeof AdminContratosIndexRoute
   '/admin/editor': typeof AdminEditorIndexRoute
   '/admin/contratos/$id/visualizar': typeof AdminContratosIdVisualizarRoute
@@ -183,7 +190,7 @@ export interface FileRoutesById {
   '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
   '/admin/agenda': typeof AdminAgendaRoute
-  '/admin/artistas': typeof AdminArtistasRoute
+  '/admin/artistas': typeof AdminArtistasRouteWithChildren
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/conteudo': typeof AdminConteudoRoute
   '/admin/leads': typeof AdminLeadsRoute
@@ -195,6 +202,7 @@ export interface FileRoutesById {
   '/admin/contratos/$id': typeof AdminContratosIdRouteWithChildren
   '/admin/editor/$pageId': typeof AdminEditorPageIdRouteWithChildren
   '/admin/editor/configuracoes-globais': typeof AdminEditorConfiguracoesGlobaisRoute
+  '/admin/artistas/': typeof AdminArtistasIndexRoute
   '/admin/contratos/': typeof AdminContratosIndexRoute
   '/admin/editor/': typeof AdminEditorIndexRoute
   '/admin/contratos/$id/visualizar': typeof AdminContratosIdVisualizarRoute
@@ -219,6 +227,7 @@ export interface FileRouteTypes {
     | '/admin/contratos/$id'
     | '/admin/editor/$pageId'
     | '/admin/editor/configuracoes-globais'
+    | '/admin/artistas/'
     | '/admin/contratos/'
     | '/admin/editor/'
     | '/admin/contratos/$id/visualizar'
@@ -228,7 +237,6 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/admin/agenda'
-    | '/admin/artistas'
     | '/admin/configuracoes'
     | '/admin/conteudo'
     | '/admin/leads'
@@ -240,6 +248,7 @@ export interface FileRouteTypes {
     | '/admin/contratos/$id'
     | '/admin/editor/$pageId'
     | '/admin/editor/configuracoes-globais'
+    | '/admin/artistas'
     | '/admin/contratos'
     | '/admin/editor'
     | '/admin/contratos/$id/visualizar'
@@ -262,6 +271,7 @@ export interface FileRouteTypes {
     | '/admin/contratos/$id'
     | '/admin/editor/$pageId'
     | '/admin/editor/configuracoes-globais'
+    | '/admin/artistas/'
     | '/admin/contratos/'
     | '/admin/editor/'
     | '/admin/contratos/$id/visualizar'
@@ -369,6 +379,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ArtistasSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/artistas/': {
+      id: '/admin/artistas/'
+      path: '/'
+      fullPath: '/admin/artistas/'
+      preLoaderRoute: typeof AdminArtistasIndexRouteImport
+      parentRoute: typeof AdminArtistasRoute
+    }
     '/admin/contratos/': {
       id: '/admin/contratos/'
       path: '/contratos'
@@ -421,6 +438,18 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AdminArtistasRouteChildren {
+  AdminArtistasIndexRoute: typeof AdminArtistasIndexRoute
+}
+
+const AdminArtistasRouteChildren: AdminArtistasRouteChildren = {
+  AdminArtistasIndexRoute: AdminArtistasIndexRoute,
+}
+
+const AdminArtistasRouteWithChildren = AdminArtistasRoute._addFileChildren(
+  AdminArtistasRouteChildren,
+)
+
 interface AdminContratosIdRouteChildren {
   AdminContratosIdVisualizarRoute: typeof AdminContratosIdVisualizarRoute
 }
@@ -445,7 +474,7 @@ const AdminEditorPageIdRouteWithChildren =
 
 interface AdminRouteChildren {
   AdminAgendaRoute: typeof AdminAgendaRoute
-  AdminArtistasRoute: typeof AdminArtistasRoute
+  AdminArtistasRoute: typeof AdminArtistasRouteWithChildren
   AdminConfiguracoesRoute: typeof AdminConfiguracoesRoute
   AdminConteudoRoute: typeof AdminConteudoRoute
   AdminLeadsRoute: typeof AdminLeadsRoute
@@ -461,7 +490,7 @@ interface AdminRouteChildren {
 
 const AdminRouteChildren: AdminRouteChildren = {
   AdminAgendaRoute: AdminAgendaRoute,
-  AdminArtistasRoute: AdminArtistasRoute,
+  AdminArtistasRoute: AdminArtistasRouteWithChildren,
   AdminConfiguracoesRoute: AdminConfiguracoesRoute,
   AdminConteudoRoute: AdminConteudoRoute,
   AdminLeadsRoute: AdminLeadsRoute,
